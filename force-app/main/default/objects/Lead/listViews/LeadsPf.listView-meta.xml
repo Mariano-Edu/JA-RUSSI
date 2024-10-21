@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>LeadsPf</fullName>
+    <columns>FULL_NAME</columns>
+    <columns>CelularFormatado__c</columns>
+    <columns>TelefoneFormatado__c</columns>
+    <columns>LEAD.EMAIL</columns>
+    <columns>LEAD.STATUS</columns>
+    <columns>LEAD.CREATED_DATE</columns>
+    <columns>CORE.USERS.ALIAS</columns>
+    <columns>Corretor__c</columns>
+    <filterScope>Mine</filterScope>
+    <filters>
+        <field>LEAD.RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Lead.PessoaFisica</value>
+    </filters>
+    <label>Leads de Pessoa Física</label>
+</ListView>

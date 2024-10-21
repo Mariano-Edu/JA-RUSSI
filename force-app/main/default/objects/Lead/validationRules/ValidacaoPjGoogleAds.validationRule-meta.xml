@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ValidacaoPjGoogleAds</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+    $RecordType.DeveloperName = &apos;GoogleAds&apos;,
+    isPJ__c = TRUE,
+    ISBLANK(CNPJ__c)
+)</errorConditionFormula>
+    <errorDisplayField>CNPJ__c</errorDisplayField>
+    <errorMessage>Preencha o campo de CNPJ</errorMessage>
+</ValidationRule>

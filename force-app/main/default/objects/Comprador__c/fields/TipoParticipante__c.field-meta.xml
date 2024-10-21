@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TipoParticipante__c</fullName>
+    <label>Tipo de Participante</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Comprador</fullName>
+                <default>false</default>
+                <label>Comprador</label>
+            </value>
+            <value>
+                <fullName>Sócio</fullName>
+                <default>false</default>
+                <label>Sócio</label>
+            </value>
+            <value>
+                <fullName>Fiador</fullName>
+                <default>false</default>
+                <label>Fiador</label>
+            </value>
+            <value>
+                <fullName>Procurador</fullName>
+                <default>false</default>
+                <label>Procurador</label>
+            </value>
+            <value>
+                <fullName>Cônjuge/Companheiro</fullName>
+                <default>false</default>
+                <label>Cônjuge/Companheiro</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

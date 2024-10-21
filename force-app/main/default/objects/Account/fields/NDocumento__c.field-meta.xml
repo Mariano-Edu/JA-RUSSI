@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NDocumento__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Referente a qualquer documento de identificação que o lead estrangeiro possa ter, como RNE (Registro Nacional de Estrangeiros) ou DNI (identificação na Argentina)</inlineHelpText>
+    <label>Nº de Documento</label>
+    <length>14</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

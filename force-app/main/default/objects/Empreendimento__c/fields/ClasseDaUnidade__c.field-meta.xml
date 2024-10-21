@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ClasseDaUnidade__c</fullName>
+    <label>Classe da Unidade</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Sala comercial</fullName>
+                <default>false</default>
+                <label>Sala comercial</label>
+            </value>
+            <value>
+                <fullName>Duplex</fullName>
+                <default>false</default>
+                <label>Duplex</label>
+            </value>
+            <value>
+                <fullName>Triplex</fullName>
+                <default>false</default>
+                <label>Triplex</label>
+            </value>
+            <value>
+                <fullName>Penthouse</fullName>
+                <default>false</default>
+                <label>Penthouse</label>
+            </value>
+            <value>
+                <fullName>Diferenciado</fullName>
+                <default>false</default>
+                <label>Diferenciado</label>
+            </value>
+            <value>
+                <fullName>Residencial</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Residencial</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

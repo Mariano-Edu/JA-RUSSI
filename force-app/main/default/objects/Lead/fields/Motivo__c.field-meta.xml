@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Motivo__c</fullName>
+    <label>Motivo da visita não realizada</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>LeadNaoQuisVisitar__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Acima do valor procurado</fullName>
+                <default>false</default>
+                <label>Acima do valor procurado</label>
+            </value>
+            <value>
+                <fullName>Não está na região</fullName>
+                <default>false</default>
+                <label>Não está na região</label>
+            </value>
+            <value>
+                <fullName>Não tem interesse</fullName>
+                <default>false</default>
+                <label>Não tem interesse</label>
+            </value>
+            <value>
+                <fullName>Imóvel não se enquadra na procura</fullName>
+                <default>false</default>
+                <label>Imóvel não se enquadra na procura</label>
+            </value>
+            <value>
+                <fullName>Não responde/atende</fullName>
+                <default>false</default>
+                <label>Não responde/atende</label>
+            </value>
+            <value>
+                <fullName>Nenhum</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Nenhum</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>checked</controllingFieldValue>
+            <valueName>Acima do valor procurado</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>checked</controllingFieldValue>
+            <valueName>Não está na região</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>checked</controllingFieldValue>
+            <valueName>Não tem interesse</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>checked</controllingFieldValue>
+            <valueName>Imóvel não se enquadra na procura</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>checked</controllingFieldValue>
+            <valueName>Não responde/atende</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

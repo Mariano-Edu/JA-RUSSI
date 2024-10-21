@@ -1,0 +1,35 @@
+<template>
+    <div class="slds-form-element slds-box">
+        <lightning-input data-name="nome" type="text" value={formulario.nome} label="Nome completo"
+            onchange={handleChange} required></lightning-input>
+
+        <div class="container-ddi-phone">
+            <lightning-combobox label="DDI" options={ddis} data-name="ddiCel" value={formulario.ddiCel}
+            onchange={handleChange}></lightning-combobox>
+
+            <lightning-input data-name="dddCel" value={formulario.dddCel} label="DDD"
+                onchange={handleChange}></lightning-input>
+
+            <lightning-input data-name="celular" type="tel" value={formulario.celular} label="Celular"
+                onchange={handleChange}></lightning-input>
+        </div>
+
+        <div class="container-ddi-phone">
+            <lightning-combobox label="DDI" options={ddis} data-name="ddiTel" value={formulario.ddiTel}
+            onchange={handleChange}></lightning-combobox>
+
+            <lightning-input data-name="dddTel" value={formulario.dddTel} label="DDD"
+                onchange={handleChange}></lightning-input>
+
+            <lightning-input data-name="telefone" type="tel" value={formulario.telefone} label="Telefone"
+                onchange={handleChange}></lightning-input>
+        </div>
+            
+        <lightning-input data-name="email" type="email" value={formulario.email} label="Email"
+            onchange={handleChange}></lightning-input>
+    </div>
+    <div class="slds-clearfix slds-p-top_medium">
+        <lightning-button variant="brand" label="Pesquisar" icon-name="utility:search" class="slds-float_right"
+            onclick={handleConsultarLeads}></lightning-button>
+    </div>
+</template>

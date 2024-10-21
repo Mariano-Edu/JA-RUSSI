@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ValidacaoParaConversao</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+    ISPICKVAL(Status, &quot;Convertido&quot;),
+    OR(
+        ISBLANK(EmpreendimentoInteresse__c),
+        AND(
+            ISBLANK(Email),
+            ISBLANK(Phone),
+            ISBLANK(Celular__c),
+            OR(
+                AND(
+                    RecordType.DeveloperName == &apos;PessoaFisica&apos;,
+                    ISBLANK(CPF__c)
+                ),
+                AND(
+                    RecordType.DeveloperName == &apos;PessoaJuridica&apos;,
+                    ISBLANK(CNPJ__c)
+                )
+            )
+        )
+    )
+)</errorConditionFormula>
+    <errorMessage>Verifique se os campos, E-mail, Empreendimento, CPF/CNPJ, Celular ou Telefone estão preenchidos antes de converter o lead</errorMessage>
+</ValidationRule>

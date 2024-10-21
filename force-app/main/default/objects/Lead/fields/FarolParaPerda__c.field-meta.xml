@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FarolParaPerda__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF(
+    ISBLANK(ConfiguracaoDeSLA__c),
+    &apos;&apos;,
+    IF(
+        AND(
+            TempoMinutosParaVencer__c &lt;= ConfiguracaoDeSLA__r.tempoLimiteParaFarolAmarelo__c,
+            TempoMinutosParaVencer__c &gt; ConfiguracaoDeSLA__r.tempoLimiteParaFarolVermelho__c
+        ),
+        IMAGE(&quot;https://jarussiacessosf24--hml.sandbox.file.force.com/sfc/servlet.shepherd/version/renditionDownload?rendition=ORIGINAL_Jpg&amp;versionId=068Dw000002IsBS&amp;operationContext=CHATTER&amp;contentId=05TDw000005T79F&quot;, &quot;Amarelo&quot;, 20, 20),
+        IF(
+            TempoMinutosParaVencer__c &lt;= ConfiguracaoDeSLA__r.tempoLimiteParaFarolVermelho__c,
+            IMAGE(&quot;https://jarussiacessosf24--hml.sandbox.file.force.com/sfc/servlet.shepherd/version/renditionDownload?rendition=ORIGINAL_Png&amp;versionId=068Dw000002IsBc&amp;operationContext=CHATTER&amp;contentId=05TDw000005T79P&quot;, &quot;Vermelho&quot;, 20, 20),
+            IMAGE(&quot;https://jarussiacessosf24--hml.sandbox.file.force.com/sfc/servlet.shepherd/version/renditionDownload?rendition=ORIGINAL_Jpg&amp;versionId=068Dw000002IsBX&amp;operationContext=CHATTER&amp;contentId=05TDw000005T79K&quot;, &quot;Verde&quot;, 20, 20)
+        )
+    )
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Farol para perda</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

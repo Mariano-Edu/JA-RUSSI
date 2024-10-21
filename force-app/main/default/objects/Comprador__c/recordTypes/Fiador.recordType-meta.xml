@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Fiador</fullName>
+    <active>true</active>
+    <label>Fiador</label>
+    <picklistValues>
+        <picklist>CompradorPrincipal__c</picklist>
+        <values>
+            <fullName>Não</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sim</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>TipoParticipante__c</picklist>
+        <values>
+            <fullName>Cônjuge%2FCompanheiro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fiador</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Procurador</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sócio</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

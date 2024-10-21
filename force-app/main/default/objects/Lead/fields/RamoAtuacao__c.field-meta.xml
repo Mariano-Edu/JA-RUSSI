@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>RamoAtuacao__c</fullName>
+    <description>Ramo de Atuação</description>
+    <label>Ramo de Atuação</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Administracao</fullName>
+                <default>false</default>
+                <label>Administração</label>
+            </value>
+            <value>
+                <fullName>Agronegocio</fullName>
+                <default>false</default>
+                <label>Agronegócio</label>
+            </value>
+            <value>
+                <fullName>Direito</fullName>
+                <default>false</default>
+                <label>Direito</label>
+            </value>
+            <value>
+                <fullName>EngenhariaEProducao</fullName>
+                <default>false</default>
+                <label>Engenharia e Produção</label>
+            </value>
+            <value>
+                <fullName>NegociosEServicos</fullName>
+                <default>false</default>
+                <label>Negócios e Serviços</label>
+            </value>
+            <value>
+                <fullName>SaudeEBemEstar</fullName>
+                <default>false</default>
+                <label>Saúde e Bem Estar</label>
+            </value>
+            <value>
+                <fullName>Tecnologia</fullName>
+                <default>false</default>
+                <label>Técnologia</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Permissão que habilita a edição do CPF ou CNPJ da conta</description>
+    <isLicensed>false</isLicensed>
+    <label>Edição Cpf e Cnpj da Conta</label>
+</CustomPermission>

@@ -1,0 +1,6 @@
+.container-ddi-phone {
+    display: grid;
+    grid-template-columns: 0.10fr 0.10fr 0.80fr;
+    grid-template-rows: 1fr;
+    gap: 0.8rem;
+}

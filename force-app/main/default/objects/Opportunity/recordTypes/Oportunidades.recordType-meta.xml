@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Oportunidades</fullName>
+    <active>true</active>
+    <businessProcess>Processo de Vendas Oportunidade</businessProcess>
+    <label>Oportunidades</label>
+    <picklistValues>
+        <picklist>ForecastCategoryName</picklist>
+        <values>
+            <fullName>Best Case</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Closed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Commit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Omitted</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pipeline</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>LeadSource</picklist>
+        <values>
+            <fullName>Corretores</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Digital</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Eventos</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Imobiliárias</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Imprensa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Indicação</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Instagram</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Site</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Telefone</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WhatsApp</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Loss_Reason__c</picklist>
+        <values>
+            <fullName>Lost to Competitor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No Budget %2F Lost Funding</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No Decision %2F Non-Responsive</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Price</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>MotivoPerda__c</picklist>
+        <values>
+            <fullName>Cliente Desistiu</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Financiamento Não Aprovado</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Proposta Rejeitada</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Objetivo__c</picklist>
+        <values>
+            <fullName>Filhos</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Investimento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Moradia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Outros</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Permuta__c</picklist>
+        <values>
+            <fullName>Permuta Bem</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Permuta Serviços</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SubmotivoPerda__c</picklist>
+        <values>
+            <fullName>Documentação Incompleta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mudança de Preferência</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Oferta Baixa</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Type</picklist>
+        <values>
+            <fullName>Financiamento Bancário</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Financiamento Direto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Venda à Vista</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

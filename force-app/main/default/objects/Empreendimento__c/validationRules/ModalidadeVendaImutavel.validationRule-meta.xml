@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ModalidadeVendaImutavel</fullName>
+    <active>true</active>
+    <description>Não é possível realizar a alteração do valor</description>
+    <errorConditionFormula>AND(
+    NOT(ISNEW()),
+    ISCHANGED(ImovelTerceiros__c)
+)</errorConditionFormula>
+    <errorDisplayField>ImovelTerceiros__c</errorDisplayField>
+    <errorMessage>Não é possível realizar a alteração do valor</errorMessage>
+</ValidationRule>

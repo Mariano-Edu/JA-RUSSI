@@ -1,0 +1,222 @@
+<template>
+    <div class="slds-box slds-theme_default slds-grid slds-wrap" style="gap: 1rem">
+        <lightning-button 
+            variant="brand-outline"
+            label="Limpar Filtros"
+            icon-name="utility:filter"
+            class=""
+            onclick={limparFiltros}
+        >
+        </lightning-button>
+
+        <div class="slds-grid slds-wrap slds-size_1-of-1" style="gap: 1rem;">
+                 <div class="slds-col" >
+                    <lightning-record-picker
+                        label="Empreendimento"
+                        placeholder="Escolha um empreendimento"
+                        object-api-name="Empreendimento__c"
+                        value={empreendimento}
+                        onchange={handleEmpreendimento}
+                    >
+                    </lightning-record-picker>
+                </div>
+            
+                <div class="slds-col">
+                    <template lwc:if={getEmpreendimento}>
+                        <lightning-combobox
+                            name="bloco"
+                            label="Bloco"
+                            value={blocoSelecionado}
+                            placeholder="Selecione um bloco"
+                            options={blocoOptions}
+                            onchange={handleChangeBloco}>
+                        </lightning-combobox>
+                    </template>
+
+                    <template lwc:else>
+                        <lightning-combobox
+                            name="bloco"
+                            label="Bloco"
+                            placeholder="Selecione um bloco"
+                            disabled >
+                        </lightning-combobox>
+                    </template>
+                </div>
+                
+                <div class="slds-col" >
+                    <c-custom-multi-pick-list 
+                        label="Andar" 
+                        showpills="true" 
+                        role="cm-picklist-andar"
+                        onselectionchange={handleAndarChange}
+                        disabled={isBlocoNotSelecionado}>
+                    </c-custom-multi-pick-list>
+                </div>
+    
+                <div class="slds-col" >
+                    <c-custom-multi-pick-list 
+                        label="Status" 
+                        showpills="true" 
+                        role="cm-picklist-status"
+                        onselectionchange={handleStatusChange}
+                        disabled={isBlocoNotSelecionado}>
+                    </c-custom-multi-pick-list>
+                </div>
+                        
+                <div class="slds-col" >
+                    <div class="slds-input__icon-container">
+                        <lightning-input 
+                            label="Final de Unidade" 
+                            onkeyup={handleKeyup} 
+                            data-field="finalUnidade" 
+                            type="search"
+                            disabled={isBlocoNotSelecionado}
+                        >
+                        </lightning-input>
+                    </div>
+                    <template if:true={finalUnidadePills.length}>
+                        <div class="slds-m-top_small">
+                            <div class="slds-pill_container" style="background: none; border: none; padding: 0;">
+                                <ul class="slds-listbox slds-grid" style="gap: 5px; flex-wrap: wrap;" role="listbox" aria-label="Selected Options:" aria-orientation="horizontal">
+                                    <template for:each={finalUnidadePills} for:item="pill">
+                                        <li key={pill.label}  role="presentation" style="background: none;">
+                                            <span class="slds-pill" role="option" tabindex="0" aria-selected="true">
+                                                <span class="slds-pill__label" title={pill.label}>{pill.label}
+                                                </span>
+                                                <span class="slds-icon_container slds-pill__remove" title="Remove" data-label={pill.label} onclick={removerFinalUnidade}>
+                                                    <lightning-icon icon-name="utility:close" size="x-small" alternative-text="Remove"></lightning-icon>
+                                                    <span class="slds-assistive-text">Press delete or backspace to remove</span>
+                                                </span>
+                                            </span>
+                                        </li>
+                                    </template>
+                                </ul>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+        </div>
+        
+        <lightning-layout horizontal-align="center" style="gap: 1rem" class="slds-size_1-of-1" multiple-rows>
+            <div>Filtros Extras</div>
+            <lightning-layout-item size="12" class="slds-align_absolute-center slds-float_right">
+                <template lwc:if={filtroState}>
+                    <div class="lgc-bg">
+                        <c-lwc-tooltip content="Filtros">
+                            <lightning-button-icon-stateful icon-name="utility:chevronup" selected={filtroState} onclick={abrirFiltrosExtras} alternative-text="Esconder filtros"></lightning-button-icon-stateful>
+                        </c-lwc-tooltip>
+                    </div>
+                </template>
+                
+                <template lwc:else>
+                    <div class="lgc-bg">
+                        <c-lwc-tooltip content="Filtros">
+                            <lightning-button-icon-stateful icon-name="utility:chevrondown" selected={filtroState} onclick={abrirFiltrosExtras} alternative-text="Exibir filtros"></lightning-button-icon-stateful>
+                        </c-lwc-tooltip>
+                    </div>
+                </template>
+            </lightning-layout-item>
+        
+            <template if:true={mostrarFiltrosExtras}>
+                <lightning-layout-item class="slds-size_1-of-1 slds-box">
+                    <div class="slds-grid slds-wrap slds-size_1-of-1 slds-gutters_x-small">
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-5">
+                            <!-- Contêiner da Input -->
+                            <div>
+                                <lightning-input 
+                                    label="Quantidade de Quartos" 
+                                    onkeyup={handleKeyup} 
+                                    data-field="quantidadeQuartos" 
+                                    value={quantidadeQuartos}
+                                    type="search"
+                                    disabled={isBlocoNotSelecionado}
+                                ></lightning-input>
+                            </div>
+                        
+                            <!-- Contêiner para as pílulas e o texto com espaçamento à esquerda -->
+                            <template if:true={quantidadeQuartosPills.length}>
+                                    <div class="slds-m-top_small" style="background: none; border: none; padding: 0;">
+                                        <ul class="slds-listbox slds-grid" style="gap: 5px; flex-wrap: wrap;" role="listbox" aria-label="Selected Options:" aria-orientation="horizontal">
+                                            <template for:each={quantidadeQuartosPills} for:item="pill">
+                                                <li key={pill.label} role="presentation" style="background: none;">
+                                                    <span class="slds-pill" role="option" tabindex="0" aria-selected="true">
+                                                        <span class="slds-pill__label" title={pill.label}>{pill.label}</span>
+                                                        <span class="slds-icon_container slds-pill__remove" title="Remove" data-label={pill.label} onclick={removerQuantidadeQuartos}>
+                                                            <lightning-icon icon-name="utility:close" size="x-small" alternative-text="Remove"></lightning-icon>
+                                                        </span>
+                                                        
+                                                    </span>
+                                                </li>
+                                            </template>
+                                        </ul>
+                                    </div>
+                                
+                            </template>
+                            
+                        </div>
+                        
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-5 slds-grid slds-gutters_x-small">
+                            <lightning-input disabled={isBlocoNotSelecionado} formatter="currency" step="0.01" class="slds-col slds-size_1-of-2" data-field="valorMinimo" onchange={handleInputValor} type="number" name="valorMinimo" label="Valor mínimo" ></lightning-input>
+                            <lightning-input disabled={isBlocoNotSelecionado} formatter="currency" step="0.01" class="slds-col slds-size_1-of-2" data-field="valorMaximo" onchange={handleInputValor} type="number" name="valorMaximo" label="Valor máximo" ></lightning-input>
+                            
+                        </div>
+                        
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-5 slds-grid slds-gutters_x-small">
+                            <lightning-input disabled={isBlocoNotSelecionado} formatter="number" class="slds-col slds-size_1-of-2" data-field="metragemMinima" onchange={handleInputMetragem} type="number" name="metragemMinimo" label="Metragem mínima"></lightning-input>
+                            <lightning-input disabled={isBlocoNotSelecionado} formatter="number" class="slds-col slds-size_1-of-2" data-field="metragemMaxima" onchange={handleInputMetragem} type="number" name="metragemMaximo" label="Metragem máxima" ></lightning-input>
+                        </div>
+            
+                        
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-5">
+                            <div>
+                                <lightning-input 
+                                    label="Quantidade de Suítes"  
+                                    onkeyup={handleKeyup} 
+                                    data-field="quantidadeSuites" 
+                                    value={quantidadeSuites}
+                                    type="search"
+                                    disabled={isBlocoNotSelecionado}
+                                ></lightning-input>
+  
+                            </div>
+                            
+                            <!-- Contêiner para as pílulas e o texto -->
+                            <div class="slds-m-top_small">
+                                <template if:true={quantidadeSuitesPills.length}>
+                                    <ul class="slds-listbox slds-grid" style="gap: 5px; flex-wrap: wrap;" role="listbox" aria-label="Selected Options:" aria-orientation="horizontal">
+                                        <template for:each={quantidadeSuitesPills} for:item="pill">
+                                            <li key={pill.label} role="presentation">
+                                                <span class="slds-pill" role="option" tabindex="0" aria-selected="true">
+                                                    <span class="slds-pill__label" title={pill.label}>{pill.label}</span>
+                                                    <span class="slds-icon_container slds-pill__remove" title="Remove" data-label={pill.label} onclick={removerQuantidadeSuites}>
+                                                        <lightning-icon icon-name="utility:close" size="x-small" alternative-text="Remove"></lightning-icon>
+    
+                                                    </span>
+                                                    
+                                                </span>
+                                            </li>
+                                        </template>
+                                    </ul>
+                                </template>
+                            </div>
+                        </div>
+                        
+                        
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-5">
+                            <div>
+                                <c-custom-multi-pick-list 
+                                    label="Tipos de unidade" 
+                                    showpills="true" 
+                                    role="cm-picklist-tipoUnidade"
+                                    onselectionchange={handleTipoUnidadeChange}
+                                    disabled={isBlocoNotSelecionado}>
+                                </c-custom-multi-pick-list>
+                            </div>
+                        </div>
+                    </div>
+                </lightning-layout-item>
+            </template>
+
+        </lightning-layout>
+    </div>
+    </template>

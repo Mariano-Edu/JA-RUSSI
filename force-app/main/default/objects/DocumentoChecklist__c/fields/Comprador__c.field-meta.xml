@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Comprador__c</fullName>
+    <label>Comprador</label>
+    <referenceTo>Comprador__c</referenceTo>
+    <relationshipLabel>Documentos da Checklist</relationshipLabel>
+    <relationshipName>DocumentosChecklist</relationshipName>
+    <relationshipOrder>0</relationshipOrder>
+    <reparentableMasterDetail>false</reparentableMasterDetail>
+    <trackTrending>false</trackTrending>
+    <type>MasterDetail</type>
+    <writeRequiresMasterRead>false</writeRequiresMasterRead>
+</CustomField>

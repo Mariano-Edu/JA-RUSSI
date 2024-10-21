@@ -1,0 +1,19 @@
+<template>
+  <div class="slds-p-bottom_small">
+    <div class="search--max-width">
+      <lightning-input type="search" variant="label-hidden" placeholder="Filtre os leads" onchange={handleFiltrar}></lightning-input>
+    </div>
+  </div>
+  <div class="datatable--height">
+    <lightning-datatable key-field="id" data={leads} columns={colunas} max-row-selection="1" onrowselection={getSelectedRows}>
+    </lightning-datatable>
+  </div>
+  <div class="slds-clearfix slds-p-top_medium">
+    <div class="slds-float_right">
+      <lightning-button label="Cancelar" onclick={handleCancelar} class="slds-p-right_medium">
+      </lightning-button>
+      <lightning-button variant="brand" label="Detalhes" icon-name="utility:fallback" onclick={handleDetalhesLead}>
+      </lightning-button>
+    </div>
+  </div>
+</template>

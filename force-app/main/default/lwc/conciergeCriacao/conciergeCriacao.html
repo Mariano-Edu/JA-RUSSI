@@ -1,0 +1,62 @@
+<template>
+  <div class="slds-form-element slds-box">
+
+    <lightning-combobox label="Tipo de Registro" options={recordTypes} data-name="recordType" value={formulario.recordType}
+      onchange={handleChange} required=""></lightning-combobox>
+
+    <template lwc:if={isLeadPf}>
+      <lightning-input required label="Nome completo" data-name="nome" value={formulario.nome} onchange={handleChange}>
+      </lightning-input>
+    </template>
+
+    <template lwc:elseif={isLeadPj}>
+      <lightning-input required label="Nome do responsável" data-name="nome" value={formulario.nome} onchange={handleChange}>
+      </lightning-input>
+      <lightning-input required label="Empresa" data-name="empresa" value={formulario.empresa} onchange={handleChange}>
+      </lightning-input>
+    </template>
+
+    <div class="container-ddi-phone">
+      <lightning-combobox label="DDI" options={ddis} data-name="ddiCel" value={formulario.ddiCel}
+      onchange={handleChange}></lightning-combobox>
+
+      <lightning-input data-name="dddCel" value={formulario.dddCel} label="DDD"
+      onchange={handleChange}></lightning-input>
+
+      <lightning-input label="Celular" data-name="celular" value={formulario.celular} onchange={handleChange}>
+      </lightning-input>
+    </div>
+
+    <div class="container-ddi-phone">
+      <lightning-combobox label="DDI" options={ddis} data-name="ddiTel" value={formulario.ddiTel}
+      onchange={handleChange}></lightning-combobox>
+
+      <lightning-input data-name="dddTel" value={formulario.dddTel} label="DDD"
+      onchange={handleChange}></lightning-input>
+
+      <lightning-input label="Telefone" data-name="telefone" value={formulario.telefone} onchange={handleChange}>
+      </lightning-input>
+    </div>
+
+    <lightning-input label="Email" data-name="email" value={formulario.email} onchange={handleChange}>
+    </lightning-input>
+
+    <lightning-combobox label="Origem do lead" options={origens} data-name="origem" value={formulario.origem}
+      onchange={handleChange} required=""></lightning-combobox>
+
+    <lightning-combobox label="Mídia atual" options={midias} data-name="midia" value={formulario.midia}
+      onchange={handleChange} required=""></lightning-combobox>
+
+    <lightning-combobox label="Canal de atendimento" options={canais} data-name="canal" value={formulario.canal}
+      onchange={handleChange} required=""></lightning-combobox>
+
+  </div>
+  <div class="slds-clearfix slds-p-top_medium">
+    <div class="slds-float_right">
+      <lightning-button label="Cancelar" class="slds-p-right_medium" onclick={handleCancelar}>
+      </lightning-button>
+      <lightning-button variant="brand" label="Criar" icon-name="utility:fallback" class="" onclick={handleCriarLead}>
+      </lightning-button>
+    </div>
+  </div>
+</template>

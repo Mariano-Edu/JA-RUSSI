@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DataCasamentoObrigatoria</fullName>
+    <active>true</active>
+    <description>Quando o Estado Civil for: &quot;Casado(a) - Regime comunhão universal de bens&quot;, &quot;Casado(a) - Regime comunhão parcial de bens&quot;, &quot;Casado(a) - Regime separação total de bens&quot; ou &quot;União Estável&quot; a Data de Casamento deve ser preenchida!</description>
+    <errorConditionFormula>AND(
+    OR(
+        ISPICKVAL(EstadoCivil__pc, &quot;Casado(a) - Regime comunhão universal de bens&quot;),
+        ISPICKVAL(EstadoCivil__pc, &quot;Casado(a) - Regime comunhão parcial de bens&quot;),
+        ISPICKVAL(EstadoCivil__pc, &quot;Casado(a) - Regime separação total de bens&quot;),
+        ISPICKVAL(EstadoCivil__pc, &quot;União Estável&quot;)
+    ),
+    ISBLANK(DataDeCasamentoUniao__pc)
+)</errorConditionFormula>
+    <errorMessage>Quando o Estado Civil for: &quot;Casado(a) - Regime comunhão universal de bens&quot;, &quot;Casado(a) - Regime comunhão parcial de bens&quot;, &quot;Casado(a) - Regime separação total de bens&quot; ou &quot;União Estável&quot; a Data de Casamento deve ser preenchida!</errorMessage>
+</ValidationRule>

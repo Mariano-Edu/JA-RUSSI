@@ -1,0 +1,49 @@
+.spacer {
+    height: 5px; 
+}
+
+.pipeline {
+    margin-top: 1rem;
+    margin-bottom: 1rem; 
+    position: relative;
+    width: 90%;
+    left: 50px;
+}
+
+.filtros {
+    margin-top: 40px;
+    margin-bottom: 40px; 
+}
+
+.pagination {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    padding: 20px; 
+    width: 100%;
+}
+
+.pagination span {
+    margin: 0 20px; 
+}
+.espelho{
+    position: relative;
+    top: 30px;
+    left: 40px;
+}
+
+.nao_disp-wrap {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+}
+
+.nao_disp-wrap p {
+    font-size: 20px;
+    color: #5a5a5a;
+}
+
+.bt-reload {
+    margin-top: 2%;
+    margin-left: .5%;
+}

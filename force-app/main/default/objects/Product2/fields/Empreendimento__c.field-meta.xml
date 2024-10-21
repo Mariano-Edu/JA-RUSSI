@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Empreendimento__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <inlineHelpText>Indique o empreendimento em que se encontra esta unidade.</inlineHelpText>
+    <label>Empreendimento</label>
+    <referenceTo>Empreendimento__c</referenceTo>
+    <relationshipLabel>Unidades</relationshipLabel>
+    <relationshipName>Unidades</relationshipName>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Lookup</type>
+</CustomField>

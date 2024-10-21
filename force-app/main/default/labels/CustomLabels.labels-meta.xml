@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>ErroEstagioConversao</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Quando o lead não possui um compromisso concluído no processo de conversão</shortDescription>
+        <value>O lead precisa de um compromisso concluído para ser convertido</value>
+    </labels>
+    <labels>
+        <fullName>ErroEstagioQualificacao</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Erro para quando o lead não está apto para entrar no estágio  de qualificação</shortDescription>
+        <value>O lead não possui um compromisso para avançar para essa etapa</value>
+    </labels>
+    <labels>
+        <fullName>channelMustNotBeEmpty</fullName>
+        <language>pt_BR</language>
+        <protected>false</protected>
+        <shortDescription>Canal não pode estar vazio</shortDescription>
+        <value>O campo de canal de atendimento deve ser preenchido</value>
+    </labels>
+    <labels>
+        <fullName>emailMustNotBeEmpty</fullName>
+        <language>pt_BR</language>
+        <protected>false</protected>
+        <shortDescription>O campo de email de atendimento deve ser preenchido</shortDescription>
+        <value>O campo de email de atendimento deve ser preenchido</value>
+    </labels>
+    <labels>
+        <fullName>leadOriginMustNotBeEmpty</fullName>
+        <language>pt_BR</language>
+        <protected>false</protected>
+        <shortDescription>Origem do lead não pode estar vazio</shortDescription>
+        <value>O campo origem deve ser preenchido</value>
+    </labels>
+    <labels>
+        <fullName>mobilePhoneMustNotBeEmpty</fullName>
+        <language>pt_BR</language>
+        <protected>false</protected>
+        <shortDescription>Telefone não pode estar vazio</shortDescription>
+        <value>O campo de telefone deve ser preenchido</value>
+    </labels>
+    <labels>
+        <fullName>nameMustNotBeEmpty</fullName>
+        <language>pt_BR</language>
+        <protected>false</protected>
+        <shortDescription>Nome não pode estar vazio</shortDescription>
+        <value>O campo nome deve ser preenchido</value>
+    </labels>
+</CustomLabels>

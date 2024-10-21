@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TipoImutavel</fullName>
+    <active>true</active>
+    <description>Não permite alteração do campo Tipo</description>
+    <errorConditionFormula>AND(
+    NOT(ISNEW()),
+    ISCHANGED(Type),
+    NOT(ISBLANK(PRIORVALUE(Type)))
+)</errorConditionFormula>
+    <errorDisplayField>Type</errorDisplayField>
+    <errorMessage>Não é possível realizar a alteração do valor</errorMessage>
+</ValidationRule>

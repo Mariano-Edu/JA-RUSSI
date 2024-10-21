@@ -1,0 +1,21 @@
+<template>
+    <header class="slds-modal__header">
+        <h2 class="slds-text-heading_medium">Lead Perdido</h2>
+    </header>
+    <div class="slds-modal__content slds-p-around_medium">
+        <lightning-combobox
+            label="Motivo da perda"
+            options={motivos}
+            data-name="motivo"
+            value={motivos}
+            onchange={handleChange}
+        >
+        </lightning-combobox>
+    </div>
+    <footer class="slds-modal__footer btn-container">
+        <div class="btn-container">
+            <lightning-button variant="neutral" label="Cancelar" onclick={closeModal}></lightning-button>
+            <lightning-button variant="brand" label="Confirmar" onclick={handleConfirm}></lightning-button>
+        </div>
+    </footer>
+</template>

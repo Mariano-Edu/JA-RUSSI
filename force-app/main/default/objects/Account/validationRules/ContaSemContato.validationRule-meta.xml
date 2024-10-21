@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ContaSemContato</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+    OR(
+        RecordType.DeveloperName = &apos;Pessoa Jurídica (PJ)&apos;,
+        RecordType.DeveloperName = &apos;Pessoa Física (PF)&apos;
+    ),
+    OR(
+        ISBLANK(Celular__c),
+        ISBLANK(EmailPJ__c),
+        ISBLANK(PersonEmail),
+        ISBLANK(Phone)
+    )
+)</errorConditionFormula>
+    <errorMessage>Insira algum valor em pelo menos um dos seguintes campos: E-mail, Celular ou Telefone</errorMessage>
+</ValidationRule>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>StatusVisita__c</fullName>
+    <label>Status do compromisso</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Scheduled</fullName>
+                <default>true</default>
+                <label>Agendado</label>
+            </value>
+            <value>
+                <fullName>Done</fullName>
+                <default>false</default>
+                <label>Realizado com sucesso</label>
+            </value>
+            <value>
+                <fullName>NotDone</fullName>
+                <default>false</default>
+                <label>Não realizado</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

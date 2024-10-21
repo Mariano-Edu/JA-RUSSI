@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ValidaStageOportunidade</fullName>
+    <active>true</active>
+    <description>Regra para validar a fase na criação de oportunidade</description>
+    <errorConditionFormula>AND (
+    ISNEW(),
+				NOT(ISPICKVAL(StageName, &apos;Proposta&apos;))
+)</errorConditionFormula>
+    <errorDisplayField>StageName</errorDisplayField>
+    <errorMessage>A Oportunidade deve ser criada na fase de Proposta</errorMessage>
+</ValidationRule>

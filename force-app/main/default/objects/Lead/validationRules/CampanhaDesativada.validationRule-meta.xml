@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CampanhaDesativada</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+    NOT(Vencido__c),
+    NOT(Campanha__r.IsActive)
+)</errorConditionFormula>
+    <errorMessage>Não é possível associar um Lead com a campanha desativada!</errorMessage>
+</ValidationRule>

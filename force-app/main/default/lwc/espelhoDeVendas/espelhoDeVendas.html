@@ -1,0 +1,48 @@
+<template>
+    <template lwc:if={isDisponivel}>
+        <div class="slds-grid slds-col slds-size_1-of-1" title='Espelho de vendas' >
+            <div class="slds-grid slds-wrap slds-col slds-size_1-of-1" >
+                <div class="slds-text-heading_small slds-col slds-size_1-of-1">
+                    <lightning-icon icon-name="standard:buyer_group" alternative-text="Event" title="Event"></lightning-icon>
+                    <span class="slds-p-left_small">Utilize o espelho de vendas para apresentar ao cliente o catálogo de produtos disponíveis para compra, filtrando pelo empreendimento, bloco e demais características do imóvel.</span>
+                </div>
+
+                <lightning-button 
+                    variant="brand"
+                    label="Recarregar Espelho"
+                    icon-name="utility:loop"
+                    class="bt-reload"
+                    onclick={handleRecarregarEspelho}
+                >
+                </lightning-button>
+                    
+                <div class="slds-col slds-size_1-of-1 slds-p-vertical_medium">
+                    <c-espelho-de-vendas-filtros 
+                        empreendimento={empreendimentoSelecionado}
+                        bloco-options={blocoOptions}
+                        onfilterupdate={handleFilterUpdate} 
+                        apartments={apartments}
+                        onselectempreendimento={selectEmpreendimento}
+                        filtered-apartments={getFitleredApartments}>
+                    </c-espelho-de-vendas-filtros>
+                </div>
+    
+                <div class="slds-col slds-size_1-of-1">
+                    <c-espelho-de-vendas-apartment-cards
+                        apartments={filteredApartments}
+                        filtered-apartments={getFitleredApartments}
+                        onselecionarunidade={selecionarUnidade}
+                        onchangeapartments={changeApartments}
+                        empreendimento-selecionado={getEmpreendimentoSelecionado}>
+                    </c-espelho-de-vendas-apartment-cards>
+                </div>
+            </div>
+        </div>
+    </template>
+    <template lwc:else>
+        <div class="slds-box slds-theme_default slds-grid slds-wrap nao_disp-wrap">
+            <lightning-icon icon-name="utility:error" alternative-text="Error!" title="Error"></lightning-icon>
+            <p>Empreendimento indisponível no espelho</p>
+        </div>
+    </template>
+</template>

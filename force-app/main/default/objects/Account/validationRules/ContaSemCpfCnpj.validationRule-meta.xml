@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ContaSemCpfCnpj</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+OR(
+AND(
+RecordType.DeveloperName == &apos;Pessoa Física (PF)&apos;,
+ISBLANK(CPF__c)
+),
+AND(
+RecordType.DeveloperName == &apos;Pessoa Jurídica (PJ)&apos;,
+ISBLANK(CNPJ__c)
+)
+)
+)</errorConditionFormula>
+    <errorMessage>Preencha o campo CPF/CNPJ</errorMessage>
+</ValidationRule>
