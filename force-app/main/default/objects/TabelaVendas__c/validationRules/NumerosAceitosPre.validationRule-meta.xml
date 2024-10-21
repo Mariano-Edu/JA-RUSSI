@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NumerosAceitosPre</fullName>
+    <active>false</active>
+    <errorConditionFormula>NOT(OR(
+    PeriodicidadeParcela__c = 1,
+    PeriodicidadeParcela__c = 6,
+    PeriodicidadeParcela__c = 12
+))</errorConditionFormula>
+    <errorDisplayField>PeriodicidadeParcela__c</errorDisplayField>
+    <errorMessage>Número inválido! Permitidos: 1, 6, 12.</errorMessage>
+</ValidationRule>

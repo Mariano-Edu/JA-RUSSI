@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TipoDesconto</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+    NOT(ISBLANK(DescontoNominalPorcentagem__c)),
+    NOT(ISBLANK(DescontoNominalMoeda__c))
+)</errorConditionFormula>
+    <errorMessage>Apenas um tipo de desconto pode ser associado</errorMessage>
+</ValidationRule>

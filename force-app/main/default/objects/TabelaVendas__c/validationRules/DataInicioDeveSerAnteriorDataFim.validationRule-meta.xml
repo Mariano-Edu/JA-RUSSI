@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DataInicioDeveSerAnteriorDataFim</fullName>
+    <active>true</active>
+    <errorConditionFormula>VigenciaInicio__c &gt;= VigenciaFim__c</errorConditionFormula>
+    <errorDisplayField>VigenciaInicio__c</errorDisplayField>
+    <errorMessage>A Data de Início da Vigência deve ser anterior à Data de Fim da Vigência</errorMessage>
+</ValidationRule>

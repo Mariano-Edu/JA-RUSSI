@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DatasDevemSerPreenchidas</fullName>
+    <active>true</active>
+    <errorConditionFormula>Ativo__c = TRUE &amp;&amp; 
+(OR(
+    ISBLANK(VigenciaInicio__c), 
+    ISBLANK(VigenciaFim__c)
+))</errorConditionFormula>
+    <errorDisplayField>Ativo__c</errorDisplayField>
+    <errorMessage>A tabela de vendas só pode ser ativada se as datas de início e fim de vigência estiverem preenchidas.</errorMessage>
+</ValidationRule>
