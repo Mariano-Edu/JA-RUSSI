@@ -1,0 +1,19 @@
+name: Validate Pull Request - HML
+
+on:
+  pull_request:
+    branches:
+      - hml
+    paths:
+      - 'force-app/**'
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Validate on HML
+        uses: jawills/sf-deploy@v1.0
+        with:
+          SFDX_AUTH_URL: ${{ secrets.AUTH_URL_HML }}
+          DRY_RUN: true
+          TEST_LEVEL: NoTestRun

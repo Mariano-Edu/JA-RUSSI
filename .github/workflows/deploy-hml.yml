@@ -1,0 +1,31 @@
+name: Deploy das alterações para HML
+
+# only trigger on pull request closed events
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - hml
+    paths:
+      - 'force-app/**'
+jobs:
+  merge_job:
+    # this job will only run if the PR has been merged
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Deploy - HML
+        uses: jawills/sf-deploy@v1.0
+        with:
+          SFDX_AUTH_URL: ${{ secrets.AUTH_URL_HML }}
+          DRY_RUN: false
+          TEST_LEVEL: RunAllTestsInOrg
+
+  close_job:
+    # this job will only run if the PR has been closed without being merged
+    if: github.event.pull_request.merged == false
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo PR #${{ github.event.number }} foi fechada sem realizar o merge
