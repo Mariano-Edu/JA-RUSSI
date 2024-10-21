@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Financiamento Bancário</fullName>
+        <default>false</default>
+        <label>Financiamento Bancário</label>
+    </customValue>
+    <customValue>
+        <fullName>Venda á Vista</fullName>
+        <default>false</default>
+        <label>Venda á Vista</label>
+    </customValue>
+    <customValue>
+        <fullName>Financiamento Direto</fullName>
+        <default>false</default>
+        <label>Financiamento Direto</label>
+    </customValue>
+    <masterLabel>Tipo da Venda</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

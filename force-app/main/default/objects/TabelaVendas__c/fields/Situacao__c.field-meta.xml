@@ -4,8 +4,8 @@
     <externalId>false</externalId>
     <formula>IF(
     AND(
-        TODAY() &gt;= DataInicio__c ,
-        TODAY() &lt;= DataFim__c
+        TODAY() &gt;= VigenciaInicio__c ,
+        TODAY() &lt;= VigenciaFim__c
     ),
     &quot;Em vigor&quot;,
     &quot;Suspensa&quot;

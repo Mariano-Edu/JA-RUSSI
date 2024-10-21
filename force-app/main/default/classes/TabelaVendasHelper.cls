@@ -28,9 +28,9 @@ public with sharing class TabelaVendasHelper {
                 for (UnidadeTabelaVendas__c existente : unidadesExistentes.values()) {
                     if (existente.Unidade__c == unidade.Id && existente.TabelaVenda__c == tab.Id) {
                         existente.Name = unidade.Name;
-                        existente.PrecoLista__c = unidade.PrecoLista__c;
+                        existente.PrecoLista__c = unidade.ValorDaUnidade__c;
                         existente.CoeficienteTabela__c = unidade.Coeficiente__c;
-                        existente.MetragemUnidade__c = unidade.MetragemTotal__c;
+                        existente.MetragemUnidade__c = unidade.MetragemDaUnidadeM__c;
                         unidadesParaAtualizar.add(existente);
                         idsExistentesParaManter.add(existente.Id);
                         found = true;
@@ -41,9 +41,9 @@ public with sharing class TabelaVendasHelper {
                 if (!found) {
                     UnidadeTabelaVendas__c novaUnidadeTabela = new UnidadeTabelaVendas__c();
                     novaUnidadeTabela.Name = unidade.Name;
-                    novaUnidadeTabela.PrecoLista__c = unidade.PrecoLista__c;
+                    novaUnidadeTabela.PrecoLista__c = unidade.ValorDaUnidade__c;
                     novaUnidadeTabela.CoeficienteTabela__c = unidade.Coeficiente__c;
-                    novaUnidadeTabela.MetragemUnidade__c = unidade.MetragemTotal__c;
+                    novaUnidadeTabela.MetragemUnidade__c = unidade.MetragemDaUnidadeM__c;
                     novaUnidadeTabela.Unidade__c = unidade.Id;
                     novaUnidadeTabela.TabelaVenda__c = tab.Id;
                     unidadesParaInserir.add(novaUnidadeTabela);

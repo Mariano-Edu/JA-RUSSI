@@ -4,6 +4,9 @@
         <members>TabelaVendaHandler</members>
         <members>TabelaVendasHelper</members>
         <members>TabelaVendasHelperTest</members>
+        <members>ProdutoSelector</members>
+        <members>UnidadeTabelaSelector</members>
+        <members>TestDataFactory</members>
         <name>ApexClass</name>
     </types>
     <types>
