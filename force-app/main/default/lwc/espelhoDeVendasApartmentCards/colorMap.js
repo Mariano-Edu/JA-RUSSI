@@ -1,0 +1,30 @@
+// colorMap.js
+const colorMap = {
+    'vermelho': 'rgb(255, 0, 0)',
+    'verde': 'rgb(0, 255, 0)',
+    'azul': 'rgb(0, 0, 255)',
+    'amarelo': 'rgb(255, 255, 0)',
+    'preto': 'rgb(0, 0, 0)',
+    'branco': 'rgb(255, 255, 255)',
+    'cinza': 'rgb(128, 128, 128)',
+    'laranja': 'rgb(255, 165, 0)',
+    'roxo': 'rgb(128, 0, 128)',
+    'rosa': 'rgb(255, 192, 203)',
+    'marrom': 'rgb(165, 42, 42)',
+    'ciano': 'rgb(0, 255, 255)',
+    'magenta': 'rgb(255, 0, 255)',
+    'limão': 'rgb(0, 255, 0)',
+    'azul claro': 'rgb(173, 216, 230)',
+    'verde claro': 'rgb(144, 238, 144)',
+    'dourado': 'rgb(255, 215, 0)',
+    'prata': 'rgb(192, 192, 192)',
+    'violeta': 'rgb(238, 130, 238)',
+    'índigo': 'rgb(75, 0, 130)',
+    'turquesa': 'rgb(64, 224, 208)',
+    'salmon': 'rgb(250, 128, 114)',
+    'chocolate': 'rgb(210, 105, 30)',
+    'coral': 'rgb(255, 127, 80)',
+    'caqui': 'rgb(240, 230, 140)',
+};
+
+export default colorMap;

@@ -1,0 +1,125 @@
+<template>
+    <lightning-card>
+        <!-- Escolha do do objeto -->
+        <div if:true={objetosCarregados}>
+            <div if:false={bloqueioEdicaoObjeto}>
+                <div class="combobox">
+                    <c-picklist-pequisavel label="Objetos" options={listaObjetos} value={objetoSelecionado}
+                        onchange={handleChangeObjeto}>
+                    </c-picklist-pequisavel>
+                </div>
+                <div>
+                    <lightning-button variant="brand" class="botaoConfirmarObjeto slds-align_absolute-center"
+                        label="Confirmar" title="confirmarObjeto" onclick={handleClickObjeto}>
+                    </lightning-button>
+                </div>
+            </div>
+            <div class="selecionado slds-box" if:true={bloqueioEdicaoObjeto}>
+                <p>Objeto</p>
+                <p>{rotuloObjetoSelecionado} <lightning-button-icon icon-name="utility:delete"
+                        alternative-text="Delete" class="slds-m-left_xx-small slds-float_right" title="Delete"
+                        onclick={handleClickLimparObjeto}></lightning-button-icon>
+                </p>
+                <lightning-accordion allow-multiple-sections-open>
+                    <lightning-accordion-section name="A" label="Campos" if:true={camposCarregados}>
+                        <div class="tabelaDados">
+                            <lightning-datatable key-field="value" data={listaCampos} columns={columns}
+                                hide-checkbox-column="true" onrowaction={handleRowAction}>
+                            </lightning-datatable>
+                        </div>
+                    </lightning-accordion-section>
+                </lightning-accordion>
+            </div>
+        </div>
+
+        <!-- escolha de relacionamento nivel 1 -->
+        <div class="selecionado slds-box" if:true={relacionamentosCarregados}>
+            <p>Relacionamento nivel 1</p>
+            <p>{rotuloCampoSelecionado} <lightning-button-icon icon-name="utility:delete"
+                    alternative-text="Delete" class="slds-m-left_xx-small slds-float_right" title="Delete"
+                    onclick={handleDeleteRelacionamento1}></lightning-button-icon>
+            </p>
+            <lightning-accordion allow-multiple-sections-open>
+                <lightning-accordion-section name="B" label="Campos" if:true={relacionamentosCarregados}>
+                    <div class="tabelaDados">
+                        <lightning-datatable key-field="value" data={listaRelacionamentos} columns={columns}
+                            hide-checkbox-column="true" onrowaction={handleRowAction}>
+                        </lightning-datatable>
+                    </div>
+                </lightning-accordion-section>
+            </lightning-accordion>
+        </div>
+
+        <!-- escolha de relacionamento nivel 2 -->
+        <div class="selecionado slds-box" if:true={relacionamentoNivel2Carregados}>
+            <p>Relacionamento nivel 2</p>
+            <p>{rotuloRelacionamentoNivel2Selecionado} <lightning-button-icon icon-name="utility:delete"
+                    alternative-text="Delete" class="slds-m-left_xx-small slds-float_right" title="Delete"
+                    onclick={handleDeleteRelacionamento2}></lightning-button-icon>
+            </p>
+            <lightning-accordion allow-multiple-sections-open>
+                <lightning-accordion-section name="C" label="Campos" if:true={relacionamentoNivel2Carregados}>
+                    <div class="tabelaDados">
+                        <lightning-datatable key-field="value" data={listaRelacionamentosNivel2} columns={columns}
+                            hide-checkbox-column="true" onrowaction={handleRowAction}>
+                        </lightning-datatable>
+                    </div>
+                </lightning-accordion-section>
+            </lightning-accordion>
+        </div>
+
+        <!-- escolha de relacionamento nivel 3 -->
+        <div class="selecionado slds-box" if:true={relacionamentoNivel3Carregados}>
+            <p>Relacionamento nivel 3</p>
+            <p>{rotuloRelacionamentoNivel3Selecionado} <lightning-button-icon icon-name="utility:delete"
+                    alternative-text="Delete" class="slds-m-left_xx-small slds-float_right" title="Delete"
+                    onclick={handleDeleteRelacionamento3}></lightning-button-icon>
+            </p>
+            <lightning-accordion allow-multiple-sections-open>
+                <lightning-accordion-section name="C" label="Campos" if:true={relacionamentoNivel3Carregados}>
+                    <div class="tabelaDados">
+                        <lightning-datatable key-field="value" data={listaRelacionamentosNivel3} columns={columns}
+                            hide-checkbox-column="true" onrowaction={handleRowAction}>
+                        </lightning-datatable>
+                    </div>
+                </lightning-accordion-section>
+            </lightning-accordion>
+        </div>
+
+        <!-- escolha de relacionamento nivel 4 -->
+        <div class="selecionado slds-box" if:true={relacionamentoNivel4Carregados}>
+            <p>Relacionamento nivel 4</p>
+            <p>{rotuloRelacionamentoNivel4Selecionado} <lightning-button-icon icon-name="utility:delete"
+                    alternative-text="Delete" class="slds-m-left_xx-small slds-float_right" title="Delete"
+                    onclick={handleDeleteRelacionamento4}></lightning-button-icon>
+            </p>
+            <lightning-accordion allow-multiple-sections-open>
+                <lightning-accordion-section name="C" label="Campos" if:true={relacionamentoNivel4Carregados}>
+                    <div class="tabelaDados">
+                        <lightning-datatable key-field="value" data={listaRelacionamentosNivel4} columns={columns}
+                            hide-checkbox-column="true" onrowaction={handleRowAction}>
+                        </lightning-datatable>
+                    </div>
+                </lightning-accordion-section>
+            </lightning-accordion>
+        </div>
+
+        <!-- escolha de relacionamento nivel 5 -->
+        <div class="selecionado slds-box" if:true={relacionamentoNivel5Carregados}>
+            <p>Relacionamento nivel 5</p>
+            <p>{rotuloRelacionamentoNivel5Selecionado} <lightning-button-icon icon-name="utility:delete"
+                    alternative-text="Delete" class="slds-m-left_xx-small slds-float_right" title="Delete"
+                    onclick={handleDeleteRelacionamento5}></lightning-button-icon>
+            </p>
+            <lightning-accordion allow-multiple-sections-open>
+                <lightning-accordion-section name="C" label="Campos" if:true={relacionamentoNivel5Carregados}>
+                    <div class="tabelaDados">
+                        <lightning-datatable key-field="value" data={listaRelacionamentosNivel5} columns={columns}
+                            hide-checkbox-column="true" onrowaction={handleRowAction}>
+                        </lightning-datatable>
+                    </div>
+                </lightning-accordion-section>
+            </lightning-accordion>
+        </div>
+    </lightning-card>
+</template>

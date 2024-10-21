@@ -1,0 +1,109 @@
+<template>
+    <article class="slds-card">
+        <div class="slds-card__header slds-grid">
+            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                <div class="slds-media__figure">
+                    <span class="slds-icon_container">
+                        <lightning-icon icon-name="standard:customer_portal_users"></lightning-icon>
+                    </span>
+                </div>
+                <div class="slds-media__body">
+                    <h2 class="slds-card__header-title">
+                        <span>Concierge</span>
+                    </h2>
+                </div>
+            </header>
+        </div>
+        <div class="slds-card__body slds-card__body_inner">
+            <template lwc:if={telaFormulario}>
+                <span>Você está no Concierge! Insira os dados do cliente abaixo para busca.</span>
+                <div class="slds-p-top_medium">
+                    <c-concierge-formulario 
+                        tela-cliente-encontrado={tela.clienteEncontrado}
+                        tela-cliente-nao-encontrado={tela.clienteNaoEncontrado} 
+                        formulario={formulario}
+                        ddis={ddis}
+                        record-types={recordTypes}
+                        onmudancaformulario={handleMudancaFormulario} 
+                        onconsultarleads={handleConsultarLeads}
+                        ondefaultfields={handleDefaultfields}>
+                    </c-concierge-formulario>
+                </div>
+            </template>
+            <template lwc:elseif={telaClienteNaoEncontrado}>
+                <span>Parece que o cliente procurado ainda não foi cadastrado. Deseja criar um novo
+                    lead?</span>
+                <div class="slds-p-top_medium">
+                    <c-concierge-no-data 
+                        tela-cancelar={tela.formulario} 
+                        tela-criar={tela.criarCliente}
+                        onmudancatela={handleMudancaTela}
+                        onlimparform={handleLimparForm}
+                        >
+                    </c-concierge-no-data>
+                </div>
+            </template>
+            <template lwc:elseif={telaClienteEncontrado}>
+                <span>Registro(s) Encontrado(s): </span>
+                <div class="slds-p-top_medium">
+                    <c-concierge-tabela-leads 
+                        tela-cancelar={tela.formulario} 
+                        tela-distribuir={tela.distribuicao}
+                        onmudancaformulario={handleMudancaFormulario}
+                        leads={leads}
+                        ondistribuirleads={handleDistribuirLeads} 
+                        onmudancatela={handleMudancaTela}
+                        onlimparform={handleLimparForm}
+                    >
+                    </c-concierge-tabela-leads>
+                </div>
+            </template>
+            <template lwc:elseif={telaCriarCliente}>
+                <span>Insira os dados do cliente abaixo:</span>
+                <div class="slds-p-top_medium">
+                    <c-concierge-criacao 
+                        roleta={roletasLeads} 
+                        tela-cancelar={tela.formulario} 
+                        tela-criar={tela.distribuicao}
+                        origens={origens} 
+                        canais={canais}
+                        record-types={recordTypes}
+                        onlimparform={handleLimparForm}
+                        formulario={formulario} 
+                        oncriarlead={handleCriarLead} 
+                        ddis={ddis}
+                        midias={midias}
+                        onmudancaformulario={handleMudancaFormulario} 
+                        onmudancatela={handleMudancaTela}
+                        onsetformulariofield={setFormularioField}
+                        ondefaultfields={handleDefaultfields}>
+                    </c-concierge-criacao>
+                </div>
+            </template>
+            <template lwc:elseif={telaDistribuicao}>
+                <span>O lead foi criado com sucesso!</span>
+                <div class="slds-p-top_medium">
+                    <c-concierge-tabela-roleta 
+                        tela-cancelar={tela.formulario} 
+                        roletas-leads={roletasLeads} 
+                        formulario={formulario}
+                        tela-distribuir={tela.distribuicaoRealizada} 
+                        onconfirmardistribuicao={handleConfirmarDistribuicao}
+                        onmudancatela={handleMudancaTela} 
+                        onmudancaformulario={handleMudancaFormulario}
+                        onlimparform={handleLimparForm}
+                    >
+                    </c-concierge-tabela-roleta>
+                </div>
+            </template>
+            <template lwc:elseif={telaDistribuicaoRealizada}>
+                <span>Parabéns pela captação! O lead já foi direcionado para a roleta escolhida e
+                    será atendido o mais breve possível pelos nossos corretores!</span>
+                <div class="slds-p-top_medium">
+                    <c-concierge-conclusao tela-pesquisar={tela.formulario} onmudancatela={handleMudancaTela}>
+                    </c-concierge-conclusao>
+                </div>
+            </template>
+        </div>
+    </article>
+</template>

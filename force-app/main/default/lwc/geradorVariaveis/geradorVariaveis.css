@@ -1,0 +1,37 @@
+.combobox{
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
+.botaoConfirmarObjeto{
+    margin-top: 1%;
+}
+
+.selecionado{
+    margin-top: 1%;
+    font-size: larger; 
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
+.telaCampo{
+    padding-top: 2%;
+}
+
+.iconeExcluir{
+    padding-left: 2%;
+}
+
+.variavel{
+    font-size: x-large;
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
+.botoes{
+    padding-top: 2%;
+}
+
+.tabelaDados{
+    height: 300px;
+}

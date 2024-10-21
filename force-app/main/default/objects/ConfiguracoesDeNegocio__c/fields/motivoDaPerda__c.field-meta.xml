@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>motivoDaPerda__c</fullName>
+    <inlineHelpText>Defina um SLA para Leads perdidos, de acordo com o motivo da perda.</inlineHelpText>
+    <label>Motivo da perda</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Renda Insuficiente</fullName>
+                <default>false</default>
+                <label>Renda Insuficiente</label>
+            </value>
+            <value>
+                <fullName>Não Contatado</fullName>
+                <default>false</default>
+                <label>Não Contatado</label>
+            </value>
+            <value>
+                <fullName>Não se Adequa.</fullName>
+                <default>false</default>
+                <label>Não se Adequa.</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

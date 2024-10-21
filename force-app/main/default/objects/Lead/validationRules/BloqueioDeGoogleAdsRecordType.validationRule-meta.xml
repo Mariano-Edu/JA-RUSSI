@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>BloqueioDeGoogleAdsRecordType</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+    RecordTypeAtual__c = &apos;Google Ads&apos;,
+    NOT(
+        OR(
+            ISPICKVAL(Status, &quot;Lost&quot;),
+												ISPICKVAL(Status, &quot;New&quot;),
+            ISPICKVAL(Status, &quot;Qualified&quot;),
+            ISPICKVAL(Status, &quot;Contacting&quot;),
+												ISPICKVAL(Status, &quot;Scheduled&quot;)
+        )
+    )
+)</errorConditionFormula>
+    <errorMessage>Não é possível alterar para o tipo de registro &apos;GoogleAds&apos; nesta fase do lead.</errorMessage>
+</ValidationRule>

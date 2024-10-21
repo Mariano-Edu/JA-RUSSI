@@ -1,0 +1,87 @@
+<template>
+    <lightning-modal-header label="Desconto da proposta"></lightning-modal-header>
+    
+    <lightning-modal-body> 
+        <div class="slds-grid slds-wrap">  
+
+            <div class="slds-box slds-grid slds-wrap slds-col slds-p-vertical_medium" style="padding: 1rem 2rem; overflow: auto;">
+
+                <!-- <div class="slds-grid slds-col slds-size_1-of-1  slds-p-bottom_small" style="gap: 1rem;">
+                     <lightning-input aria-invalid =false onchange={handlePorcentagemDesconto} class="slds-col slds-size_1-of-3" value={getPorcentagemDesconto} type="number" name="porcentagemDesconto" label="Desconto %" ></lightning-input>
+
+                    <lightning-combobox
+                        name="seriePagamento"
+                        label="Tipo de condição"
+                        placeholder="Selecione um tipo de condição!"
+                        options={tiposCondicoes}
+                        value={serieSelecionadaUid}
+                        class="slds-col slds-size_1-of-3" 
+                        onchange={handleChangeSerie}
+                        >
+                    </lightning-combobox>
+                </div> -->
+
+                <div class="slds-col slds-grid slds-size_1-of-1" style="height: 15rem;">
+                    <div class="slds-col slds-size_1-of-1 slds-p-vertical_medium" style="height: fit-content; ">
+                        <lightning-datatable
+                                
+                                key-field="uid"
+                                data={propostasVisiveisGet}
+                                columns={tipoCondicoesColunas}
+                                draft-values={draftValues}
+                                onsave={handleSave}
+                                
+                                default-sort-direction={defaultSortDirection}
+                                sorted-direction={sortDirection}
+                                sorted-by={sortedBy}
+                                onsort={onHandleSort}>
+                                
+                                
+                        </lightning-datatable>
+                    </div>
+               </div>
+
+               <div class="slds-col slds-grid slds-size_1-of-1">
+                    <div class="slds-col slds-size_1-of-1 slds-grid slds-grid_align-end slds-p-vertical_medium" >
+                        <div class="slds-grid slds-wrap slds-col slds-size_1-of-8" >
+                            <span class="slds-col slds-size_1-of-1 slds-text-body_small" style="font-weight: lighter;">Valor nominal</span>
+                            <span class="slds-col slds-size_1-of-1 slds-text-heading_small" style="font-weight: normal;">R${getValorNominal}</span>
+                        </div>
+
+                        <div class="slds-grid slds-wrap slds-col slds-size_1-of-8" >
+                            <span class="slds-col slds-size_1-of-1 slds-text-body_small" style="font-weight: lighter;">Total de desconto</span>
+                            <span class="slds-col slds-size_1-of-1 slds-text-heading_small" style="font-weight: normal;">R${getValorDescontoTotal}</span>
+                        </div>
+
+                        <div class="slds-grid slds-wrap slds-col slds-size_1-of-8" >
+                            <span class="slds-col slds-size_1-of-1 slds-text-body_small" style="font-weight: lighter;">Valor Nominal com desconto</span>
+                            <span class="slds-col slds-size_1-of-1 slds-text-heading_small" style="font-weight: normal;">R${getValorNominalComDesconto}</span>
+                        </div>
+
+                    </div>
+               </div>
+                
+            </div>
+
+        </div>
+    </lightning-modal-body>
+
+
+    <lightning-modal-footer>
+        <lightning-button variant="brand-outline" label="Cancelar" onclick={handleFecharModal} class="slds-m-left_x-small"></lightning-button>
+
+            <template lwc:if={isSerieTodos}>
+                <lightning-button variant="brand" label="Aplicar" onclick={handleSalvarPropostas} class="slds-m-left_x-small"></lightning-button>
+            </template>
+            
+            <template lwc:else>
+                <template lwc:if={isDescontoValido}>
+                    <lightning-button variant="brand" label="Aplicar" onclick={handleSalvarPropostas} class="slds-m-left_x-small"></lightning-button>
+                </template>
+                <template lwc:else>
+                    <lightning-button variant="brand" label="Aplicar" disabled class="slds-m-left_x-small"></lightning-button>
+                </template>
+            </template>
+
+    </lightning-modal-footer>
+</template>

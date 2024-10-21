@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>RegraCPFValido</fullName>
+    <active>true</active>
+    <description>Regra para verificar se CPF é valido!</description>
+    <errorConditionFormula>NOT(OR(LEN(CPF__c)=0,AND(MOD(MOD(11-MOD(VALUE(MID(CPF__c,1,1))*10+VALUE(MID(CPF__c,2,1))*9+VALUE(MID(CPF__c,3,1))*8+VALUE(MID(CPF__c,5,1))*7+VALUE(MID(CPF__c,6,1))*6+VALUE(MID(CPF__c,7,1))*5+VALUE(MID(CPF__c,9,1))*4+VALUE(MID(CPF__c,10,1))*3+VALUE(MID(CPF__c,11,1))*2,11),11),10)=VALUE(MID(CPF__c,13,1)),MOD(MOD(11-MOD(VALUE(MID(CPF__c,1,1))*11+VALUE(MID(CPF__c,2,1))*10+VALUE(MID(CPF__c,3,1))*9+VALUE(MID(CPF__c,5,1))*8+VALUE(MID(CPF__c,6,1))*7+VALUE(MID(CPF__c,7,1))*6+VALUE(MID(CPF__c,9,1))*5+VALUE(MID(CPF__c,10,1))*4+VALUE(MID(CPF__c,11,1))*3+VALUE(MID(CPF__c,13,1))*2,11),11),10)=VALUE(MID(CPF__c,14,1)))))&amp;&amp;NOT(OR(LEN(CPF__c)=0,AND(MOD(MOD(11-MOD(VALUE(MID(CPF__c,1,1))*10+VALUE(MID(CPF__c,2,1))*9+VALUE(MID(CPF__c,3,1))*8+VALUE(MID(CPF__c,4,1))*7+VALUE(MID(CPF__c,5,1))*6+VALUE(MID(CPF__c,6,1))*5+VALUE(MID(CPF__c,7,1))*4+VALUE(MID(CPF__c,8,1))*3+VALUE(MID(CPF__c,9,1))*2,11),11),10)=VALUE(MID(CPF__c,10,1)),MOD(MOD(11-MOD(VALUE(MID(CPF__c,1,1))*11+VALUE(MID(CPF__c,2,1))*10+VALUE(MID(CPF__c,3,1))*9+VALUE(MID(CPF__c,4,1))*8+VALUE(MID(CPF__c,5,1))*7+VALUE(MID(CPF__c,6,1))*6+VALUE(MID(CPF__c,7,1))*5+VALUE(MID(CPF__c,8,1))*4+VALUE(MID(CPF__c,9,1))*3+VALUE(MID(CPF__c,10,1))*2,11),11),10)=VALUE(MID(CPF__c,11,1))))&amp;&amp;NOT(OR(CPF__c=&quot;00000000000&quot;,CPF__c=&quot;11111111111&quot;,CPF__c=&quot;22222222222&quot;,CPF__c=&quot;33333333333&quot;,CPF__c=&quot;44444444444&quot;,CPF__c=&quot;55555555555&quot;,CPF__c=&quot;66666666666&quot;,CPF__c=&quot;77777777777&quot;,CPF__c=&quot;88888888888&quot;,CPF__c=&quot;99999999999&quot;)))</errorConditionFormula>
+    <errorDisplayField>CPF__c</errorDisplayField>
+    <errorMessage>Digite um CPF valido!</errorMessage>
+</ValidationRule>

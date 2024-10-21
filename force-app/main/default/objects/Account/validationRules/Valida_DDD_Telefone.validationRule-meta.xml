@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Valida_DDD_Telefone</fullName>
+    <active>true</active>
+    <description>Valida o DDD do Telefone</description>
+    <errorConditionFormula>NOT(
+    OR(
+        ISBLANK(DDDTelefone__c),
+        ISNUMBER(DDDTelefone__c)
+    )
+)</errorConditionFormula>
+    <errorDisplayField>DDDTelefone__pc</errorDisplayField>
+    <errorMessage>Por favor, insira um DDD válido</errorMessage>
+</ValidationRule>

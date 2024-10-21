@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ValidaEstrangeiroCheckbox</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND (
+    Estrangeiro__c = false,
+				NOT(ISBLANK(NDocumento__c))
+)</errorConditionFormula>
+    <errorDisplayField>NDocumento__c</errorDisplayField>
+    <errorMessage>A caixa de seleção &quot;Estrangeiro&quot; deve estar habilitada para preencher este campo.</errorMessage>
+</ValidationRule>

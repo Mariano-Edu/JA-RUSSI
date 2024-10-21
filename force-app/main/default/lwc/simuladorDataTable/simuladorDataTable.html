@@ -1,0 +1,115 @@
+<template>
+        <table class="slds-table slds-table_cell-buffer slds-no-row-hover slds-table_bordered" >
+            <thead>
+                <tr class="slds-line-height_reset">
+                    <template for:each={getColunasHeader} for:item="header">
+                        <th key={header.fieldApiName} class="" scope="col" style="width: max-content">
+                            <div class="slds-truncate" title={header.label}>{header.label}</div>
+                        </th>
+                    </template>
+
+                </tr>
+            </thead>
+
+            
+            <tbody>
+                <template for:each={getSeriesPagamentosObjetos} for:item="seriePagamento" for:index="index">
+                    <tr key={seriePagamento.uid} data-uid={seriePagamento.uid} class="slds-hint-parent" style="height: fit-content;">
+                        <td  data-label="Tipo de Condição" scope="row">
+                            <div  title="Tipo de condição" >
+                                 <lightning-combobox
+                                 label="Tipo de condição"
+                                 onchange={handleChange} 
+                                 data-uid={seriePagamento.uid} 
+                                 data-name="TipoCondicao__c"
+                                 options={tipoCondicoesPickList}
+                                 dropdown-alignment="auto"
+                                 value={seriePagamento.TipoCondicao__c}
+                                 >
+                                       
+                                </lightning-combobox>
+
+                            </div>
+                        </td>
+
+                        <td  data-label="Início de pagamento" >
+                            <div  title="Início de pagamento" >
+                                <lightning-input  value={seriePagamento.InicioPagamento__c} type="date" date-style="short" onchange={handleChange} data-uid={seriePagamento.uid} data-name="InicioPagamento__c" label="Início de pagamento" ></lightning-input>
+                            </div>
+                        </td>
+
+                        <td  data-label="Dia de vencimento" scope="row">
+                            <div  title="Dia de vencimento" >
+                                 <lightning-combobox
+                                 label="Dia de vencimento"
+                                 onchange={handleChange} 
+                                 data-uid={seriePagamento.uid} 
+                                 data-name="vencimentoParcela"
+                                 options={vencimentoParcelaOptions}
+                                 dropdown-alignment="auto"
+                                 value={seriePagamento.vencimentoParcela}
+                                 >
+                                       
+                                </lightning-combobox>
+
+                            </div>
+                        </td>
+
+                        <td  data-label="Qtd. de Parcelas" >
+                            <div  title="Qtd. de Parcelas" >
+                                <lightning-input  type="number" value={seriePagamento.QuantidadeParcelas__c}  label="Qtd. de Parcelas" onchange={handleChange} data-uid={seriePagamento.uid} data-name="QuantidadeParcelas__c"></lightning-input>
+                            </div>
+                        </td>
+
+                        <td  data-label="Valor da parcela" >
+                            <div  title="Valor da parcela" >
+                                <lightning-input  type="number" step=".01" formatter="currency" value={seriePagamento.valorParcela} onchange={handleChange} data-uid={seriePagamento.uid} data-name="valorParcela" label="Valor da parcela" ></lightning-input>
+                            </div>
+                        </td>
+
+                        <td  data-label="Valor total" >
+                            <div  title="Valor total" >
+                                <lightning-input  type="number" step=".01" formatter="currency" value={seriePagamento.valorTotal} onchange={handleChange} data-uid={seriePagamento.uid} data-name="valorTotal" label="Valor total" ></lightning-input>
+                            </div>
+                        </td>
+                        
+                        <td  data-label="% Parcela" >
+                            <div  title="% Parcela" >
+                                <lightning-input  value={seriePagamento.porcentagemParcela}  onchange={handleChange} data-uid={seriePagamento.uid} data-name="porcParcela" label="% Parcela"  disabled></lightning-input>
+                            </div>
+                        </td>
+
+                        <td  data-label="% Total" >
+                            <div title="% Total" >
+                                <lightning-input  value={seriePagamento.ValorTotal__c} onchange={handleChange} data-uid={seriePagamento.uid} data-name="ValorTotal__c" label="% Total"  disabled></lightning-input>
+                            </div>
+                        </td>
+
+                        <td  data-label="Após habite-se?" >
+                            <div  title="Após habite-se?" >
+                                <lightning-input  type="toggle"  message-toggle-active="" message-toggle-inactive="" onchange={handleChange} checked={seriePagamento.AposHabiteSe__c} data-uid={seriePagamento.uid} data-name="AposHabiteSe__c" ></lightning-input>
+                            </div>
+                        </td>
+
+                        <td role="gridcell" >
+
+                            <c-lwc-tooltip content="Deletar">
+                                <lightning-button-icon value="deletar" data-uid={seriePagamento.uid}  icon-name="utility:delete" class="slds-m-left_x-small" onclick={handleDelete}></lightning-button-icon>
+                            </c-lwc-tooltip>                            
+                            
+                            <c-lwc-tooltip content="Zerar">
+                                <lightning-button-icon value="zerar" data-uid={seriePagamento.uid} icon-name="utility:discounts" class="slds-m-left_x-small" onclick={handleZerar}></lightning-button-icon>
+                            </c-lwc-tooltip>
+
+                            <!-- <c-lwc-tooltip content="Dividir">
+                                <lightning-button-icon value="dividir" data-uid={seriePagamento.uid} icon-name="utility:inner_join" class="slds-m-left_x-small" onclick={handleDividir}></lightning-button-icon>
+                            </c-lwc-tooltip> -->
+
+                        </td>
+
+                    </tr>
+
+                </template>
+            </tbody>
+        </table>
+</template>

@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Role__c</fullName>
+    <label>Cargo</label>
+    <required>true</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Administrador</fullName>
+                <default>false</default>
+                <label>Administrador</label>
+            </value>
+            <value>
+                <fullName>Administrativo Comercial</fullName>
+                <default>false</default>
+                <label>Administrativo Comercial</label>
+            </value>
+            <value>
+                <fullName>Assessor(a) Comercial - Interno</fullName>
+                <default>false</default>
+                <label>Assessor(a) Comercial - Interno</label>
+            </value>
+            <value>
+                <fullName>Assessor(a) Comercial - Parceiros</fullName>
+                <default>false</default>
+                <label>Assessor(a) Comercial - Parceiros</label>
+            </value>
+            <value>
+                <fullName>Assessor(a) Comercial - SP/Miami</fullName>
+                <default>false</default>
+                <label>Assessor(a) Comercial - SP/Miami</label>
+            </value>
+            <value>
+                <fullName>Assistência Técnica</fullName>
+                <default>false</default>
+                <label>Assistência Técnica</label>
+            </value>
+            <value>
+                <fullName>Assistente Comercial - Interno</fullName>
+                <default>false</default>
+                <label>Assistente Comercial - Interno</label>
+            </value>
+            <value>
+                <fullName>Assistente Comercial - Parceiros</fullName>
+                <default>false</default>
+                <label>Assistente Comercial - Parceiros</label>
+            </value>
+            <value>
+                <fullName>CEO</fullName>
+                <default>false</default>
+                <label>CEO</label>
+            </value>
+            <value>
+                <fullName>Controladoria</fullName>
+                <default>false</default>
+                <label>Controladoria</label>
+            </value>
+            <value>
+                <fullName>Corretores</fullName>
+                <default>false</default>
+                <label>Corretores</label>
+            </value>
+            <value>
+                <fullName>Corretores - SP/Miami</fullName>
+                <default>false</default>
+                <label>Corretores - SP/Miami</label>
+            </value>
+            <value>
+                <fullName>csouz Conta pessoal de Parceiro</fullName>
+                <default>false</default>
+                <label>csouz Conta pessoal de Parceiro</label>
+            </value>
+            <value>
+                <fullName>Diretor(a) Engenharia</fullName>
+                <default>false</default>
+                <label>Diretor(a) Engenharia</label>
+            </value>
+            <value>
+                <fullName>Diretor Comercial</fullName>
+                <default>false</default>
+                <label>Diretor Comercial</label>
+            </value>
+            <value>
+                <fullName>Diretoria(a) Adm</fullName>
+                <default>false</default>
+                <label>Diretoria(a) Adm</label>
+            </value>
+            <value>
+                <fullName>Diretor Presidente</fullName>
+                <default>false</default>
+                <label>Diretor Presidente</label>
+            </value>
+            <value>
+                <fullName>Equipe Claudio Executivo de Parceiro</fullName>
+                <default>false</default>
+                <label>Equipe Claudio Executivo de Parceiro</label>
+            </value>
+            <value>
+                <fullName>Equipe Claudio Gerente de Parceiro</fullName>
+                <default>false</default>
+                <label>Equipe Claudio Gerente de Parceiro</label>
+            </value>
+            <value>
+                <fullName>Equipe Claudio Usuário de Parceiro</fullName>
+                <default>false</default>
+                <label>Equipe Claudio Usuário de Parceiro</label>
+            </value>
+            <value>
+                <fullName>Felicità Executivo de Parceiro</fullName>
+                <default>false</default>
+                <label>Felicità Executivo de Parceiro</label>
+            </value>
+            <value>
+                <fullName>Felicità Gerente de Parceiro</fullName>
+                <default>false</default>
+                <label>Felicità Gerente de Parceiro</label>
+            </value>
+            <value>
+                <fullName>Felicità Usuário de Parceiro</fullName>
+                <default>false</default>
+                <label>Felicità Usuário de Parceiro</label>
+            </value>
+            <value>
+                <fullName>Financeiro</fullName>
+                <default>false</default>
+                <label>Financeiro</label>
+            </value>
+            <value>
+                <fullName>Gerente Comercial Geral</fullName>
+                <default>false</default>
+                <label>Gerente Comercial Geral</label>
+            </value>
+            <value>
+                <fullName>Gerente Comercial - Interno</fullName>
+                <default>false</default>
+                <label>Gerente Comercial - Interno</label>
+            </value>
+            <value>
+                <fullName>Gerente Comercial Regional - Parceiros</fullName>
+                <default>false</default>
+                <label>Gerente Comercial Regional - Parceiros</label>
+            </value>
+            <value>
+                <fullName>Gerente Comercial SP/Miami</fullName>
+                <default>false</default>
+                <label>Gerente Comercial SP/Miami</label>
+            </value>
+            <value>
+                <fullName>Gerente de Marketing</fullName>
+                <default>false</default>
+                <label>Gerente de Marketing</label>
+            </value>
+            <value>
+                <fullName>Gerente de Operações Engenharia</fullName>
+                <default>false</default>
+                <label>Gerente de Operações Engenharia</label>
+            </value>
+            <value>
+                <fullName>Imobiliária - House</fullName>
+                <default>false</default>
+                <label>Imobiliária - House</label>
+            </value>
+            <value>
+                <fullName>Imobiliárias</fullName>
+                <default>false</default>
+                <label>Imobiliárias</label>
+            </value>
+            <value>
+                <fullName>Incorporação/Jurídico</fullName>
+                <default>false</default>
+                <label>Incorporação/Jurídico</label>
+            </value>
+            <value>
+                <fullName>Marketing</fullName>
+                <default>false</default>
+                <label>Marketing</label>
+            </value>
+            <value>
+                <fullName>Produção Eng.</fullName>
+                <default>false</default>
+                <label>Produção Eng.</label>
+            </value>
+            <value>
+                <fullName>Qualidade</fullName>
+                <default>false</default>
+                <label>Qualidade</label>
+            </value>
+            <value>
+                <fullName>SDR</fullName>
+                <default>false</default>
+                <label>SDR</label>
+            </value>
+            <value>
+                <fullName>TI</fullName>
+                <default>false</default>
+                <label>TI</label>
+            </value>
+            <value>
+                <fullName>vbera Conta pessoal de Parceiro</fullName>
+                <default>false</default>
+                <label>vbera Conta pessoal de Parceiro</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

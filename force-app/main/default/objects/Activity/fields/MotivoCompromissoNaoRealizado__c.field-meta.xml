@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>MotivoCompromissoNaoRealizado__c</fullName>
+    <label>Motivo do compromisso não realizado</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>StatusVisita__c</controllingField>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>ACIMA DO VALOR PROCURADO</fullName>
+                <default>false</default>
+                <label>Acima do Valor Procurado</label>
+            </value>
+            <value>
+                <fullName>NÃO ESTÁ NA REGIÃO</fullName>
+                <default>false</default>
+                <label>Não Está na Região</label>
+            </value>
+            <value>
+                <fullName>NÃO TEM INTERESSE</fullName>
+                <default>false</default>
+                <label>Não Tem Interesse</label>
+            </value>
+            <value>
+                <fullName>IMÓVEL NÃO SE ENQUADRA NA PROCURA</fullName>
+                <default>false</default>
+                <label>Imóvel Não se Enquadra na Procura</label>
+            </value>
+            <value>
+                <fullName>NÃO RESPONDE/ATENDE</fullName>
+                <default>false</default>
+                <label>Não Responde/Atende</label>
+            </value>
+            <value>
+                <fullName>Outros</fullName>
+                <default>false</default>
+                <label>Outros</label>
+            </value>
+            <value>
+                <fullName>Cliente desistiu</fullName>
+                <default>false</default>
+                <label>Cliente desistiu</label>
+            </value>
+            <value>
+                <fullName>Cliente ira reagendar</fullName>
+                <default>false</default>
+                <label>Cliente irá reagendar</label>
+            </value>
+            <value>
+                <fullName>Desistiu da compra</fullName>
+                <default>false</default>
+                <label>Desistiu da compra</label>
+            </value>
+            <value>
+                <fullName>Não responde</fullName>
+                <default>false</default>
+                <label>Não responde</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>NotDone</controllingFieldValue>
+            <controllingFieldValue>Cancelado</controllingFieldValue>
+            <valueName>ACIMA DO VALOR PROCURADO</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>NotDone</controllingFieldValue>
+            <controllingFieldValue>Cancelado</controllingFieldValue>
+            <valueName>NÃO ESTÁ NA REGIÃO</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>NotDone</controllingFieldValue>
+            <controllingFieldValue>Cancelado</controllingFieldValue>
+            <valueName>NÃO TEM INTERESSE</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>NotDone</controllingFieldValue>
+            <controllingFieldValue>Cancelado</controllingFieldValue>
+            <valueName>IMÓVEL NÃO SE ENQUADRA NA PROCURA</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>NotDone</controllingFieldValue>
+            <controllingFieldValue>Cancelado</controllingFieldValue>
+            <valueName>NÃO RESPONDE/ATENDE</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

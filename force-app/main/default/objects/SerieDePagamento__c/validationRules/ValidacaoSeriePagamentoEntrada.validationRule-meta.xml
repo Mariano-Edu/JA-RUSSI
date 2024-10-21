@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ValidacaoSeriePagamentoEntrada</fullName>
+    <active>true</active>
+    <description>Garante que quando uma série de pagamento é marcada como &apos;Entrada&apos;, o campo &apos;Percentual Valor Unidade&apos; seja preenchido</description>
+    <errorConditionFormula>AND(
+     Entrada__c  = TRUE,
+    ISBLANK(PercentualValorUnidade__c)
+)</errorConditionFormula>
+    <errorMessage>O campo &apos;Percentual Valor Unidade&apos; é obrigatório quando o tipo de série de pagamento é marcada como &apos;Entrada&apos;</errorMessage>
+</ValidationRule>

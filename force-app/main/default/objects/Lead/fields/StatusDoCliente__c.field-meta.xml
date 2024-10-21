@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>StatusDoCliente__c</fullName>
+    <label>Status do Cliente</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Avaliando opções de imóveis.</fullName>
+                <default>false</default>
+                <label>Avaliando opções de imóveis.</label>
+            </value>
+            <value>
+                <fullName>Apenas olhando.</fullName>
+                <default>false</default>
+                <label>Apenas olhando.</label>
+            </value>
+            <value>
+                <fullName>Pronto para fazer uma proposta.</fullName>
+                <default>false</default>
+                <label>Pronto para fazer uma proposta.</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

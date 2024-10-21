@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>RegimeDeBens__c</fullName>
+    <label>Regime de bens</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Comunhão parcial de Bens</fullName>
+                <default>false</default>
+                <label>Comunhão parcial de Bens</label>
+            </value>
+            <value>
+                <fullName>Comunhão Universal de Bens</fullName>
+                <default>false</default>
+                <label>Comunhão Universal de Bens</label>
+            </value>
+            <value>
+                <fullName>Separação convecional de Bens</fullName>
+                <default>false</default>
+                <label>Separação convecional de Bens</label>
+            </value>
+            <value>
+                <fullName>Separação obrigatória de Bens</fullName>
+                <default>false</default>
+                <label>Separação obrigatória de Bens</label>
+            </value>
+            <value>
+                <fullName>Participação final nos Aquestos</fullName>
+                <default>false</default>
+                <label>Participação final nos Aquestos</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

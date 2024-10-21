@@ -1,0 +1,39 @@
+<template>
+    <template for:each={documentos} for:item="documento">
+        <div key={documento} class="slds-m-top_x-small slds-box slds-box_xx-small">
+            <div class="slds-m-horizontal_medium slds-m-vertical_xxxx-small slds-grid
+                                 slds-grid_vertical-align-center">
+
+                <lightning-icon class={documento.StatusAprovacao__c} data-iddoc={documento.Id}
+                    icon-name="standard:document">
+                </lightning-icon>
+                <span onclick={redirecionarPaginaDocumento} data-iddoc={documento.Id}
+                    class="documento_span slds-align_absolute-center slds-m-left_medium">{documento.Name}</span>
+
+                <input class="slds-hide" type="file" accept=".xlsx, .xls, .csv, .png, .doc, .docx, .pdf" data-iddoc={documento.Id} onchange={openfileUpload} />
+
+                <template if:true={documento.isLoading}>
+                    <div class="slds-m-top_medium slds-m-bottom_medium slds-m-right_medium slds-is-relative" >
+                        <lightning-spinner alternative-text="Loading" size="medium" variant="brand"></lightning-spinner>
+                    </div>
+                </template>
+
+                <template if:false={documento.isLoading}>
+                    <template if:false={documento.isUploaded}>
+                        <lightning-button-group class="slds-m-top_medium slds-m-bottom_medium">
+                            <lightning-button label="Anexar" icon-name='utility:upload' data-iddoc={documento.Id} onclick={clickAnexoHandler}></lightning-button>
+                        </lightning-button-group>
+                    </template>
+
+                    <template if:true={documento.isUploaded}>
+                        <lightning-button-group class="slds-m-top_medium slds-m-bottom_medium">
+                            <lightning-button label="Anexar" icon-name='utility:upload' data-iddoc={documento.Id} onclick={clickAnexoHandler}></lightning-button>
+                            <lightning-button label="Visualizar" icon-name='utility:preview' onclick={previewHandler} data-iddoc={documento.Id}></lightning-button>
+                            <lightning-button label='Excluir' icon-name='utility:delete' onclick={handleDelete} data-iddoc={documento.Id}></lightning-button>
+                        </lightning-button-group>
+                    </template>
+                </template>
+            </div>
+        </div>
+    </template>
+</template>

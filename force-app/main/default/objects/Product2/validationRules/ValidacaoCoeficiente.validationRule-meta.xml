@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ValidacaoCoeficiente</fullName>
+    <active>false</active>
+    <description>Validação do coeficiente, ele não pode ser nulo</description>
+    <errorConditionFormula>ISBLANK(Coeficiente__c)</errorConditionFormula>
+    <errorDisplayField>Coeficiente__c</errorDisplayField>
+    <errorMessage>O coeficiente não pode ser nulo.</errorMessage>
+</ValidationRule>

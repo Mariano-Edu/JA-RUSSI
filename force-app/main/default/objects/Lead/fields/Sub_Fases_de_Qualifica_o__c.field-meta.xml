@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Sub_Fases_de_Qualifica_o__c</fullName>
+    <description>Descreve a evolução do Lead dentro da fase de Qualificação.</description>
+    <inlineHelpText>Um Lead estará apto a seguir para a fase de Interessado SQL, após o sucesso em uma realização de contato.</inlineHelpText>
+    <label>Sub Fases de Qualificação</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Status</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>1ª Tentativa</fullName>
+                <default>false</default>
+                <label>1ª Tentativa</label>
+            </value>
+            <value>
+                <fullName>2ª Tentativa</fullName>
+                <default>false</default>
+                <label>2ª Tentativa</label>
+            </value>
+            <value>
+                <fullName>3ª Tentativa</fullName>
+                <default>false</default>
+                <label>3ª Tentativa</label>
+            </value>
+            <value>
+                <fullName>Contato Realizado</fullName>
+                <default>false</default>
+                <label>Contato Realizado</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Contacting</controllingFieldValue>
+            <valueName>1ª Tentativa</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Contacting</controllingFieldValue>
+            <valueName>2ª Tentativa</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Contacting</controllingFieldValue>
+            <valueName>3ª Tentativa</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Contacting</controllingFieldValue>
+            <valueName>Contato Realizado</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

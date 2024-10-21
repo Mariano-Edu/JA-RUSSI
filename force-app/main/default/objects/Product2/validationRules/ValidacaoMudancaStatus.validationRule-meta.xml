@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ValidacaoMudancaStatus</fullName>
+    <active>true</active>
+    <description>Valida as mudanças de status da unidade, somente o Administrador do Sistema pode fazer as alterações livremente do campo status</description>
+    <errorConditionFormula>OR(
+    
+    AND(
+        ISPICKVAL(Status__c, &apos;Disponivel&apos;),
+        NOT($Profile.Name = &apos;Administrador do Sistema&apos;)
+    ),
+
+    
+    AND(
+        ISPICKVAL(Status__c, &apos;Reservada&apos;),
+        NOT($Profile.Name = &apos;Administrador do Sistema&apos;),
+        OR(
+            ISPICKVAL(PRIORVALUE(Status__c), &apos;Disponivel&apos;), 
+            ISPICKVAL(Status__c, &apos;Vendido&apos;)
+        )
+    ),
+
+   
+    AND(
+        ISPICKVAL(Status__c, &apos;Vendido&apos;),
+        NOT($Profile.Name = &apos;Administrador do Sistema&apos;)
+    )
+)</errorConditionFormula>
+    <errorDisplayField>Status__c</errorDisplayField>
+    <errorMessage>Somente o Administrador do Sistema pode fazer as alterações</errorMessage>
+</ValidationRule>

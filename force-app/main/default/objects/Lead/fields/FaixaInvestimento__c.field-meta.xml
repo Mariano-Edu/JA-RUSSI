@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FaixaInvestimento__c</fullName>
+    <label>Faixa de Investimento</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>R$ 300 Mil a R$ 999 Mil</fullName>
+                <default>false</default>
+                <label>R$ 300 Mil a R$ 999 Mil</label>
+            </value>
+            <value>
+                <fullName>R$ 1 Milhão a R$ 1,9 Milhões</fullName>
+                <default>false</default>
+                <label>R$ 1 Milhão a R$ 1,9 Milhões</label>
+            </value>
+            <value>
+                <fullName>R$ 2 Milhões a R$ 3,9 Milhões</fullName>
+                <default>false</default>
+                <label>R$ 2 Milhões a R$ 3,9 Milhões</label>
+            </value>
+            <value>
+                <fullName>R$ 4 Milhões a R$ 5,9 Milhões</fullName>
+                <default>false</default>
+                <label>R$ 4 Milhões a R$ 5,9 Milhões</label>
+            </value>
+            <value>
+                <fullName>Acima de R$ 6 Milhões</fullName>
+                <default>false</default>
+                <label>Acima de R$ 6 Milhões</label>
+            </value>
+            <value>
+                <fullName>Não definido</fullName>
+                <default>false</default>
+                <label>Não definido</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

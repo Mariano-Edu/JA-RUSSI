@@ -1,0 +1,31 @@
+.pill-container {
+    margin-top: 10px;
+}
+
+.pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 10px;
+    background-color: #e0e0e0;
+    border-radius: 16px;
+    font-size: 0.875rem;
+    font-weight: bold;
+    margin-right: 5px;
+    margin-top: 5px;
+}
+
+.pill lightning-icon {
+    margin-left: 5px;
+    cursor: pointer;
+}
+.slds-input__icon-container {
+    position: relative;
+}
+
+.slds-input__icon {
+    position: absolute;
+    right: 1rem;
+    top: 70%;
+    transform: translateY(-50%);
+    pointer-events: none;
+}

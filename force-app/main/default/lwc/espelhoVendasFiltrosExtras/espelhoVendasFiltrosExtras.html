@@ -1,0 +1,71 @@
+<template>
+    <lightning-card title="Filtros Adicionais" icon-name="standard:filter">
+        <div class="slds-p-around_medium">
+            <!-- Metragem -->
+            <lightning-input 
+                label="Metragem"
+                type="range"
+                min="0"
+                max="500"
+                value={metragem}
+                onchange={handleMetragemChange}
+            ></lightning-input>
+
+            <!-- Valor -->
+            <lightning-input 
+                label="Valor"
+                type="number"
+                min="0"
+                step="0.01"
+                value={valor}
+                onchange={handleValorChange}
+            ></lightning-input>
+
+            <!-- Quantidade de Quartos -->
+            <lightning-input 
+                label="Quantidade de Quartos"
+                type="number"
+                min="0"
+                value={quantidadeQuartos}
+                onchange={handleQuantidadeQuartosChange}
+            ></lightning-input>
+
+            <!-- Quantidade de Suítes -->
+            <lightning-input 
+                label="Quantidade de Suítes"
+                type="number"
+                min="0"
+                value={quantidadeSuites}
+                onchange={handleQuantidadeSuitesChange}
+            ></lightning-input>
+
+            <!-- Tipo de Unidade -->
+            <lightning-combobox
+                label="Tipo de Unidade"
+                options={tipoUnidadeOptions}
+                value={tipoUnidade}
+                onchange={handleTipoUnidadeChange}
+            ></lightning-combobox>
+
+            <!-- Exibindo Filtros Selecionados -->
+            <template if:true={selectedFilters.length}>
+                <div class="slds-pill_container" style="background: none; border: none; padding: 0;">
+                    <ul class="slds-listbox slds-listbox_horizontal" role="listbox" aria-label="Selected Options:" aria-orientation="horizontal">
+                        <template for:each={selectedFilters} for:item="filter">
+                            <li key={filter.label} class="slds-listbox-item" role="presentation" style="background: none;">
+                                <span class="slds-pill" role="option" tabindex="0" aria-selected="true">
+                                    <span class="slds-pill__label" title={filter.label}>{filter.label}</span>
+                                    <span class="slds-icon_container slds-pill__remove" title="Remove" data-label={filter.label} onclick={handleRemoveFilter}>
+                                        <lightning-icon icon-name="utility:close" size="x-small" alternative-text="Remove"></lightning-icon>
+                                        <span class="slds-assistive-text">Press delete or backspace to remove</span>
+                                    </span>
+                                </span>
+                            </li>
+                        </template>
+                    </ul>
+                </div>
+                <p>{selectedFilters.length} item(s) selecionado(s)</p>
+            </template>
+        </div>
+    </lightning-card>
+</template>

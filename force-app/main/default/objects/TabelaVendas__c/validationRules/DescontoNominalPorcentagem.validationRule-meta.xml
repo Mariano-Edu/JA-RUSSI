@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DescontoNominalPorcentagem</fullName>
+    <active>true</active>
+    <errorConditionFormula>DescontoNominalPorcentagem__c &gt; 1</errorConditionFormula>
+    <errorDisplayField>DescontoNominalPorcentagem__c</errorDisplayField>
+    <errorMessage>A porcentagem de desconto não pode exceder 100%</errorMessage>
+</ValidationRule>

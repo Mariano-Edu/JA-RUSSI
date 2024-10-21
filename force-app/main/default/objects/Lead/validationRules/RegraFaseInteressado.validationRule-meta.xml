@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>RegraFaseInteressado</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+				OR(
+				    ISPICKVAL(Status, &apos;Scheduled&apos;),
+								ISPICKVAL(Status, &apos;Converted&apos;)
+				),
+				AND(
+								ISBLANK(EmpreendimentoInteresse__c),
+								ISBLANK(TEXT(FaixaInvestimento__c))
+				)
+)</errorConditionFormula>
+    <errorMessage>Para avançar de fase deve ser preenchido o campo Empreendimento ou o campo Faixa de Investimento</errorMessage>
+</ValidationRule>

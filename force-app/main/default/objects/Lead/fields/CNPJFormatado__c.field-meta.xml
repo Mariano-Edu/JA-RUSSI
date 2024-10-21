@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CNPJFormatado__c</fullName>
+    <description>Formula para visualizar CNPJ Formatado!</description>
+    <externalId>false</externalId>
+    <formula>IF(
+    LEN(CNPJ__c) = 14,
+    LEFT(CNPJ__c, 2) &amp; &quot;.&quot; &amp; MID(CNPJ__c, 3, 3) &amp; &quot;.&quot; &amp; MID(CNPJ__c, 6, 3) &amp; &quot;/&quot; &amp; MID(CNPJ__c, 9, 4) &amp; &quot;-&quot; &amp; RIGHT(CNPJ__c, 2),
+    CNPJ__c
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>CNPJ Formatado</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ValidaPermissaoEdicaoCPF</fullName>
+    <active>true</active>
+    <description>Regra que valida se o usuário possui a permissão que habilita a edição do cpf</description>
+    <errorConditionFormula>AND(
+    NOT(ISNEW()),
+    ISCHANGED(CPF__c),
+    NOT( $Permission.EdicaoCpfCnpjConta )
+)</errorConditionFormula>
+    <errorDisplayField>CPF__c</errorDisplayField>
+    <errorMessage>Não é permitido editar o CPF após o preenchimento. Entre em contato com seu Gestor ou Administrador do Sistema)</errorMessage>
+</ValidationRule>

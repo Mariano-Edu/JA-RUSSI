@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>MotivoPerda__c</fullName>
+    <label>Motivo da Perda</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Proposta Rejeitada</fullName>
+                <default>false</default>
+                <label>Proposta Rejeitada</label>
+            </value>
+            <value>
+                <fullName>Financiamento Não Aprovado</fullName>
+                <default>false</default>
+                <label>Financiamento Não Aprovado</label>
+            </value>
+            <value>
+                <fullName>Cliente Desistiu</fullName>
+                <default>false</default>
+                <label>Cliente Desistiu</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

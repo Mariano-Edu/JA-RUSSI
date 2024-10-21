@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Cargo__c</fullName>
+    <label>Cargo</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Corretor</fullName>
+                <default>false</default>
+                <label>Corretor</label>
+            </value>
+            <value>
+                <fullName>CoordenadorDeVendas</fullName>
+                <default>false</default>
+                <label>Coordenador de Vendas</label>
+            </value>
+            <value>
+                <fullName>GerenteDeVendas</fullName>
+                <default>false</default>
+                <label>Gerente de Vendas</label>
+            </value>
+            <value>
+                <fullName>DiretorDeVendas</fullName>
+                <default>false</default>
+                <label>Diretor de Vendas</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ValidaCelularTelefone</fullName>
+    <active>true</active>
+    <errorConditionFormula>OR (
+    NOT(
+        OR(
+				        AND(
+								        NOT(ISBLANK(TEXT(DDICelular__c))),
+												    NOT(ISBLANK(DDDCelular__c)),
+												    NOT(ISBLANK(Celular__c))
+								    ),
+								    AND(
+    								    ISBLANK(TEXT(DDICelular__c)),
+				    								ISBLANK(DDDCelular__c),
+								    				ISBLANK(Celular__c)
+								    )
+				    )
+    ),
+				NOT(
+        OR(
+				        AND(
+								        NOT(ISBLANK(TEXT(DDITelefone__c))),
+												    NOT(ISBLANK(DDDTelefone__c)),
+												    NOT(ISBLANK(Phone))
+								    ),
+								    AND(
+    								    ISBLANK(TEXT(DDITelefone__c)),
+				    								ISBLANK(DDDTelefone__c),
+								    				ISBLANK(Phone)
+								    )
+				    )
+    )
+)</errorConditionFormula>
+    <errorMessage>Campos Celular ou Telefone e seu respectivo DDD/DDI devem estar preenchidos.</errorMessage>
+</ValidationRule>

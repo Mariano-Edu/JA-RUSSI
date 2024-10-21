@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ProibirVoltarOpp</fullName>
+    <active>true</active>
+    <errorConditionFormula>OR(
+    AND(
+        ISPICKVAL(StageName, &apos;Documentação&apos;),
+        ISPICKVAL(PRIORVALUE(StageName), &apos;Análise Jurídica&apos;)
+    ),
+    AND(
+        ISPICKVAL(StageName, &apos;Proposta&apos;),
+        ISPICKVAL(PRIORVALUE(StageName), &apos;Documentação&apos;)
+    )
+)</errorConditionFormula>
+    <errorMessage>Não é permitido voltar para fase da Oportunidade</errorMessage>
+</ValidationRule>

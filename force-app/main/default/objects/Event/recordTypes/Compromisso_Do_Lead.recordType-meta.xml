@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Compromisso_Do_Lead</fullName>
+    <active>true</active>
+    <label>Compromisso Do Lead</label>
+    <picklistValues>
+        <picklist>MotivoCompromissoNaoRealizado__c</picklist>
+        <values>
+            <fullName>ACIMA DO VALOR PROCURADO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cliente desistiu</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cliente ira reagendar</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Desistiu da compra</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IMÓVEL NÃO SE ENQUADRA NA PROCURA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NÃO ESTÁ NA REGIÃO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NÃO RESPONDE%2FATENDE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NÃO TEM INTERESSE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Não responde</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Outros</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>MotivoVisitaNaoRealizada__c</picklist>
+        <values>
+            <fullName>ACIMA DO VALOR PROCURADO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IMÓVEL NÃO SE ENQUADRA NA PROCURA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>N%2FA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NÃO ESTÁ NA REGIÃO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NÃO RESPONDE%2FATENDE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NÃO TEM INTERESSE</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>StatusVisita__c</picklist>
+        <values>
+            <fullName>Cancelado</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Done</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NotDone</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Não compareceu</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Scheduled</fullName>
+            <default>true</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Subject</picklist>
+        <values>
+            <fullName>Call</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Meeting</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Send Letter%2FQuote</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Type</picklist>
+        <values>
+            <fullName>Chamada</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>E-mail</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Outros</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reunião</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Visita</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

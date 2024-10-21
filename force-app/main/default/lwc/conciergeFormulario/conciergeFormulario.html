@@ -1,0 +1,39 @@
+<template>
+    <div class="slds-form-element slds-box">
+        <div class="slds-grid slds-wrap slds-gutters_x-small slds-size_1-of-1">
+        <lightning-input class="slds-col slds-size_1-of-1" data-name="nome" type="text" value={formulario.nome} label="Nome completo"
+            onchange={handleChange} required></lightning-input>
+        </div>
+
+        <div class="slds-grid slds-wrap slds-gutters_x-small slds-size_1-of-1">
+            <lightning-combobox class="slds-col slds-size_1-of-2 slds-medium-size_2-of-8 slds-large-size_1-of-6" label="DDI" options={ddis} data-name="ddiCel" value={formulario.ddiCel}
+            onchange={handleChange}></lightning-combobox>
+
+            <lightning-input class="slds-col slds-size_1-of-2 slds-medium-size_2-of-8 slds-large-size_1-of-6" data-name="dddCel" value={formulario.dddCel} label="DDD"
+                onchange={handleChange}></lightning-input>
+
+            <lightning-input class="slds-col slds-size_1-of-1 slds-medium-size_4-of-8 slds-large-size_4-of-6" data-name="celular" type="tel" value={formulario.celular} label="Celular"
+                onchange={handleChange}></lightning-input>
+        </div>
+
+        <div class="slds-grid slds-wrap slds-gutters_x-small slds-size_1-of-1">
+            <lightning-combobox class="slds-col slds-size_1-of-2 slds-medium-size_2-of-8 slds-large-size_1-of-6" label="DDI" options={ddis} data-name="ddiTel" value={formulario.ddiTel}
+            onchange={handleChange}></lightning-combobox>
+
+            <lightning-input class="slds-col slds-size_1-of-2 slds-medium-size_2-of-8 slds-large-size_1-of-6" data-name="dddTel" value={formulario.dddTel} label="DDD"
+                onchange={handleChange}></lightning-input>
+
+            <lightning-input class="slds-col slds-size_1-of-1 slds-medium-size_4-of-8 slds-large-size_4-of-6" data-name="telefone" type="tel" value={formulario.telefone} label="Telefone"
+                onchange={handleChange}></lightning-input>
+        </div>
+            
+        <div class="slds-grid slds-wrap slds-gutters_x-small slds-size_1-of-1">
+        <lightning-input class="slds-col slds-size_1-of-1" data-name="email" type="email" value={formulario.email} label="Email"
+            onchange={handleChange}></lightning-input>
+        </div>
+    </div>
+    <div class="slds-clearfix slds-p-top_medium">
+        <lightning-button variant="brand" label="Pesquisar" icon-name="utility:search" class="slds-float_right"
+            onclick={handleConsultarLeads}></lightning-button>
+    </div>
+</template>

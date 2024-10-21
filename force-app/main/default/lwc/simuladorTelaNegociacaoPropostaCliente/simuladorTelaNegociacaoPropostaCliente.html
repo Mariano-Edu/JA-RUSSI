@@ -1,0 +1,52 @@
+<template>
+    <lightning-card class="slds-col slds-p-horizontal_large" icon-name="standard:person_language" title="Proposta do cliente" variant="narrow">
+                            
+        <div class="slds-grid slds-wrap">
+            <div class="slds-text-title slds-col slds-size_1-of-1">
+                <span>Agora é hora de negociar com o cliente as melhores condições de pagamento!</span>
+            </div>
+            
+            <div class="slds-box slds-grid slds-wrap slds-col slds-p-vertical_medium" style="padding: 1rem 2rem;">
+                <div class="slds-grid slds-col slds-size_1-of-1 slds-grid_align-end slds-p-bottom_small">
+                    <lightning-button-group>
+                        <lightning-button onclick={handleIgualarTabelas} label="Igualar a tabela" icon-name="utility:contract_payment"></lightning-button>
+                        <lightning-button onclick={handleAbrirModalDesconto} aria-haspopup="dialog" label="Desconto" icon-name="utility:discounts"></lightning-button>
+                        <lightning-button onclick={handlePagarAvista} label="Pagar à vista" icon-name="utility:currency"></lightning-button>
+                    </lightning-button-group>
+                </div>
+
+                <div class="slds-grid slds-col slds-size_1-of-1 slds-p-vertical_medium" style="height: fit-content;">
+                    <c-simulador-data-table class="slds-size_1-of-1" 
+                    style="background-color: #f3f3f3;"
+                    header={colunas}
+                    series={propostasClienteData}
+                    onmudancacondicao={handleChangeCondicao}
+                    ondeletecondicao={handleDeleteCondicao}
+                    ondividircondicao={handleDividirCondicao}
+                    onzerarcondicao={handleZerarCondicao}
+                    unidade-selecionada={unidadeSelecionada}>
+                    </c-simulador-data-table>
+                </div>
+
+                <div class="slds-grid slds-col slds-size_1-of-1 slds-grid_align-center slds-p-vertical_medium">
+                    <lightning-button-icon icon-name="utility:add"  aria-haspopup="dialog"  alternative-text="Adicionar nova condição" title="Adicionar nova condição" onclick={addNewObjectWithUid}></lightning-button-icon>
+                </div>
+
+                <div class="slds-col slds-grid">
+                    <div class="slds-col slds-size_1-of-1 slds-grid slds-grid_align-end slds-p-vertical_medium" >
+                        <div class="slds-grid slds-wrap" style="width: 8rem;">
+                            <span class="slds-col slds-size_1-of-1 slds-text-body_small" style="font-weight: lighter;">valor Nominal</span>
+                            <span class="slds-col slds-size_1-of-1 slds-text-heading_small" style="font-weight: normal;">{formattedValorNominal}</span>
+                        </div>
+                        <div class="slds-grid slds-wrap" style="width: 8rem;">
+                            <span class="slds-col slds-size_1-of-1 slds-text-body_small" style="font-weight: lighter;">VPL</span>
+                            <span class="slds-col slds-size_1-of-1 slds-text-heading_small" style="font-weight: normal;">{formattedValorVPL}</span>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+
+        </div>
+    </lightning-card>
+</template>

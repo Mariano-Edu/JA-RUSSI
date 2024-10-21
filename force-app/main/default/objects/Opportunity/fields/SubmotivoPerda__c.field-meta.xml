@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SubmotivoPerda__c</fullName>
+    <label>Submotivo da Perda</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Oferta Baixa</fullName>
+                <default>false</default>
+                <label>Oferta Baixa</label>
+            </value>
+            <value>
+                <fullName>Documentação Incompleta</fullName>
+                <default>false</default>
+                <label>Documentação Incompleta</label>
+            </value>
+            <value>
+                <fullName>Mudança de Preferência</fullName>
+                <default>false</default>
+                <label>Mudança de Preferência</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ValidacaoOportunidadeFechadoPerdido</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+    NOT($Permission.PermissaoParaFecharOportunidade),
+    OR(
+        ISPICKVAL(StageName, &apos;Fechado e Perdido&apos;),
+        ISPICKVAL(StageName, &apos;Fechado e Ganho&apos;)
+    )
+)</errorConditionFormula>
+    <errorMessage>Você não tem Autorização para avançar a oportunidade</errorMessage>
+</ValidationRule>

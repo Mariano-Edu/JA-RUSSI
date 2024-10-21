@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>MotivoLeadPerdido__c</fullName>
+    <label>Motivo do Lead Perdido</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Final de Cadência</fullName>
+                <default>false</default>
+                <label>Final de Cadência</label>
+            </value>
+            <value>
+                <fullName>Venda Não Concluída</fullName>
+                <default>false</default>
+                <label>Venda Não Concluída</label>
+            </value>
+            <value>
+                <fullName>Comprou Outro Imóvel</fullName>
+                <default>false</default>
+                <label>Comprou Outro Imóvel</label>
+            </value>
+            <value>
+                <fullName>Lead Corretor</fullName>
+                <default>false</default>
+                <label>Lead Corretor</label>
+            </value>
+            <value>
+                <fullName>Impossível Contactar</fullName>
+                <default>false</default>
+                <label>Impossível Contactar</label>
+            </value>
+            <value>
+                <fullName>Desistência</fullName>
+                <default>false</default>
+                <label>Desistência</label>
+            </value>
+            <value>
+                <fullName>Curioso.</fullName>
+                <default>false</default>
+                <label>Curioso.</label>
+            </value>
+            <value>
+                <fullName>Lead Não Qualificado</fullName>
+                <default>false</default>
+                <label>Lead Não Qualificado</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

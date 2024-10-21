@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>59.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Endereço</masterLabel>
+    <description>Componente responsável pela atualização do endereço dos registros a partir do CEP.</description>
+    <targets>
+        <target>lightning__RecordPage</target>
+        <target>lightningCommunity__Default</target>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Page_Layout</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+            <property name="campoLogradouro" type="String" label="Campo do logradouro" description="Nome API do campo de logradouro neste objeto." />
+            <property name="campoNumero" type="String" label="Campo do número" description="Nome API do campo de número neste objeto." />
+            <property name="campoComplemento" type="String" label="Campo do complemento" description="Nome API do campo de complemento neste objeto." />
+            <property name="campoBairro" type="String" label="Campo do bairro" description="Nome API do campo de bairro neste objeto." />
+            <property name="campoCidade" type="String" label="Campo da cidade" description="Nome API do campo de cidade neste objeto." />
+            <property name="campoUF" type="String" label="Campo da UF" description="Nome API do campo de UF neste objeto." />
+            <property name="campoPais" type="String" label="Campo do país" description="Nome API do campo de país neste objeto." />
+            <property name="campoCEP" type="String" label="Campo do CEP" description="Nome API do campo de CEP neste objeto." />
+            <property name="apresentarValores" type="Boolean" label="Apresentar valores dos campos?" description="Indica se os valores dos campos devem continuar a ser exibidos mesmo após salvamento." />
+            <property name="apresentarBotaoSalvar" type="Boolean" label="Apresentar botão para salvar?" description="Indica se deve ser exibido botão para salvamento." />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

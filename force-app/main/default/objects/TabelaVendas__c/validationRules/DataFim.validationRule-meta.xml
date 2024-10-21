@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DataFim</fullName>
+    <active>true</active>
+    <errorConditionFormula>DataFim__c  &lt;=  DataInicio__c</errorConditionFormula>
+    <errorDisplayField>DataFim__c</errorDisplayField>
+    <errorMessage>Data de fim não pode ser antes da data inicio</errorMessage>
+</ValidationRule>

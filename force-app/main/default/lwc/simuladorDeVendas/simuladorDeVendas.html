@@ -1,0 +1,120 @@
+<template>
+    <div class="slds-box">
+        <lightning-card icon-name="standard:quotes" title='Simulador de vendas' variant="narrow">
+            <div class="slds-grid slds-wrap"> 
+                <div class="slds-text-heading_small slds-col slds-size_1-of-1">
+                    <span>Agora é o momento de apresentar para o cliente as unidades disponíveis para compra e escolher a ideal! Para isso, utilize os filtros disponíveis para otimizar o processo de venda.</span>
+                </div>
+
+
+                <div class="slds-col slds-p-vertical_medium slds-size_1-of-1">
+                    <lightning-progress-indicator current-step={currentStepValue} type="path"  variant="base">
+                        <lightning-progress-step label="Espelho de vendas" value="espelho">
+                        </lightning-progress-step>
+
+                        <lightning-progress-step label="Informações da unidade" value="unidade">
+                        </lightning-progress-step>
+
+                        <lightning-progress-step label="Vagas da unidade" value="vaga">
+                        </lightning-progress-step>
+
+                        <lightning-progress-step label="Negociação" value="negociacao">
+                        </lightning-progress-step>
+
+                        <lightning-progress-step label="Extrato" value="extrato">
+                        </lightning-progress-step>
+                    </lightning-progress-indicator>
+                </div>
+
+                <div class="slds-col slds-grid slds-p-vertical_medium slds-size_1-of-1 ">
+                    <template lwc:if={etapaEspelho}>
+                        <div class="slds-grid slds-wrap slds-size_1-of-1">
+                            <c-espelho-de-vendas class="slds-grid slds-size_1-of-1" style="padding-inline:  2rem" onselecionarunidade={handleChooseUnidade}>
+                            </c-espelho-de-vendas>
+
+                            <div class="slds-col slds-grid slds-p-vertical_medium slds-grid_align-end slds-size_1-of-1">
+                                <lightning-button variant="brand" label="Avançar" title="Avançar para etapa seguinte" onclick={doNextstep} class="slds-m-left_x-small"></lightning-button>
+                            </div>
+                        </div>
+                    </template>
+
+                    <template lwc:elseif={etapaUnidade}>
+                    <div class="slds-grid slds-wrap slds-size_1-of-1">
+                        <c-unidade-info-display class="slds-col slds-size_1-of-1"
+                         produto-selecionado={produtoSelecionado}>
+                        </c-unidade-info-display>
+
+                        <div class="slds-col slds-grid slds-p-vertical_medium slds-grid_align-end slds-size_1-of-1">
+                            <lightning-button variant="brand-outline" label="Voltar" title="Voltar para etapa anterior" onclick={doPrevStep} class="slds-m-left_x-small"></lightning-button>
+                            <lightning-button variant="brand" label="Avançar" title="Avançar para etapa seguinte" onclick={doNextstep} class="slds-m-left_x-small"></lightning-button>
+                        </div>
+
+                    </div>
+                    </template>
+
+                    <template lwc:elseif={etapaVaga}>
+                    <div class="slds-grid slds-wrap slds-size_1-of-1">
+            
+                                
+                        <div class="slds-col slds-grid slds-p-vertical_medium slds-grid_align-end slds-size_1-of-1">
+                            <lightning-button variant="brand-outline" label="Voltar" title="Voltar para etapa anterior" onclick={doPrevStep} class="slds-m-left_x-small"></lightning-button>
+                            <lightning-button variant="brand" label="Avançar" title="Avançar para etapa seguinte" onclick={doNextstep} class="slds-m-left_x-small"></lightning-button>
+                        </div>
+
+                    </div>
+                    </template>
+
+                    <template lwc:elseif={etapaNegociacao}>
+                        <div class="slds-grid slds-wrap slds-size_1-of-1">
+                            <c-simulador-tela-negociacao 
+                                ultima-tabela-selecionada={ultimaTabelaSelecionada} 
+                                onaplicardesconto={aplicarDescontoProposta} 
+                                onhandlepagaravista={pagarAVista} 
+                                onhandleigualartabelas={igualarTabelas} 
+                                onsettabelaselecionada={setTabelaSelecionada} 
+                                info-complementares={tabelaVendasInfoComplementares} 
+                                tabela-venda-vingente-value={tabelaVendasVingenteValue} 
+                                tabelas-de-vendas-data={getTabelasVendas} 
+                                onchangepropostaserie={changeSeriesProposta} 
+                                valor-vpl-proposta={valorVplProposta} 
+                                valor-nominal-proposta={getValorNominalProposta} 
+                                propostas-cliente={propostasCliente}
+                                onmudarcondicao={editarCondicao} 
+                                onadicionarcondicao={adicionarNovaCondicao}
+                                ondeletarcondicao={deletarCondicao} 
+                                onzerarcondicao={handleZerarCondicao} 
+                                ondividircondicao={handleDividirCondicao} 
+                                class="slds-col slds-size_1-of-1" 
+                                produto-selecionado={getProdutoSelecionado} >
+                            </c-simulador-tela-negociacao>
+
+                            <div class="slds-col slds-grid slds-p-vertical_medium slds-grid_align-end slds-size_1-of-1">
+                                <lightning-button variant="brand-outline" label="Voltar" title="Voltar para etapa anterior" onclick={doPrevStep} class="slds-m-left_x-small"></lightning-button>
+                                <lightning-button variant="brand" label="Analisar" title="Analisar proposta do cliente" onclick={doNextstep} class="slds-m-left_x-small"></lightning-button>
+                            </div>
+    
+                        </div>
+                    </template>
+                    
+                    <template lwc:else>
+                        <div class="slds-grid slds-wrap slds-size_1-of-1">
+                            <c-simulador-tela-extrato class="slds-col slds-size_1-of-1" 
+                            propostas-cliente-data={propostasCliente} 
+                            id-tabela-vendas={getTabelaVendasSelecionadaId} 
+                            valores-matriz={getValoresMatriz}>
+
+                            </c-simulador-tela-extrato>
+
+                            <div class="slds-col slds-grid slds-p-vertical_medium slds-grid_align-end slds-size_1-of-1">
+                                <lightning-button variant="brand-outline" label="Voltar" title="Voltar para etapa anterior" onclick={doPrevStep} class="slds-m-left_x-small"></lightning-button>
+                                <lightning-button variant="brand" label="Concluir" title="Concluir simulação de venda" onclick={concluirSimulacao} class="slds-m-left_x-small"></lightning-button>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+
+
+            </div>
+        </lightning-card> 
+    </div>
+</template>

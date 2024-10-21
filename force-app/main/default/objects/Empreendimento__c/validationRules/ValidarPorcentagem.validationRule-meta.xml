@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ValidarPorcentagem</fullName>
+    <active>true</active>
+    <errorConditionFormula>OR (
+			 Alvenaria__c &gt; 1.0,
+	   AreaExterna__c &gt; 1.0,
+	   Estrutura__c &gt; 1.0,
+	   Fundacao__c &gt; 1.0,
+	   Instalacoes__c &gt; 1.0,
+    Acabamento__c &gt; 1.0,
+				Alvenaria__c &lt; 0,
+	   AreaExterna__c &lt; 0,
+	   Estrutura__c &lt; 0,
+	   Fundacao__c &lt; 0,
+	   Instalacoes__c &lt; 0,
+    Acabamento__c &lt; 0
+)</errorConditionFormula>
+    <errorMessage>Os valores devem estar entre 0% e 100%</errorMessage>
+</ValidationRule>

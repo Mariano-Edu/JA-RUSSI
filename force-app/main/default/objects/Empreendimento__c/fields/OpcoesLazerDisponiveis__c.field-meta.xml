@@ -1,0 +1,962 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OpcoesLazerDisponiveis__c</fullName>
+    <description>Opções de lazer disponíveis</description>
+    <label>Opções de Lazer Disponíveis</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Academia</fullName>
+                <default>false</default>
+                <label>Academia</label>
+            </value>
+            <value>
+                <fullName>Ar-condicionado nas áreas de lazer</fullName>
+                <default>false</default>
+                <label>Ar-condicionado nas áreas de lazer</label>
+            </value>
+            <value>
+                <fullName>Ar-condicionado nas áreas internas de lazer</fullName>
+                <default>false</default>
+                <label>Ar-condicionado nas áreas internas de lazer</label>
+            </value>
+            <value>
+                <fullName>Área para jogos</fullName>
+                <default>false</default>
+                <label>Área para jogos</label>
+            </value>
+            <value>
+                <fullName>Áreas comuns entregues equipadas e decoradas</fullName>
+                <default>false</default>
+                <label>Áreas comuns entregues equipadas e decoradas</label>
+            </value>
+            <value>
+                <fullName>Áreas técnicas</fullName>
+                <default>false</default>
+                <label>Áreas técnicas</label>
+            </value>
+            <value>
+                <fullName>Áreas verdes de acesso exclusivo aos condomínios</fullName>
+                <default>false</default>
+                <label>Áreas verdes de acesso exclusivo aos condomínios</label>
+            </value>
+            <value>
+                <fullName>Arquibancada</fullName>
+                <default>false</default>
+                <label>Arquibancada</label>
+            </value>
+            <value>
+                <fullName>Arquibancada residencial</fullName>
+                <default>false</default>
+                <label>Arquibancada residencial</label>
+            </value>
+            <value>
+                <fullName>Atelier</fullName>
+                <default>false</default>
+                <label>Atelier</label>
+            </value>
+            <value>
+                <fullName>Bar da piscina</fullName>
+                <default>false</default>
+                <label>Bar da piscina</label>
+            </value>
+            <value>
+                <fullName>Bar lounge no rooftop</fullName>
+                <default>false</default>
+                <label>Bar lounge no rooftop</label>
+            </value>
+            <value>
+                <fullName>Beauty care</fullName>
+                <default>false</default>
+                <label>Beauty care</label>
+            </value>
+            <value>
+                <fullName>Bicicletário</fullName>
+                <default>false</default>
+                <label>Bicicletário</label>
+            </value>
+            <value>
+                <fullName>Bicicletario com bike lab</fullName>
+                <default>false</default>
+                <label>Bicicletario com bike lab</label>
+            </value>
+            <value>
+                <fullName>Brinquedoteca</fullName>
+                <default>false</default>
+                <label>Brinquedoteca</label>
+            </value>
+            <value>
+                <fullName>Caixilhos com persiana de enrolar nos APTOS. de 1 Dorm.</fullName>
+                <default>false</default>
+                <label>Caixilhos com persiana de enrolar nos APTOS. de 1 Dorm.</label>
+            </value>
+            <value>
+                <fullName>Churrasqueira</fullName>
+                <default>false</default>
+                <label>Churrasqueira</label>
+            </value>
+            <value>
+                <fullName>Churrasqueira com Forno de Pizza</fullName>
+                <default>false</default>
+                <label>Churrasqueira com Forno de Pizza</label>
+            </value>
+            <value>
+                <fullName>Churrasqueira e piscina com deck molhado e solário</fullName>
+                <default>false</default>
+                <label>Churrasqueira e piscina com deck molhado e solário</label>
+            </value>
+            <value>
+                <fullName>Churrasqueira e spa com solário</fullName>
+                <default>false</default>
+                <label>Churrasqueira e spa com solário</label>
+            </value>
+            <value>
+                <fullName>Churrasqueira Gourmet</fullName>
+                <default>false</default>
+                <label>Churrasqueira Gourmet</label>
+            </value>
+            <value>
+                <fullName>Cinema</fullName>
+                <default>false</default>
+                <label>Cinema</label>
+            </value>
+            <value>
+                <fullName>Cokitchen</fullName>
+                <default>false</default>
+                <label>Cokitchen</label>
+            </value>
+            <value>
+                <fullName>Comércio térreo</fullName>
+                <default>false</default>
+                <label>Comércio térreo</label>
+            </value>
+            <value>
+                <fullName>Contrapiso com tratamento acústico nas unidades</fullName>
+                <default>false</default>
+                <label>Contrapiso com tratamento acústico nas unidades</label>
+            </value>
+            <value>
+                <fullName>Coworking</fullName>
+                <default>false</default>
+                <label>Coworking</label>
+            </value>
+            <value>
+                <fullName>Coworking / Gourmet</fullName>
+                <default>false</default>
+                <label>Coworking / Gourmet</label>
+            </value>
+            <value>
+                <fullName>Coworking integrado com jogos e café</fullName>
+                <default>false</default>
+                <label>Coworking integrado com jogos e café</label>
+            </value>
+            <value>
+                <fullName>Coworking no rooftop</fullName>
+                <default>false</default>
+                <label>Coworking no rooftop</label>
+            </value>
+            <value>
+                <fullName>Delivery</fullName>
+                <default>false</default>
+                <label>Delivery</label>
+            </value>
+            <value>
+                <fullName>Descanso</fullName>
+                <default>false</default>
+                <label>Descanso</label>
+            </value>
+            <value>
+                <fullName>Eletric Bike Station</fullName>
+                <default>false</default>
+                <label>Eletric Bike Station</label>
+            </value>
+            <value>
+                <fullName>Elevador privativo</fullName>
+                <default>false</default>
+                <label>Elevador privativo</label>
+            </value>
+            <value>
+                <fullName>Elevadores inteligentes</fullName>
+                <default>false</default>
+                <label>Elevadores inteligentes</label>
+            </value>
+            <value>
+                <fullName>Entregue equipado e decorado, pronto para funcionar, sem custo adicionais</fullName>
+                <default>false</default>
+                <label>Entregue equipado e decorado, pronto para funcionar, sem custo adicionais</label>
+            </value>
+            <value>
+                <fullName>Espaço delivery</fullName>
+                <default>false</default>
+                <label>Espaço delivery</label>
+            </value>
+            <value>
+                <fullName>Espaço Família com Churrasqueira</fullName>
+                <default>false</default>
+                <label>Espaço Família com Churrasqueira</label>
+            </value>
+            <value>
+                <fullName>Espaço Gourmet</fullName>
+                <default>false</default>
+                <label>Espaço Gourmet</label>
+            </value>
+            <value>
+                <fullName>Espaço Gourmet com Churrasqueira</fullName>
+                <default>false</default>
+                <label>Espaço Gourmet com Churrasqueira</label>
+            </value>
+            <value>
+                <fullName>Espaço Gourmet com Churrasqueira e Forno de Pizza</fullName>
+                <default>false</default>
+                <label>Espaço Gourmet com Churrasqueira e Forno de Pizza</label>
+            </value>
+            <value>
+                <fullName>Espaço Gourmet Externo</fullName>
+                <default>false</default>
+                <label>Espaço Gourmet Externo</label>
+            </value>
+            <value>
+                <fullName>Espaço gourmet unids serv de moradia</fullName>
+                <default>false</default>
+                <label>Espaço gourmet unids serv de moradia</label>
+            </value>
+            <value>
+                <fullName>Espaço Mulher</fullName>
+                <default>false</default>
+                <label>Espaço Mulher</label>
+            </value>
+            <value>
+                <fullName>Espaço multiuso</fullName>
+                <default>false</default>
+                <label>Espaço multiuso</label>
+            </value>
+            <value>
+                <fullName>Espaço Pet</fullName>
+                <default>false</default>
+                <label>Espaço Pet</label>
+            </value>
+            <value>
+                <fullName>Espaço wellness com spa</fullName>
+                <default>false</default>
+                <label>Espaço wellness com spa</label>
+            </value>
+            <value>
+                <fullName>Espaço yoga</fullName>
+                <default>false</default>
+                <label>Espaço yoga</label>
+            </value>
+            <value>
+                <fullName>Espaço zen</fullName>
+                <default>false</default>
+                <label>Espaço zen</label>
+            </value>
+            <value>
+                <fullName>Fachada com brises e painéis</fullName>
+                <default>false</default>
+                <label>Fachada com brises e painéis</label>
+            </value>
+            <value>
+                <fullName>Fechadura eletrônica</fullName>
+                <default>false</default>
+                <label>Fechadura eletrônica</label>
+            </value>
+            <value>
+                <fullName>Fechadura inteligente nas unidades</fullName>
+                <default>false</default>
+                <label>Fechadura inteligente nas unidades</label>
+            </value>
+            <value>
+                <fullName>Fitness</fullName>
+                <default>false</default>
+                <label>Fitness</label>
+            </value>
+            <value>
+                <fullName>Fitness com vista panorâmica</fullName>
+                <default>false</default>
+                <label>Fitness com vista panorâmica</label>
+            </value>
+            <value>
+                <fullName>Fitness externo</fullName>
+                <default>false</default>
+                <label>Fitness externo</label>
+            </value>
+            <value>
+                <fullName>Fitness interno e externo</fullName>
+                <default>false</default>
+                <label>Fitness interno e externo</label>
+            </value>
+            <value>
+                <fullName>Fitness no rooftop</fullName>
+                <default>false</default>
+                <label>Fitness no rooftop</label>
+            </value>
+            <value>
+                <fullName>Fitness residencial</fullName>
+                <default>false</default>
+                <label>Fitness residencial</label>
+            </value>
+            <value>
+                <fullName>Garden Festas</fullName>
+                <default>false</default>
+                <label>Garden Festas</label>
+            </value>
+            <value>
+                <fullName>Gerador</fullName>
+                <default>false</default>
+                <label>Gerador</label>
+            </value>
+            <value>
+                <fullName>Gerador de conforto</fullName>
+                <default>false</default>
+                <label>Gerador de conforto</label>
+            </value>
+            <value>
+                <fullName>Gerador de conforto para elevador e sistemas de segurança</fullName>
+                <default>false</default>
+                <label>Gerador de conforto para elevador e sistemas de segurança</label>
+            </value>
+            <value>
+                <fullName>Ginástica Externa</fullName>
+                <default>false</default>
+                <label>Ginástica Externa</label>
+            </value>
+            <value>
+                <fullName>Guarda-corpo em vidro</fullName>
+                <default>false</default>
+                <label>Guarda-corpo em vidro</label>
+            </value>
+            <value>
+                <fullName>Hall</fullName>
+                <default>false</default>
+                <label>Hall</label>
+            </value>
+            <value>
+                <fullName>Hall serviço</fullName>
+                <default>false</default>
+                <label>Hall serviço</label>
+            </value>
+            <value>
+                <fullName>Hall social</fullName>
+                <default>false</default>
+                <label>Hall social</label>
+            </value>
+            <value>
+                <fullName>Hall social residencial</fullName>
+                <default>false</default>
+                <label>Hall social residencial</label>
+            </value>
+            <value>
+                <fullName>Horta</fullName>
+                <default>false</default>
+                <label>Horta</label>
+            </value>
+            <value>
+                <fullName>Horta residencial</fullName>
+                <default>false</default>
+                <label>Horta residencial</label>
+            </value>
+            <value>
+                <fullName>Infra p/ aquecimento solar</fullName>
+                <default>false</default>
+                <label>Infra p/ aquecimento solar</label>
+            </value>
+            <value>
+                <fullName>Infra para automação e ar condicionado</fullName>
+                <default>false</default>
+                <label>Infra para automação e ar condicionado</label>
+            </value>
+            <value>
+                <fullName>Infraestrutura de serviços no térreo</fullName>
+                <default>false</default>
+                <label>Infraestrutura de serviços no térreo</label>
+            </value>
+            <value>
+                <fullName>Infraestrutura para ar-condicionado nas unidades</fullName>
+                <default>false</default>
+                <label>Infraestrutura para ar-condicionado nas unidades</label>
+            </value>
+            <value>
+                <fullName>Infraestrutura para automação nas unidades</fullName>
+                <default>false</default>
+                <label>Infraestrutura para automação nas unidades</label>
+            </value>
+            <value>
+                <fullName>Infraestrutura para futura instalação de ar-condicionado nas unidades</fullName>
+                <default>false</default>
+                <label>Infraestrutura para futura instalação de ar-condicionado nas unidades</label>
+            </value>
+            <value>
+                <fullName>Infraestrutura para sistema de aquecimento solar</fullName>
+                <default>false</default>
+                <label>Infraestrutura para sistema de aquecimento solar</label>
+            </value>
+            <value>
+                <fullName>Infraestrutura para wi-fi nas áreas comuns</fullName>
+                <default>false</default>
+                <label>Infraestrutura para wi-fi nas áreas comuns</label>
+            </value>
+            <value>
+                <fullName>Infraestrutura para wi-fi nas áreas comuns internas</fullName>
+                <default>false</default>
+                <label>Infraestrutura para wi-fi nas áreas comuns internas</label>
+            </value>
+            <value>
+                <fullName>Jardim descoberto</fullName>
+                <default>false</default>
+                <label>Jardim descoberto</label>
+            </value>
+            <value>
+                <fullName>Jogos</fullName>
+                <default>false</default>
+                <label>Jogos</label>
+            </value>
+            <value>
+                <fullName>Laundry Pet</fullName>
+                <default>false</default>
+                <label>Laundry Pet</label>
+            </value>
+            <value>
+                <fullName>Laundry Room</fullName>
+                <default>false</default>
+                <label>Laundry Room</label>
+            </value>
+            <value>
+                <fullName>Lavanderia</fullName>
+                <default>false</default>
+                <label>Lavanderia</label>
+            </value>
+            <value>
+                <fullName>Lavanderia coletiva</fullName>
+                <default>false</default>
+                <label>Lavanderia coletiva</label>
+            </value>
+            <value>
+                <fullName>Lazer Completo</fullName>
+                <default>false</default>
+                <label>Lazer Completo</label>
+            </value>
+            <value>
+                <fullName>Lazer na cobertura</fullName>
+                <default>false</default>
+                <label>Lazer na cobertura</label>
+            </value>
+            <value>
+                <fullName>Lobby de acesso</fullName>
+                <default>false</default>
+                <label>Lobby de acesso</label>
+            </value>
+            <value>
+                <fullName>Loja no térreo</fullName>
+                <default>false</default>
+                <label>Loja no térreo</label>
+            </value>
+            <value>
+                <fullName>Loja no térreo: integração da arquitetura com a cidade</fullName>
+                <default>false</default>
+                <label>Loja no térreo: integração da arquitetura com a cidade</label>
+            </value>
+            <value>
+                <fullName>Lounge Bar Piscina</fullName>
+                <default>false</default>
+                <label>Lounge Bar Piscina</label>
+            </value>
+            <value>
+                <fullName>Lounge Club Gourmet</fullName>
+                <default>false</default>
+                <label>Lounge Club Gourmet</label>
+            </value>
+            <value>
+                <fullName>Lounge coberto</fullName>
+                <default>false</default>
+                <label>Lounge coberto</label>
+            </value>
+            <value>
+                <fullName>Lounge com churrasqueira e forno de pizza</fullName>
+                <default>false</default>
+                <label>Lounge com churrasqueira e forno de pizza</label>
+            </value>
+            <value>
+                <fullName>Lounge e Bar</fullName>
+                <default>false</default>
+                <label>Lounge e Bar</label>
+            </value>
+            <value>
+                <fullName>Lounge gourmet</fullName>
+                <default>false</default>
+                <label>Lounge gourmet</label>
+            </value>
+            <value>
+                <fullName>Lounge jogos</fullName>
+                <default>false</default>
+                <label>Lounge jogos</label>
+            </value>
+            <value>
+                <fullName>Lounge mirante</fullName>
+                <default>false</default>
+                <label>Lounge mirante</label>
+            </value>
+            <value>
+                <fullName>Lounge no rooftop</fullName>
+                <default>false</default>
+                <label>Lounge no rooftop</label>
+            </value>
+            <value>
+                <fullName>Massagem</fullName>
+                <default>false</default>
+                <label>Massagem</label>
+            </value>
+            <value>
+                <fullName>Medidores de água/energia entregues</fullName>
+                <default>false</default>
+                <label>Medidores de água/energia entregues</label>
+            </value>
+            <value>
+                <fullName>Mini quadra</fullName>
+                <default>false</default>
+                <label>Mini quadra</label>
+            </value>
+            <value>
+                <fullName>Minimercado</fullName>
+                <default>false</default>
+                <label>Minimercado</label>
+            </value>
+            <value>
+                <fullName>Miniquadra poliesportiva</fullName>
+                <default>false</default>
+                <label>Miniquadra poliesportiva</label>
+            </value>
+            <value>
+                <fullName>Mirante</fullName>
+                <default>false</default>
+                <label>Mirante</label>
+            </value>
+            <value>
+                <fullName>Office</fullName>
+                <default>false</default>
+                <label>Office</label>
+            </value>
+            <value>
+                <fullName>Pet place</fullName>
+                <default>false</default>
+                <label>Pet place</label>
+            </value>
+            <value>
+                <fullName>Piscina</fullName>
+                <default>false</default>
+                <label>Piscina</label>
+            </value>
+            <value>
+                <fullName>Piscina com deck</fullName>
+                <default>false</default>
+                <label>Piscina com deck</label>
+            </value>
+            <value>
+                <fullName>Piscina adulto com deck molhado</fullName>
+                <default>false</default>
+                <label>Piscina adulto com deck molhado</label>
+            </value>
+            <value>
+                <fullName>Piscina Adulto e Infantil</fullName>
+                <default>false</default>
+                <label>Piscina Adulto e Infantil</label>
+            </value>
+            <value>
+                <fullName>Piscina adulto e infantil c/ deck molhado e solário</fullName>
+                <default>false</default>
+                <label>Piscina adulto e infantil c/ deck molhado e solário</label>
+            </value>
+            <value>
+                <fullName>Piscina adulto e infantil com solarium</fullName>
+                <default>false</default>
+                <label>Piscina adulto e infantil com solarium</label>
+            </value>
+            <value>
+                <fullName>piscina adulto residencial com raia de 25m e borda infinita</fullName>
+                <default>false</default>
+                <label>piscina adulto residencial com raia de 25m e borda infinita</label>
+            </value>
+            <value>
+                <fullName>Piscina coberta</fullName>
+                <default>false</default>
+                <label>Piscina coberta</label>
+            </value>
+            <value>
+                <fullName>Piscina coberta com raia de 20m</fullName>
+                <default>false</default>
+                <label>Piscina coberta com raia de 20m</label>
+            </value>
+            <value>
+                <fullName>Piscina coberta com raia de 25m</fullName>
+                <default>false</default>
+                <label>Piscina coberta com raia de 25m</label>
+            </value>
+            <value>
+                <fullName>Piscina com borda infinita</fullName>
+                <default>false</default>
+                <label>Piscina com borda infinita</label>
+            </value>
+            <value>
+                <fullName>Piscina com borda infinita no rooftop</fullName>
+                <default>false</default>
+                <label>Piscina com borda infinita no rooftop</label>
+            </value>
+            <value>
+                <fullName>Piscina com Deck Molhado</fullName>
+                <default>false</default>
+                <label>Piscina com Deck Molhado</label>
+            </value>
+            <value>
+                <fullName>Piscina com deck molhado e solário</fullName>
+                <default>false</default>
+                <label>Piscina com deck molhado e solário</label>
+            </value>
+            <value>
+                <fullName>Piscina com raia de 25m</fullName>
+                <default>false</default>
+                <label>Piscina com raia de 25m</label>
+            </value>
+            <value>
+                <fullName>Piscina com solarium</fullName>
+                <default>false</default>
+                <label>Piscina com solarium</label>
+            </value>
+            <value>
+                <fullName>Piscina com solarium no rooftop</fullName>
+                <default>false</default>
+                <label>Piscina com solarium no rooftop</label>
+            </value>
+            <value>
+                <fullName>Piscina Descoberta com Solarium</fullName>
+                <default>false</default>
+                <label>Piscina Descoberta com Solarium</label>
+            </value>
+            <value>
+                <fullName>Piscina e solarium</fullName>
+                <default>false</default>
+                <label>Piscina e solarium</label>
+            </value>
+            <value>
+                <fullName>Piscina em L com deck molhado e raia de 25m</fullName>
+                <default>false</default>
+                <label>Piscina em L com deck molhado e raia de 25m</label>
+            </value>
+            <value>
+                <fullName>Piscina infantil</fullName>
+                <default>false</default>
+                <label>Piscina infantil</label>
+            </value>
+            <value>
+                <fullName>Piscina infantil residencial</fullName>
+                <default>false</default>
+                <label>Piscina infantil residencial</label>
+            </value>
+            <value>
+                <fullName>Piscina unids serv de moradia</fullName>
+                <default>false</default>
+                <label>Piscina unids serv de moradia</label>
+            </value>
+            <value>
+                <fullName>Playground</fullName>
+                <default>false</default>
+                <label>Playground</label>
+            </value>
+            <value>
+                <fullName>Pool bar</fullName>
+                <default>false</default>
+                <label>Pool bar</label>
+            </value>
+            <value>
+                <fullName>Praça</fullName>
+                <default>false</default>
+                <label>Praça</label>
+            </value>
+            <value>
+                <fullName>Praça de Apoio ao Salão de Festas</fullName>
+                <default>false</default>
+                <label>Praça de Apoio ao Salão de Festas</label>
+            </value>
+            <value>
+                <fullName>Praça de convivência</fullName>
+                <default>false</default>
+                <label>Praça de convivência</label>
+            </value>
+            <value>
+                <fullName>Praça de lazer externa</fullName>
+                <default>false</default>
+                <label>Praça de lazer externa</label>
+            </value>
+            <value>
+                <fullName>Praça do Encontro</fullName>
+                <default>false</default>
+                <label>Praça do Encontro</label>
+            </value>
+            <value>
+                <fullName>Praça externa</fullName>
+                <default>false</default>
+                <label>Praça externa</label>
+            </value>
+            <value>
+                <fullName>Praça Festas</fullName>
+                <default>false</default>
+                <label>Praça Festas</label>
+            </value>
+            <value>
+                <fullName>Praça suspensa</fullName>
+                <default>false</default>
+                <label>Praça suspensa</label>
+            </value>
+            <value>
+                <fullName>Quadra</fullName>
+                <default>false</default>
+                <label>Quadra</label>
+            </value>
+            <value>
+                <fullName>Quadra de squash</fullName>
+                <default>false</default>
+                <label>Quadra de squash</label>
+            </value>
+            <value>
+                <fullName>Quadra de tênis</fullName>
+                <default>false</default>
+                <label>Quadra de tênis</label>
+            </value>
+            <value>
+                <fullName>Quadra Recreativa Gramada</fullName>
+                <default>false</default>
+                <label>Quadra Recreativa Gramada</label>
+            </value>
+            <value>
+                <fullName>Quiosque com Churrasqueira e Forno de Pizza</fullName>
+                <default>false</default>
+                <label>Quiosque com Churrasqueira e Forno de Pizza</label>
+            </value>
+            <value>
+                <fullName>Redário</fullName>
+                <default>false</default>
+                <label>Redário</label>
+            </value>
+            <value>
+                <fullName>Reúso de águas pluviais</fullName>
+                <default>false</default>
+                <label>Reúso de águas pluviais</label>
+            </value>
+            <value>
+                <fullName>Sala de Ginástica</fullName>
+                <default>false</default>
+                <label>Sala de Ginástica</label>
+            </value>
+            <value>
+                <fullName>Sala de massagem</fullName>
+                <default>false</default>
+                <label>Sala de massagem</label>
+            </value>
+            <value>
+                <fullName>Sala de massagem no rooftop</fullName>
+                <default>false</default>
+                <label>Sala de massagem no rooftop</label>
+            </value>
+            <value>
+                <fullName>Sala Fitness</fullName>
+                <default>false</default>
+                <label>Sala Fitness</label>
+            </value>
+            <value>
+                <fullName>Sala multiuso</fullName>
+                <default>false</default>
+                <label>Sala multiuso</label>
+            </value>
+            <value>
+                <fullName>Salão de festas</fullName>
+                <default>false</default>
+                <label>Salão de festas</label>
+            </value>
+            <value>
+                <fullName>Salão de festas c/ copa e wcs</fullName>
+                <default>false</default>
+                <label>Salão de festas c/ copa e wcs</label>
+            </value>
+            <value>
+                <fullName>Salão de Festas com Churrasqueira</fullName>
+                <default>false</default>
+                <label>Salão de Festas com Churrasqueira</label>
+            </value>
+            <value>
+                <fullName>Salão de festas com espaço gourmet</fullName>
+                <default>false</default>
+                <label>Salão de festas com espaço gourmet</label>
+            </value>
+            <value>
+                <fullName>Salão de festas com pé-direito duplo</fullName>
+                <default>false</default>
+                <label>Salão de festas com pé-direito duplo</label>
+            </value>
+            <value>
+                <fullName>Salão de festas gourmet</fullName>
+                <default>false</default>
+                <label>Salão de festas gourmet</label>
+            </value>
+            <value>
+                <fullName>Salão de festas gourmet com churrasqueira</fullName>
+                <default>false</default>
+                <label>Salão de festas gourmet com churrasqueira</label>
+            </value>
+            <value>
+                <fullName>Salão de festas gourmet integrado ao jardim externo</fullName>
+                <default>false</default>
+                <label>Salão de festas gourmet integrado ao jardim externo</label>
+            </value>
+            <value>
+                <fullName>Salão de festas gourmet integrado ao lounge externo e churrasqueira</fullName>
+                <default>false</default>
+                <label>Salão de festas gourmet integrado ao lounge externo e churrasqueira</label>
+            </value>
+            <value>
+                <fullName>Salão de jogos</fullName>
+                <default>false</default>
+                <label>Salão de jogos</label>
+            </value>
+            <value>
+                <fullName>Sauna</fullName>
+                <default>false</default>
+                <label>Sauna</label>
+            </value>
+            <value>
+                <fullName>Sauna com descanso</fullName>
+                <default>false</default>
+                <label>Sauna com descanso</label>
+            </value>
+            <value>
+                <fullName>Sauna no rooftop</fullName>
+                <default>false</default>
+                <label>Sauna no rooftop</label>
+            </value>
+            <value>
+                <fullName>Sauna residencial</fullName>
+                <default>false</default>
+                <label>Sauna residencial</label>
+            </value>
+            <value>
+                <fullName>Sauna seca</fullName>
+                <default>false</default>
+                <label>Sauna seca</label>
+            </value>
+            <value>
+                <fullName>Sauna úmida</fullName>
+                <default>false</default>
+                <label>Sauna úmida</label>
+            </value>
+            <value>
+                <fullName>Segurança e praticidades: Seu imóvel administrado pela rede ACCOR</fullName>
+                <default>false</default>
+                <label>Segurança e praticidades: Seu imóvel administrado pela rede ACCOR</label>
+            </value>
+            <value>
+                <fullName>Sem preocupações: substitua agora inquilino por hóspedes</fullName>
+                <default>false</default>
+                <label>Sem preocupações: substitua agora inquilino por hóspedes</label>
+            </value>
+            <value>
+                <fullName>Serviços pay-per-use²</fullName>
+                <default>false</default>
+                <label>Serviços pay-per-use²</label>
+            </value>
+            <value>
+                <fullName>Sistema aquecimento solar</fullName>
+                <default>false</default>
+                <label>Sistema aquecimento solar</label>
+            </value>
+            <value>
+                <fullName>Sistema de aquecimento de água central</fullName>
+                <default>false</default>
+                <label>Sistema de aquecimento de água central</label>
+            </value>
+            <value>
+                <fullName>Sky Grill</fullName>
+                <default>false</default>
+                <label>Sky Grill</label>
+            </value>
+            <value>
+                <fullName>Sky lounge</fullName>
+                <default>false</default>
+                <label>Sky lounge</label>
+            </value>
+            <value>
+                <fullName>Solarium</fullName>
+                <default>false</default>
+                <label>Solarium</label>
+            </value>
+            <value>
+                <fullName>Solarium com piscina no rooftop</fullName>
+                <default>false</default>
+                <label>Solarium com piscina no rooftop</label>
+            </value>
+            <value>
+                <fullName>Solarium com spa no rooftop</fullName>
+                <default>false</default>
+                <label>Solarium com spa no rooftop</label>
+            </value>
+            <value>
+                <fullName>Solarium no rooftop</fullName>
+                <default>false</default>
+                <label>Solarium no rooftop</label>
+            </value>
+            <value>
+                <fullName>Spa</fullName>
+                <default>false</default>
+                <label>Spa</label>
+            </value>
+            <value>
+                <fullName>Terraço gourmet</fullName>
+                <default>false</default>
+                <label>Terraço gourmet</label>
+            </value>
+            <value>
+                <fullName>Terraço gourmet com churrasqueira</fullName>
+                <default>false</default>
+                <label>Terraço gourmet com churrasqueira</label>
+            </value>
+            <value>
+                <fullName>Terraços com guarda-corpo de vidro</fullName>
+                <default>false</default>
+                <label>Terraços com guarda-corpo de vidro</label>
+            </value>
+            <value>
+                <fullName>Tomada para bicicletas e carros elétricos</fullName>
+                <default>false</default>
+                <label>Tomada para bicicletas e carros elétricos</label>
+            </value>
+            <value>
+                <fullName>Tomada para bicicletas elétricas</fullName>
+                <default>false</default>
+                <label>Tomada para bicicletas elétricas</label>
+            </value>
+            <value>
+                <fullName>Tomada para carro e bicicleta elétrica</fullName>
+                <default>false</default>
+                <label>Tomada para carro e bicicleta elétrica</label>
+            </value>
+            <value>
+                <fullName>Tomada para carro elétrico</fullName>
+                <default>false</default>
+                <label>Tomada para carro elétrico</label>
+            </value>
+            <value>
+                <fullName>Tomada USB nas unidades</fullName>
+                <default>false</default>
+                <label>Tomada USB nas unidades</label>
+            </value>
+            <value>
+                <fullName>Wellness com massagem, sauna, spa, ducha, e descanso</fullName>
+                <default>false</default>
+                <label>Wellness com massagem, sauna, spa, ducha, e descanso</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

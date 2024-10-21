@@ -1,0 +1,29 @@
+.documento_span:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+lightning-icon.Não.Entregue {
+    background-color: #a1a1a1 !important;
+}
+
+lightning-icon.Aprovado {
+    background-color: #0DDB62;
+}
+
+lightning-icon.Entregue {
+    background-color: #4F74DB;
+}
+
+lightning-icon.Reprovado {
+    background-color: #DB3912;
+}
+
+.badge_button:hover {
+    cursor: pointer;
+}
+
+.slds-is-relative {
+    position: relative;
+    min-height: 40px;
+}

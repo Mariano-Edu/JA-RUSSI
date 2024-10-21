@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>validacaoPorcentagem</fullName>
+    <active>true</active>
+    <description>Validação para ver se o campo &quot;Expected Response (%)&quot; foi preenchido com valores entre o intervalo de 0 á 100</description>
+    <errorConditionFormula>ExpectedResponse &lt;0 || ExpectedResponse &gt; 1</errorConditionFormula>
+    <errorDisplayField>ExpectedResponse</errorDisplayField>
+    <errorMessage>O valor da Porcentagem de Resposta Esperada deve estar dentro do intervalo de 0 a 100.</errorMessage>
+</ValidationRule>

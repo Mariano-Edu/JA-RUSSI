@@ -1,0 +1,103 @@
+<template>
+  <lightning-card class="slds-col slds-p-horizontal_large" icon-name="standard:account" title="Informações da unidade" variant="narrow">
+          <div class="slds-box slds-col slds-grid slds-wrap" style="padding: 3rem;"> 
+            <template lwc:if={produtoSelecionadoId}>
+                <div class="slds-clearfix  slds-col slds-size_1-of-1">
+                    <div class="slds-float_right">
+                        <lightning-button-icon onclick={redirectToEmpreendimento} icon-name="utility:preview" variant="border-filled" alternative-text="Visualizar empreendimento"></lightning-button-icon>
+                    </div>
+                </div>
+            </template>
+
+            <template lwc:if={produtoSelecionadoEmpreendimento}>
+              <div class=" slds-col slds-grid slds-wrap slds-size_1-of-2  slds-p-around_medium">
+                  <b class="slds-col slds-size_1-of-1">Empreendimento</b>
+                  <span class="slds-col slds-size_1-of-1">{produtoSelecionadoEmpreendimento}</span>
+              </div>
+            </template>
+  
+            <template lwc:else>
+            </template>
+  
+            <template lwc:if={produtoSelecionadoNomeTorre}>
+              <div class=" slds-col slds-grid slds-wrap slds-size_1-of-2  slds-p-around_medium">
+                  <b class="slds-col slds-size_1-of-1">Bloco</b>
+                  <span class="slds-col slds-size_1-of-1">{produtoSelecionadoNomeTorre}</span>
+              </div>
+            </template>
+  
+            <template lwc:else>
+            </template>
+  
+            <template lwc:if={produtoSelecionadoName}>
+              <div class=" slds-col slds-grid slds-wrap slds-size_1-of-2  slds-p-around_medium">
+                  <b class="slds-col slds-size_1-of-1">Nome do produto</b>
+                  <span class="slds-col slds-size_1-of-1">{produtoSelecionadoName}</span>
+              </div>
+            </template>
+  
+            <template lwc:else>
+            </template>
+  
+            <template lwc:if={produtoSelecionadoNumeroUnidade}>
+              <div class=" slds-col slds-grid slds-wrap slds-size_1-of-2  slds-p-around_medium">
+                  <b class="slds-col slds-size_1-of-1">Número da unidade</b>
+                  <span class="slds-col slds-size_1-of-1">{produtoSelecionadoNumeroUnidade}</span>
+              </div>
+            </template>
+  
+            <template lwc:else>
+            </template>
+  
+            <template lwc:if={produtoSelecionadoTipoUnidade}>
+              <div class=" slds-col slds-grid slds-wrap slds-size_1-of-2  slds-p-around_medium">
+                  <b class="slds-col slds-size_1-of-1">Família de produtos</b>
+                  <span class="slds-col slds-size_1-of-1">{produtoSelecionadoTipoUnidade}</span>
+              </div>
+            </template>
+  
+            <template lwc:else>
+            </template>
+            
+            <template lwc:if={produtoSelecionadoAndar}>
+              <div class=" slds-col slds-grid slds-wrap slds-size_1-of-2  slds-p-around_medium">
+                  <b class="slds-col slds-size_1-of-1">Andar</b>
+                  <span class="slds-col slds-size_1-of-1">{produtoSelecionadoAndar}</span>
+              </div>
+            </template>
+  
+            <template lwc:else>
+            </template>
+  
+            <template lwc:if={produtoSelecionadoQuartos}>
+              <div class=" slds-col slds-grid slds-wrap slds-size_1-of-2  slds-p-around_medium">
+                  <b class="slds-col slds-size_1-of-1">Quartos</b>
+                  <span class="slds-col slds-size_1-of-1">{produtoSelecionadoQuartos}</span>
+              </div>
+            </template>
+  
+            <template lwc:else>
+            </template>
+  
+            <template lwc:if={produtoSelecionadoMetragemUnidade}>
+              <div class=" slds-col slds-grid slds-wrap slds-size_1-of-2  slds-p-around_medium">
+                  <b class="slds-col slds-size_1-of-1">Metragem da unidade (privativa)</b>
+                  <span class="slds-col slds-size_1-of-1">{produtoSelecionadoMetragemUnidade}m²</span>
+              </div>
+            </template>
+  
+            <template lwc:else>
+            </template>
+  
+            <template lwc:if={produtoSelecionadoPrecoLista}>
+              <div class=" slds-col slds-grid slds-wrap slds-size_1-of-2  slds-p-around_medium">
+                  <b class="slds-col slds-size_1-of-1">Preço de lista</b>
+                  <span class="slds-col slds-size_1-of-1">{produtoSelecionadoPrecoLista}</span>
+              </div>
+            </template>
+  
+            <template lwc:else>
+            </template>
+          </div>
+  </lightning-card>
+</template>

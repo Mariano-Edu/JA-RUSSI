@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ValidaCriarLead</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+				ISNEW(),
+				OR(
+				    ISBLANK(TEXT(MidiaAtual__c)),
+				    ISBLANK(TEXT(LeadSource))
+				)
+)</errorConditionFormula>
+    <errorMessage>Campos Mídia atual e Origem do lead devem estar preenchidos</errorMessage>
+</ValidationRule>

@@ -1,0 +1,16 @@
+<template>
+   <div class="slds-grid slds-wrap slds-col">
+    
+    <c-simulador-tela-extrato-proposta-cliente
+      condicoes-proposta-cliente={propostasClienteData} 
+      valores-matriz-proposta={getValoresMatrizProposta} class="slds-col slds-size_1-of-1">
+    </c-simulador-tela-extrato-proposta-cliente>
+
+    <c-simulador-tela-extrato-tabela-comparativa id-tabela-venda={idTabelaVendas} propostas-cliente={propostasClienteData}  class="slds-col slds-size_1-of-1">
+    </c-simulador-tela-extrato-tabela-comparativa>
+
+    <c-simulador-tela-extrato-analise-proposta id-tabela-venda={idTabelaVendas} propostas-cliente={propostasClienteData} valores-matriz={valoresMatriz} class="slds-col slds-size_1-of-1">
+    </c-simulador-tela-extrato-analise-proposta>
+
+   </div>
+</template>

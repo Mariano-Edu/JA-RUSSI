@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ImpedePercentualPasseTabelaComissao</fullName>
+    <active>false</active>
+    <description>Impede que o percentual passe do definido na Tabela de Comissão.</description>
+    <errorConditionFormula>AND(
+    OR(
+        AND(
+            CONTAINS(TEXT(Role__c), &quot;Imobiliária&quot;),
+            Comission__c &gt; ( 
+                BLANKVALUE(TabelaDeComissao__r.RealStateComissionPercentage__c, 0) + 
+                BLANKVALUE(TabelaDeComissao__r.PrizePercentage__c, 0)
+            )
+        ),
+        AND(
+            NOT(CONTAINS(TEXT(Role__c), &quot;Imobiliária&quot;)),
+            Comission__c &gt; (
+                BLANKVALUE(TabelaDeComissao__r.RealStateDeveloperComissionPercentage__c, 0) + 
+                BLANKVALUE(TabelaDeComissao__r.PrizePercentage__c, 0)
+            )
+        )
+    )
+)</errorConditionFormula>
+    <errorMessage>Percentual de comissão não pode exceder o definido na tabela de comissão</errorMessage>
+</ValidationRule>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>MotivoVisitaNaoRealizada__c</fullName>
+    <label>Motivo da visita não realizada</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>StatusVisita__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>N/A</fullName>
+                <default>false</default>
+                <label>N/A</label>
+            </value>
+            <value>
+                <fullName>ACIMA DO VALOR PROCURADO</fullName>
+                <default>false</default>
+                <label>ACIMA DO VALOR PROCURADO</label>
+            </value>
+            <value>
+                <fullName>NÃO ESTÁ NA REGIÃO</fullName>
+                <default>false</default>
+                <label>NÃO ESTÁ NA REGIÃO</label>
+            </value>
+            <value>
+                <fullName>NÃO TEM INTERESSE</fullName>
+                <default>false</default>
+                <label>NÃO TEM INTERESSE</label>
+            </value>
+            <value>
+                <fullName>IMÓVEL NÃO SE ENQUADRA NA PROCURA</fullName>
+                <default>false</default>
+                <label>IMÓVEL NÃO SE ENQUADRA NA PROCURA</label>
+            </value>
+            <value>
+                <fullName>NÃO RESPONDE/ATENDE</fullName>
+                <default>false</default>
+                <label>NÃO RESPONDE/ATENDE</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Scheduled</controllingFieldValue>
+            <controllingFieldValue>Done</controllingFieldValue>
+            <valueName>N/A</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>NotDone</controllingFieldValue>
+            <controllingFieldValue>Cancelado</controllingFieldValue>
+            <valueName>ACIMA DO VALOR PROCURADO</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>NotDone</controllingFieldValue>
+            <controllingFieldValue>Cancelado</controllingFieldValue>
+            <valueName>NÃO ESTÁ NA REGIÃO</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>NotDone</controllingFieldValue>
+            <controllingFieldValue>Cancelado</controllingFieldValue>
+            <valueName>NÃO TEM INTERESSE</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>NotDone</controllingFieldValue>
+            <controllingFieldValue>Cancelado</controllingFieldValue>
+            <valueName>IMÓVEL NÃO SE ENQUADRA NA PROCURA</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>NotDone</controllingFieldValue>
+            <controllingFieldValue>Cancelado</controllingFieldValue>
+            <valueName>NÃO RESPONDE/ATENDE</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

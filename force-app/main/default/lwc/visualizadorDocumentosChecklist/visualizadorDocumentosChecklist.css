@@ -1,0 +1,28 @@
+:host {
+    --slds-c-button-success-color-background: rgba(82, 255, 0, 0.35);
+    --slds-c-button-success-color-border: rgba(82, 255, 0, 0.35);
+    --slds-c-button-success-text-color: rgba(52, 52, 52, 1);
+
+    --slds-c-button-brand-color-background: rgba(255, 243, 133, 1);
+    --slds-c-button-brand-color-border: rgba(255, 243, 133, 1);
+    --slds-c-button-brand-text-color: rgba(52, 52, 52, 1);
+
+    --slds-c-button-destructive-color-background: rgba(255, 0, 0, 0.35);
+    --slds-c-button-destructive-color-border: rgba(255, 0, 0, 0.35);
+    --slds-c-button-destructive-text-color: rgba(52, 52, 52, 1);
+}
+
+.docs_navigation {
+    transition: all 150ms;
+}
+
+.docs_navigation:hover {
+    transition: all 100ms;
+    background-color: rgb(240, 240, 240);
+    cursor: pointer;
+    border-left: 3px solid green;
+}
+
+.icone_opcoes:hover {
+    cursor: pointer;
+}

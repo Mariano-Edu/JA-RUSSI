@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>Atencao</fullName>
+        <categories>Mensagem</categories>
+        <language>pt_BR</language>
+        <protected>false</protected>
+        <shortDescription>Atenção</shortDescription>
+        <value>Atenção</value>
+    </labels>
+    <labels>
+        <fullName>Endereco</fullName>
+        <categories>Mensagem</categories>
+        <language>pt_BR</language>
+        <protected>false</protected>
+        <shortDescription>Endereço</shortDescription>
+        <value>Endereço</value>
+    </labels>
+    <labels>
+        <fullName>Erro</fullName>
+        <categories>Mensagem</categories>
+        <language>pt_BR</language>
+        <protected>true</protected>
+        <shortDescription>Erro</shortDescription>
+        <value>Erro</value>
+    </labels>
+    <labels>
+        <fullName>ErroConsultarCEP</fullName>
+        <categories>Mensagem</categories>
+        <language>pt_BR</language>
+        <protected>false</protected>
+        <shortDescription>Erro ao consultar CEP</shortDescription>
+        <value>Ocorreu um erro ao consultar o CEP com status &quot;{0}&quot; e código {1}.</value>
+    </labels>
+    <labels>
+        <fullName>ErroEstagioConversao</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Quando o lead não possui um compromisso concluído no processo de conversão</shortDescription>
+        <value>O lead precisa de um compromisso concluído para ser convertido</value>
+    </labels>
+    <labels>
+        <fullName>ErroEstagioQualificacao</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Erro para quando o lead não está apto para entrar no estágio  de qualificação</shortDescription>
+        <value>O lead não possui um compromisso para avançar para essa etapa</value>
+    </labels>
+    <labels>
+        <fullName>MensagemEnderecoModificado</fullName>
+        <categories>Mensagem</categories>
+        <language>pt_BR</language>
+        <protected>false</protected>
+        <shortDescription>Mensagem de endereço modificado.</shortDescription>
+        <value>Endereço modificado com sucesso.</value>
+    </labels>
+    <labels>
+        <fullName>MensagemTamanhoCEP</fullName>
+        <categories>Mensagem</categories>
+        <language>pt_BR</language>
+        <protected>false</protected>
+        <shortDescription>Mensagem de tamanho de CEP.</shortDescription>
+        <value>É necessário que o CEP tenha 8 dígitos.</value>
+    </labels>
+    <labels>
+        <fullName>PesquisarEndereco</fullName>
+        <categories>Mensagem</categories>
+        <language>pt_BR</language>
+        <protected>false</protected>
+        <shortDescription>Pesquisar endereço</shortDescription>
+        <value>Pesquisar endereço</value>
+    </labels>
+    <labels>
+        <fullName>Salvar</fullName>
+        <categories>Mensagem</categories>
+        <language>pt_BR</language>
+        <protected>false</protected>
+        <shortDescription>Salvar</shortDescription>
+        <value>Salvar</value>
+    </labels>
+    <labels>
+        <fullName>Sucesso</fullName>
+        <categories>Mensagem</categories>
+        <language>pt_BR</language>
+        <protected>false</protected>
+        <shortDescription>Sucesso</shortDescription>
+        <value>Sucesso</value>
+    </labels>
+    <labels>
+        <fullName>channelMustNotBeEmpty</fullName>
+        <language>pt_BR</language>
+        <protected>false</protected>
+        <shortDescription>Canal não pode estar vazio</shortDescription>
+        <value>O campo de canal de atendimento deve ser preenchido</value>
+    </labels>
+    <labels>
+        <fullName>emailMustNotBeEmpty</fullName>
+        <language>pt_BR</language>
+        <protected>false</protected>
+        <shortDescription>O campo de email de atendimento deve ser preenchido</shortDescription>
+        <value>O campo de email de atendimento deve ser preenchido</value>
+    </labels>
+    <labels>
+        <fullName>leadOriginMustNotBeEmpty</fullName>
+        <language>pt_BR</language>
+        <protected>false</protected>
+        <shortDescription>Origem do lead não pode estar vazio</shortDescription>
+        <value>O campo origem deve ser preenchido</value>
+    </labels>
+    <labels>
+        <fullName>mobilePhoneMustNotBeEmpty</fullName>
+        <language>pt_BR</language>
+        <protected>false</protected>
+        <shortDescription>Telefone não pode estar vazio</shortDescription>
+        <value>O campo de telefone deve ser preenchido</value>
+    </labels>
+    <labels>
+        <fullName>nameMustNotBeEmpty</fullName>
+        <language>pt_BR</language>
+        <protected>false</protected>
+        <shortDescription>Nome não pode estar vazio</shortDescription>
+        <value>O campo nome deve ser preenchido</value>
+    </labels>
+</CustomLabels>

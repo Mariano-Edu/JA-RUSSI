@@ -1,0 +1,66 @@
+<template>
+  <div class="slds-form-element slds-box">
+
+    <div class="slds-grid slds-wrap slds-gutters_x-small slds-size_1-of-1">
+      <lightning-combobox class="slds-col slds-size_1-of-1" label="Tipo de Registro" options={recordTypes} data-name="recordType" value={formulario.recordType}
+        onchange={handleChange} required=""></lightning-combobox>
+    </div>
+
+    <template lwc:if={isLeadPf}>
+      <div class="slds-grid slds-wrap slds-gutters_x-small slds-size_1-of-1">
+        <lightning-input class="slds-col slds-size_1-of-1" required label="Nome completo" data-name="nome" value={formulario.nome} onchange={handleChange}>
+        </lightning-input>
+      </div>
+    </template>
+
+    <template lwc:elseif={isLeadPj}>
+      <div class="slds-grid slds-wrap slds-gutters_x-small slds-size_1-of-1">
+        <lightning-input class="slds-col slds-size_1-of-1" required label="Nome do responsável" data-name="nome" value={formulario.nome} onchange={handleChange}>
+        </lightning-input>
+        <lightning-input class="slds-col slds-size_1-of-1" required label="Empresa" data-name="empresa" value={formulario.empresa} onchange={handleChange}>
+        </lightning-input>
+      </div>
+    </template>
+
+    <div class="slds-grid slds-wrap slds-gutters_x-small slds-size_1-of-1">
+      <lightning-combobox class="slds-col slds-size_1-of-2 slds-medium-size_2-of-8 slds-large-size_1-of-6" label="DDI" options={ddis} data-name="ddiCel" value={formulario.ddiCel}
+      onchange={handleChange}></lightning-combobox>
+
+      <lightning-input class="slds-col slds-size_1-of-2 slds-medium-size_2-of-8 slds-large-size_1-of-6" data-name="dddCel" value={formulario.dddCel} label="DDD"
+      onchange={handleChange}></lightning-input>
+
+      <lightning-input class="slds-col slds-size_1-of-1 slds-medium-size_4-of-8 slds-large-size_4-of-6" label="Celular" type="tel" data-name="celular" value={formulario.celular} onchange={handleChange}>
+      </lightning-input>
+    </div>
+
+    <div class="slds-grid slds-wrap slds-gutters_x-small slds-size_1-of-1">
+      <lightning-combobox class="slds-col slds-size_1-of-2 slds-medium-size_2-of-8 slds-large-size_1-of-6" label="DDI" options={ddis} data-name="ddiTel" value={formulario.ddiTel}
+      onchange={handleChange}></lightning-combobox>
+
+      <lightning-input class="slds-col slds-size_1-of-2 slds-medium-size_2-of-8 slds-large-size_1-of-6" data-name="dddTel" value={formulario.dddTel} label="DDD"
+      onchange={handleChange}></lightning-input>
+
+      <lightning-input class="slds-col slds-size_1-of-1 slds-medium-size_4-of-8 slds-large-size_4-of-6" label="Telefone" type="tel" data-name="telefone" value={formulario.telefone} onchange={handleChange}>
+      </lightning-input>
+    </div>
+
+    <div class="slds-grid slds-wrap slds-gutters_x-small slds-size_1-of-1">
+      <lightning-input class="slds-col slds-size_1-of-1" label="Email" data-name="email" value={formulario.email} onchange={handleChange}>
+      </lightning-input>
+    </div>
+
+    <div class="slds-grid slds-wrap slds-gutters_x-small slds-size_1-of-1">
+      <lightning-combobox class="slds-col slds-size_1-of-1" label="Canal de atendimento" options={canais} data-name="canal" value={formulario.canal}
+        onchange={handleChange} required=""></lightning-combobox>
+    </div>
+
+  </div>
+  <div class="slds-clearfix slds-p-top_medium">
+    <div class="slds-float_right">
+      <lightning-button label="Cancelar" class="slds-p-right_medium" onclick={handleCancelar}>
+      </lightning-button>
+      <lightning-button variant="brand" label="Criar" icon-name="utility:fallback" class="" onclick={handleCriarLead}>
+      </lightning-button>
+    </div>
+  </div>
+</template>

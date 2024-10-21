@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FirstNameObrigatorio</fullName>
+    <active>true</active>
+    <description>Impede que uma conta seja criada sem o campo &quot;First Name&quot;</description>
+    <errorConditionFormula>ISBLANK( FirstName )</errorConditionFormula>
+    <errorDisplayField>FirstName</errorDisplayField>
+    <errorMessage>Por favor, digite o primeiro nome!</errorMessage>
+</ValidationRule>

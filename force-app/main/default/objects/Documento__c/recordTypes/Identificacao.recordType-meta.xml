@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Identificacao</fullName>
+    <active>true</active>
+    <label>Identificação</label>
+    <picklistValues>
+        <picklist>StatusAprovacao__c</picklist>
+        <values>
+            <fullName>Aprovado</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Em Análise</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Entregue</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Não Entregue</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pendente de Análise</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reprovado</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vencido</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>TipoDocumento__c</picklist>
+        <values>
+            <fullName>Aplicações Financeiras</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CTPS e FGTS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Carta de Crédito</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dependentes</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Estado Civil</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ficha de Cadastro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Identificação</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Imposto de Renda</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Imóvel</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Outros</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Renda</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Residência</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Veículo</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

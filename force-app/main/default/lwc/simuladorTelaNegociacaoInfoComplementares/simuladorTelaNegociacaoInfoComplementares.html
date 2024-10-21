@@ -1,0 +1,39 @@
+<template>
+    <lightning-card class="slds-col slds-p-horizontal_large" icon-name="standard:person_language" title="Informações  complementares" variant="narrow">
+                            
+        <div class="slds-grid slds-wrap">
+            <div class="slds-text-title slds-col slds-size_1-of-1">
+                <span>Verifique as informações complementares oriundas da Tabela de Venda escolhida</span>
+            </div>
+            
+            <div class="slds-box slds-grid slds-wrap slds-col slds-p-vertical_medium" style="padding: 1rem 2rem;">
+                <div class="slds-grid slds-col slds-size_1-of-1 slds-p-vertical_large">
+                    <div class="slds-grid slds-col slds-size_1-of-2 slds-wrap slds-p-horizontal_medium" style="width: 16rem;">
+                        <span class="slds-col slds-size_1-of-1slds-text-heading_small" style="font-weight: bold;">Taxa desconto VPL</span>
+                        <span class="slds-col slds-size_1-of-1 slds-text-body_small" >{getTaxaDescontoVpl}%</span>
+                    </div>
+
+                    <div class="slds-grid slds-col slds-size_1-of-2 slds-wrap slds-p-horizontal_medium" style="width: 16rem;">
+                        <span class="slds-col slds-size_1-of-1slds-text-heading_small" style="font-weight: bold;">Antecipação ATÉ o habite-se</span>
+                        <span class="slds-col slds-size_1-of-1 slds-text-body_small">{getAntecipacaoAteHabitase}%</span>
+                    </div>
+                </div>
+
+
+                <div class="slds-grid slds-col slds-size_1-of-1 slds-p-vertical_large">
+                    <div class="slds-grid slds-col slds-size_1-of-2 slds-wrap slds-p-horizontal_medium" style="width: 16rem;">
+                        <span class="slds-col slds-size_1-of-1slds-text-heading_small" style="font-weight: bold;">Taxa TP</span>
+                        <span class="slds-col slds-size_1-of-1 slds-text-body_small" >{getTaxaTp}%</span>
+                    </div>
+
+                    <div class="slds-grid slds-col slds-size_1-of-2 slds-wrap slds-p-horizontal_medium" style="width: 16rem;">
+                        <span class="slds-col slds-size_1-of-1slds-text-heading_small" style="font-weight: bold;">Antecipação APÓS o habite-se</span>
+                        <span class="slds-col slds-size_1-of-1 slds-text-body_small">{getAntecipacaoAposHabitase}%</span>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </lightning-card>
+</template>

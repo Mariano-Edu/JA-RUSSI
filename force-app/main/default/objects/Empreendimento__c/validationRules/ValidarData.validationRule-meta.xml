@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ValidarData</fullName>
+    <active>true</active>
+    <errorConditionFormula>OR (
+    DataConclusaoReal__c &lt; DataInicioReal__c,
+				 DataConclusaoPlanejada__c &lt;  DataInicioPlanejada__c
+)</errorConditionFormula>
+    <errorMessage>A data final não pode ser anterior à data inicial.</errorMessage>
+</ValidationRule>

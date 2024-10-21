@@ -1,0 +1,166 @@
+<template>
+    <div class="slds-grid slds-gutters">
+        <template if:false={areaContasVisivel}>
+            <lightning-icon onclick={mudarAreaContasVisivel}
+                class="slds-col_bump-left icone_opcoes slds-m-horizontal_medium" size="small"
+                icon-name="utility:picklist_type">
+            </lightning-icon>
+        </template>
+
+        <template if:true={areaContasVisivel}>
+            <div class="slds-col slds-large-size_4-of-12">
+                <div class="slds-grid">
+                    <span class="slds-text-heading_medium">Compradores</span>
+                    <lightning-icon onclick={mudarAreaContasVisivel} class="slds-col_bump-left icone_opcoes"
+                        size="small" icon-name="utility:picklist_type">
+                    </lightning-icon>
+                </div>
+
+                <template for:each={contas} for:item="conta">
+                    <lightning-accordion class="slds-m-top_medium" allow-multiple-sections-open key={conta}>
+                        <lightning-accordion-section name={conta.nome} label={conta.nome}>
+                            <lightning-card title="Identificação" variant="narrow">
+                                <lightning-vertical-navigation>
+                                    <template for:each={conta.documentosIdentificacao} for:item="documento">
+                                        <div onclick={selectDoc} key={documento} data-nomeconta={conta.nome}
+                                            data-tipodoc={documento.Name} data-iddoc={documento.Id}
+                                            data-idconta={conta.id}>
+                                            <div
+                                                class="slds-m-top_medium slds-box slds-box_small slds-text-heading_small slds-grid docs_navigation">
+                                                <div>
+                                                    <lightning-icon class="slds-m-left_small"
+                                                        icon-name="standard:document">
+                                                    </lightning-icon>
+                                                    <span class="slds-m-left_medium">{documento.Name}</span>
+                                                </div>
+                                                <div class="slds-col_bump-left">
+                                                    <img class="iconeStatusDoc" data-iddoc={documento.Id}
+                                                        src={documento.StatusIcone__c} style="height:30px;">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </template>
+                                </lightning-vertical-navigation>
+                            </lightning-card>
+
+                            <lightning-card title="Imóvel" variant="narrow">
+                                <lightning-vertical-navigation>
+                                    <template for:each={conta.documentosImovel} for:item="documento">
+                                        <div onclick={selectDoc} key={documento} data-nomeconta={conta.nome}
+                                            data-tipodoc={documento.Name} data-iddoc={documento.Id}
+                                            data-idconta={conta.Id}>
+                                            <div
+                                                class="slds-m-top_medium slds-box slds-box_small slds-text-heading_small slds-grid docs_navigation">
+                                                <div>
+                                                    <lightning-icon class="slds-m-left_small"
+                                                        icon-name="standard:document">
+                                                    </lightning-icon>
+                                                    <span class="slds-m-left_medium">{documento.Name}</span>
+                                                </div>
+                                                <div class="slds-col_bump-left">
+                                                    <img src={documento.StatusIcone__c} style="height:30px">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </template>
+                                </lightning-vertical-navigation>
+                            </lightning-card>
+
+                            <lightning-card title="Veículo" variant="narrow">
+                                <lightning-vertical-navigation>
+                                    <template for:each={conta.documentosVeiculo} for:item="documento">
+                                        <div onclick={selectDoc} key={documento} data-nomeconta={conta.nome}
+                                            data-tipodoc={documento.Name} data-iddoc={documento.Id}
+                                            data-idconta={conta.Id}>
+                                            <div
+                                                class="slds-m-top_medium slds-box slds-box_small slds-text-heading_small slds-grid docs_navigation">
+                                                <div>
+                                                    <lightning-icon class="slds-m-left_small"
+                                                        icon-name="standard:document">
+                                                    </lightning-icon>
+                                                    <span class="slds-m-left_medium">{documento.Name}</span>
+                                                </div>
+                                                <div class="slds-col_bump-left">
+                                                    <img src={documento.StatusIcone__c} style="height:30px">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </template>
+                                </lightning-vertical-navigation>
+                            </lightning-card>
+                        </lightning-accordion-section>
+                    </lightning-accordion>
+                </template>
+
+            </div>
+        </template>
+
+        <div class="slds-col  slds-theme_shade">
+            <template lwc:if={docSelecionado}>
+                <img src={selectDocInfo.StatusIcone__c} class="slds-m-top_medium" style="height:30px">
+                <p class="slds-m-top_medium slds-m-bottom_medium slds-text-heading_medium">{selectDocInfo.Name}</p>
+
+                <div>
+                    <lightning-button icon-name="utility:check" variant="success" label="APROVADO"
+                        class="slds-m-left_x-small" onclick={mudarStatusDoc} data-status="Aprovado"
+                        data-iddoc={selectDocInfo.Id}></lightning-button>
+                    <lightning-button icon-name="utility:warning" variant="brand" label="APROVADO COM RESTRIÇÃO"
+                        class="slds-m-left_x-small" onclick={mudarStatusDoc} data-status="Aprovado" data-restricao=true
+                        data-iddoc={selectDocInfo.Id}>
+                    </lightning-button>
+                </div>
+                <div class="slds-m-top_medium">
+                    <lightning-button icon-name="utility:close" variant="destructive" label="REPROVADO - DIVERGENTE"
+                        class="slds-m-left_x-small" onclick={mudarStatusDoc} data-status="Reprovado"
+                        data-iddoc={selectDocInfo.Id}>
+                    </lightning-button>
+                    <lightning-button icon-name="utility:edit_form" variant="destructive"
+                        label="REPROVADO - DOC. AUSENTE" class="slds-m-left_x-small" onclick={mudarStatusDoc}
+                        data-status="Reprovado" data-iddoc={selectDocInfo.Id}>
+                    </lightning-button>
+                    <lightning-button icon-name="utility:cancel_file_request" variant="destructive"
+                        label="REPROVADO - DOC. ILEGÍVEL" class="slds-m-left_x-small" onclick={mudarStatusDoc}
+                        data-status="Reprovado" data-iddoc={selectDocInfo.Id}>
+                    </lightning-button>
+                </div>
+
+                <div class="slds-grid slds-m-top_medium">
+                    <div id="campos_container" class="slds-col slds-size_5-of-12">
+                        <template for:each={labelValueDocSelecionado} for:item="campo">
+                            <div class="campo" data-campoconta={campo.campoConta} key={campo}>
+                                <lightning-input label={campo.label} value={campo.value}>
+                                </lightning-input>
+                            </div>
+                        </template>
+                        <lightning-textarea data-iddoc={selectDocInfo.Id} value={selectDocInfo.Observacoes__c}
+                            class="campo_observacoes" label="Observações do documento">
+                        </lightning-textarea>
+                        <div class="slds-m-top_x-small">
+                            <lightning-button label="Salvar" onclick={salvarDocumento} variant="neutral">
+                            </lightning-button>
+                        </div>
+                    </div>
+
+                    <div class="slds-col slds-size_7-of-12">
+                        <template lwc:if={arquivoImagem}>
+                            <img style="width: 100%; height: 700px; overflow: hidden" src={urlVisuDocumento}>
+                        </template>
+                        
+                        <template lwc:elseif={urlVisuDocumento}>
+                            <iframe data-id="viewPDF" src={urlVisuDocumento}
+                                style="width: 100%; height: 700px; overflow: hidden" frameborder="0"></iframe>
+                        </template>
+                    </div>
+                </div>
+            </template>
+
+            <template lwc:else>
+                <div class="slds-grid slds-grid_vertical-align-center slds-grid_align-center" style="height: 100%">
+                    <div>
+                        <span class="slds-text-heading_small">Selecione um documento ao lado</span>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </div>
+</template>

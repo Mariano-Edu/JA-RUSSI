@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Comissao__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <label>Comissão</label>
+    <referenceTo>Comissao__c</referenceTo>
+    <relationshipLabel>Distribuições de Comissões</relationshipLabel>
+    <relationshipName>DistribuicoesComissoes</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

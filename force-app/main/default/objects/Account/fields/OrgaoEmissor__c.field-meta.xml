@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OrgaoEmissor__c</fullName>
+    <inlineHelpText>Órgão emissor é a instituição responsável por emitir um documento.</inlineHelpText>
+    <label>Orgão Emissor</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>CNIG - Conselho Nacional de Imigração</fullName>
+                <default>false</default>
+                <label>CNIG - Conselho Nacional de Imigração</label>
+            </value>
+            <value>
+                <fullName>CRECI - Conselho Regional de Corretores de Imóveis</fullName>
+                <default>false</default>
+                <label>CRECI - Conselho Regional de Corretores de Imóveis</label>
+            </value>
+            <value>
+                <fullName>CRESS - Conselho Regional de Serviço Socia</fullName>
+                <default>false</default>
+                <label>CRESS - Conselho Regional de Serviço Socia</label>
+            </value>
+            <value>
+                <fullName>Detran</fullName>
+                <default>false</default>
+                <label>Detran</label>
+            </value>
+            <value>
+                <fullName>MTE - Ministério do Trabalho e Emprego</fullName>
+                <default>false</default>
+                <label>MTE - Ministério do Trabalho e Emprego</label>
+            </value>
+            <value>
+                <fullName>Outros</fullName>
+                <default>false</default>
+                <label>Outros</label>
+            </value>
+            <value>
+                <fullName>Polícia Federal</fullName>
+                <default>false</default>
+                <label>Polícia Federal</label>
+            </value>
+            <value>
+                <fullName>SSP</fullName>
+                <default>false</default>
+                <label>SSP</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

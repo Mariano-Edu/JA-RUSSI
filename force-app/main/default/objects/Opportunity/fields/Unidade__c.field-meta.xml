@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Unidade__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <label>Unidade</label>
+    <lookupFilter>
+        <active>true</active>
+        <errorMessage>A Unidade deve estar relacionada ao Empreendimento de Interesse</errorMessage>
+        <filterItems>
+            <field>$Source.EmpreendimentodeInteresse__c</field>
+            <operation>equals</operation>
+            <valueField>Product2.Empreendimento__c</valueField>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>Product2</referenceTo>
+    <relationshipLabel>Opportunities</relationshipLabel>
+    <relationshipName>Opportunities</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Lookup</type>
+</CustomField>

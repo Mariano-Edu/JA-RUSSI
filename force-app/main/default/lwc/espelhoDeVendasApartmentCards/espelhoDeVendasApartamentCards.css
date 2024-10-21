@@ -1,0 +1,54 @@
+.custom-layout {
+    max-width: 95%;
+    margin: 0 auto;
+}
+
+.floor-column {
+    padding: 20px;
+}
+
+.floor-row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.floor-number {
+    margin-bottom: 10px;
+}
+
+.apartment-card {
+    min-height: 120px; /* Reduz a altura mínima do cartão */
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid #ddd; /* Adiciona uma borda leve para melhor visualização */
+    border-radius: 8px; /* Adiciona bordas arredondadas */
+    margin: 5px; /* Adiciona margem ao redor do cartão */
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center items horizontally */
+    margin-bottom: 10px;
+}
+
+.cards {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center items vertically within cards */
+}
+
+.nomeApartamento {
+    font-size: 1.2rem; /* Ajusta o tamanho da fonte */
+    font-weight: bold;
+    text-align: center; /* Center text within its container */
+}
+
+.pagination-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TabelaAtiva</fullName>
+    <active>false</active>
+    <errorConditionFormula>Ativo__c = TRUE &amp;&amp;
+(TODAY() &lt; VigenciaInicio__c || TODAY() &gt; VigenciaFim__c)</errorConditionFormula>
+    <errorDisplayField>Ativo__c</errorDisplayField>
+    <errorMessage>A tabela de vendas só pode ser ativada durante o período de vigência.</errorMessage>
+</ValidationRule>

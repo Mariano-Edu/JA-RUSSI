@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Descricao_da_Permuta__c</fullName>
+    <description>Detalhe o bem ou serviço dado como permuta.</description>
+    <inlineHelpText>Detalhe o bem ou serviço dado como permuta.</inlineHelpText>
+    <label>Descrição da Permuta</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>TextArea</type>
+</CustomField>

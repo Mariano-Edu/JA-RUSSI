@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>EmpreendimentodeInteresse__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <label>Empreendimento de Interesse</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>Empreendimento__c.Generico__c</field>
+            <operation>notEqual</operation>
+            <value>True</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>Empreendimento__c</referenceTo>
+    <relationshipLabel>Oportunidades(Empreendimento de interesse)</relationshipLabel>
+    <relationshipName>Oportunidades</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Lookup</type>
+</CustomField>

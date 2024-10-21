@@ -1,0 +1,4 @@
+.slds-is-relative {
+    position: relative;
+    min-height: 80px;
+}

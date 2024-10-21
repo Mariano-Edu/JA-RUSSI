@@ -1,0 +1,37 @@
+<template>
+    <template for:each={documentos} for:item="documento">
+        <div key={documento} class="slds-m-top_x-small slds-box slds-box_xx-small">
+            <div class="slds-m-horizontal_medium slds-m-vertical_xxxx-small slds-grid
+                                 slds-grid_vertical-align-center">
+
+                <lightning-icon class={documento.StatusAprovacao__c} data-iddoc={documento.Id}
+                    icon-name="standard:document">
+                </lightning-icon>
+                <span onclick={redirecionarPaginaDocumento} data-iddoc={documento.Id}
+                    class="documento_span slds-align_absolute-center slds-m-left_medium">{documento.Name}</span>
+
+                <input class="slds-hide" type="file" accept=".xlsx, .xls, .csv, .png, .doc, .docx, .pdf"
+                    data-iddoc={documento.Id} onchange={openfileUpload} />
+
+                <lightning-badge variant="brand-outline" label="Anexar" data-iddoc={documento.Id} title="Anexar"
+                    class="badge_button slds-m-around_small slds-badge_lightest slds-p-horizontal_medium slds-p-vertical_small"
+                    onclick={clickAnexoHandler}>
+                </lightning-badge>
+
+                <template if:true={documento.isUploaded}>
+                    <lightning-badge variant="brand-outline" label="Visualizar" title="Visualizar"
+                        class="badge_button slds-m-around_small botao_visualizar slds-badge_inverse slds-p-horizontal_medium slds-p-vertical_small"
+                        onclick={previewHandler} data-iddoc={documento.Id}>
+                    </lightning-badge>
+                </template>
+
+                <template if:false={documento.isUploaded}>
+                    <lightning-badge variant="brand-outline" label="Visualizar" title="Visualizar" class="badge_button slds-m-around_small botao_visualizar slds-badge_lightest
+                                       slds-p-horizontal_medium slds-p-vertical_small" data-iddoc={documento.Id}>
+                    </lightning-badge>
+                </template>
+
+            </div>
+        </div>
+    </template>
+</template>

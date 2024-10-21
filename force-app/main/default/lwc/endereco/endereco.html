@@ -1,0 +1,86 @@
+<template>
+    <article>
+        <template if:true={carregando}>
+            <lightning-spinner size="small" alternative-text="Carregando..."></lightning-spinner>
+        </template>        
+        <fieldset class="slds-form-element slds-form-element_compound slds-form-element_address slds-form-element_stacked">
+            <legend class="slds-form-element__label slds-form-element__legend">{label.LabelEndereco}</legend>
+
+            <div class="slds-form-element__control slds-grid slds-wrap">
+                <div class="slds-size_3-of-4">
+                            <lightning-input value={cep} type="search" placeholder={label.PesquisarEndereco} max-length="8"
+                                onchange={handleCEP} onkeypress={handleBuscarEndereco} class="cep-input">
+                            </lightning-input>
+                </div>
+                <div class="slds-size_1-of-4 slds-align_absolute-center">
+                    <lightning-button style="margin-top: 1.1rem;" label="Procurar" variant="brand" onclick={handleBuscarEndereco}></lightning-button>
+                </div>
+            </div>
+
+            <template if:true={podeExibirCampos}>
+                <lightning-record-edit-form record-id={recordId} object-api-name={objectApiName} onsubmit={handleModificarEndereco}>
+                    <div class="slds-grid slds-wrap">
+                        <template if:true={campoLogradouro}>
+                            <div class="slds-col slds-size_1-of-2 slds-p-around_small">
+                                <lightning-input-field field-name={campoLogradouro} data-name="logradouro" value={valorLogradouro} onchange={handleInputChange}>
+                                </lightning-input-field>
+                            </div>
+                        </template>
+                        <template if:true={campoNumero}>
+                            <div class="slds-col slds-size_1-of-2 slds-p-around_small">
+                                <lightning-input-field field-name={campoNumero} data-name="numero" value={endereco.numero} onchange={handleInputChange} required>
+                                </lightning-input-field>
+                            </div>
+                        </template>
+                        <template if:true={campoComplemento}>
+                            <div class="slds-col slds-size_1-of-2 slds-p-around_small">
+                                <lightning-input-field field-name={campoComplemento} data-name="complemento" value={endereco.complemento} onchange={handleInputChange}>
+                                </lightning-input-field>
+                            </div>
+                        </template>
+                        <template if:true={campoBairro}>
+                            <div class="slds-col slds-size_1-of-2 slds-p-around_small">
+                                <lightning-input-field field-name={campoBairro} data-name="bairro" value={valorBairro} onchange={handleInputChange}>
+                                </lightning-input-field>
+                            </div>
+                        </template>
+                        <template if:true={campoCidade}>
+                            <div class="slds-col slds-size_1-of-2 slds-p-around_small">
+                                <lightning-input-field field-name={campoCidade} value={valorLocalidade} onchange={handleInputChange}>
+                                </lightning-input-field>
+                            </div>
+                        </template>
+                        <template if:true={campoUF}>
+                            <div class="slds-col slds-size_1-of-2 slds-p-around_small">
+                                <lightning-input-field field-name={campoUF} value={valorUF} onchange={handleInputChange}>
+                                </lightning-input-field>
+                            </div>
+                        </template>
+                        <template if:true={campoPais}>
+                            <div class="slds-col slds-size_1-of-2 slds-p-around_small">
+                                <lightning-input-field field-name={campoPais} data-name="pais" value={endereco.pais}>
+                                </lightning-input-field>
+                            </div>
+                        </template>
+                        <template if:true={campoCEP}>
+                            <div class="slds-col slds-size_1-of-2 slds-p-around_small">
+                                <lightning-input-field field-name={campoCEP} data-name="cep" value={endereco.cep}>
+                                </lightning-input-field>
+                            </div>
+                        </template>
+                    </div>
+                    <template if:true={apresentarMapa}>
+                        <div class="slds-m-around_medium">
+                            <lightning-map map-markers={mapMarkers} zoom-level="16"></lightning-map>
+                        </div>
+                    </template>
+                    <template if:true={podeSalvar}>
+                        <lightning-button class="slds-float_right slds-m-top_small" variant="brand" icon-name="utility:fallback" type="submit" label={label.Salvar}></lightning-button>
+                    </template>
+                </lightning-record-edit-form>
+            </template>
+            
+            
+        </fieldset>
+    </article>
+</template>

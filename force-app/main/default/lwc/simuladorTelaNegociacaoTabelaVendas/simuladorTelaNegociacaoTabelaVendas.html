@@ -1,0 +1,49 @@
+<template>
+    <lightning-card class="slds-col slds-p-horizontal_large" icon-name="standard:service_contract" title="Selecione uma tabela de vendas" variant="narrow">
+        <div class="slds-grid slds-wrap">
+            <div class="slds-text-title slds-col slds-size_1-of-1">
+                <span>Selecione uma tabela de vendas disponível para o empreendimento da unidade escolhida pelo cliente. Após a seleção, as condições de pagamento serão carregadas automaticamente.</span>
+            </div>
+
+            <div class="slds-box slds-grid slds-wrap slds-col slds-p-vertical_medium" style="padding: 1rem 2rem; overflow-x: auto;">
+                <div class="slds-col  slds-grid slds-size_1-of-1" style="gap: 1rem;">
+                    <lightning-combobox
+                        name="tabelaVendas"
+                        label="Tabela de vendas"
+                        placeholder="Selecione uma tabela de vendas"
+                        options={getTabelaVendasOptions}
+                        value={tabelaVendaValue}
+                        class="slds-col" style="width: 1/4;"
+                        onchange={handleChangeTabela}>
+                    </lightning-combobox>
+                
+                    <lightning-input disabled class="slds-col" value={inicioVigenciaTabela} style="width: 1/4;" type="text" name="inicioVigencia" label="Início de vigência" ></lightning-input>
+                    
+                    <lightning-input disabled class="slds-col" value={fimVigenciaTabela} style="width: 1/4;" type="text" name="fimVigencia" label="Fim de vigência" ></lightning-input>
+                </div>
+
+                <div class="slds-col slds-grid slds-size_1-of-1">
+                    <div class="slds-col slds-size_1-of-1 slds-p-vertical_medium" style="height: 13rem;">
+                        <lightning-datatable
+                            hide-checkbox-column
+                            key-field="id"
+                            data={seriePagamentosTabelaVendas}
+                            columns={tabelaVendasColunas}>
+                        </lightning-datatable>
+                    </div>
+               </div>
+
+               <div class="slds-col slds-grid slds-size_1-of-1 slds-grid_align-end slds-p-vertical_medium">
+                    <div class="slds-grid slds-wrap" style="width: auto;">
+                        <span class="slds-col slds-size_1-of-1 slds-text-body_small" style="font-weight: lighter;">valor Nominal</span>
+                        <span class="slds-col slds-size_1-of-1 slds-text-heading_small" style="font-weight: normal;">{formattedValorNominal}</span>
+                    </div>
+                    <div class="slds-grid slds-wrap" style="width: auto; margin-left: 2rem;">
+                        <span class="slds-col slds-size_1-of-1 slds-text-body_small" style="font-weight: lighter;">VPL</span>
+                        <span class="slds-col slds-size_1-of-1 slds-text-heading_small" style="font-weight: normal;">{formattedValorVPL}</span>
+                    </div>
+               </div>
+            </div>
+        </div>
+    </lightning-card>
+</template>
