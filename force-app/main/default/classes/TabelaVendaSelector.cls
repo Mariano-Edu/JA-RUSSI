@@ -12,7 +12,7 @@ public class TabelaVendaSelector {
         return [
             SELECT
                 Id,
-                Empreendimento__r.ValorM__c,
+                Empreendimento__r.ValorMetroQuadrado__c	,
                 Empreendimento__r.MetragemPrivativaTotal__c
             FROM TabelaVendas__c
             WHERE Id = :tabelaRelacionada LIMIT 1

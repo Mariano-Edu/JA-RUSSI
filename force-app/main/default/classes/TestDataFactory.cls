@@ -38,7 +38,7 @@ public class TestDataFactory {
         TabelaVendas__c tabelaVendas = new TabelaVendas__c();
         tabelaVendas.Name = 'Teste'; 
         tabelaVendas.PeriodicidadeParcelaPos__c = 1;
-        //tabelaVendas.PeriodicidadeParcela__c = 1;
+        tabelaVendas.PeriodicidadeParcela__c = '1';
         return tabelaVendas;
     }
 
