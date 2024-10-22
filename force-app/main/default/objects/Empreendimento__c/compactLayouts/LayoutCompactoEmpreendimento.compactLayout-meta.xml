@@ -2,9 +2,8 @@
 <CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>LayoutCompactoEmpreendimento</fullName>
     <fields>Name</fields>
-    <fields>CNPJFormatado__c</fields>
-    <fields>DataInicioReal__c</fields>
-    <fields>DataConclusaoReal__c</fields>
+    <fields>DataInicialObra__c</fields>
+    <fields>DataFinalObra__c</fields>
     <fields>Ativo__c</fields>
     <label>Layout compacto do empreendimento</label>
 </CompactLayout>

@@ -5,6 +5,7 @@
     <description>Marque este campo para disponibilizar este empreendimento no espelho de vendas</description>
     <inlineHelpText>Marque este campo para disponibilizar este empreendimento no espelho de vendas</inlineHelpText>
     <label>Disponível no espelho</label>
+    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

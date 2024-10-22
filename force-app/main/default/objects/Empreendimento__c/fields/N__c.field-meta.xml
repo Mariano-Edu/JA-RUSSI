@@ -3,10 +3,12 @@
     <fullName>N__c</fullName>
     <description>Numero do Empreendimento</description>
     <externalId>false</externalId>
-    <label>Número</label>
-    <length>30</length>
+    <label>N°</label>
+    <precision>18</precision>
     <required>false</required>
+    <scale>0</scale>
+    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
+    <type>Number</type>
     <unique>false</unique>
 </CustomField>

@@ -3,6 +3,7 @@
     <fullName>Generico__c</fullName>
     <defaultValue>false</defaultValue>
     <label>Genérico</label>
+    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

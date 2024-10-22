@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SPE__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>SPE (Sociedade de Propósito Específico)</description>
+    <label>SPE</label>
+    <referenceTo>Account</referenceTo>
+    <relationshipLabel>SPE</relationshipLabel>
+    <relationshipName>Empreendimentos</relationshipName>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

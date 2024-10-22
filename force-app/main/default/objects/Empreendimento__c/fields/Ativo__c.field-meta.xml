@@ -4,6 +4,7 @@
     <defaultValue>false</defaultValue>
     <description>Indique se o empreendimento está disponível para venda de unidades.</description>
     <label>Ativo</label>
+    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

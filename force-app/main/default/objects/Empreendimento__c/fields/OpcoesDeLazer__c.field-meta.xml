@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OpcoesDeLazer__c</fullName>
+    <label>Opções de Lazer</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Academia</fullName>
+                <default>false</default>
+                <label>Academia</label>
+            </value>
+            <value>
+                <fullName>Área de churrasco</fullName>
+                <default>false</default>
+                <label>Área de churrasco</label>
+            </value>
+            <value>
+                <fullName>Área de piquenique</fullName>
+                <default>false</default>
+                <label>Área de piquenique</label>
+            </value>
+            <value>
+                <fullName>Ateliê de artesanato</fullName>
+                <default>false</default>
+                <label>Ateliê de artesanato</label>
+            </value>
+            <value>
+                <fullName>Biblioteca infantil</fullName>
+                <default>false</default>
+                <label>Biblioteca infantil</label>
+            </value>
+            <value>
+                <fullName>Biblioteca/Sala de leitura</fullName>
+                <default>false</default>
+                <label>Biblioteca/Sala de leitura</label>
+            </value>
+            <value>
+                <fullName>Brinquedoteca</fullName>
+                <default>false</default>
+                <label>Brinquedoteca</label>
+            </value>
+            <value>
+                <fullName>Espaço de coleta seletiva de recicláveis</fullName>
+                <default>false</default>
+                <label>Espaço de coleta seletiva de recicláveis</label>
+            </value>
+            <value>
+                <fullName>Espaço de coworking</fullName>
+                <default>false</default>
+                <label>Espaço de coworking</label>
+            </value>
+            <value>
+                <fullName>Espaço gourmet</fullName>
+                <default>false</default>
+                <label>Espaço gourmet</label>
+            </value>
+            <value>
+                <fullName>Espaço para aulas de dança</fullName>
+                <default>false</default>
+                <label>Espaço para aulas de dança</label>
+            </value>
+            <value>
+                <fullName>Espaço Pilates</fullName>
+                <default>false</default>
+                <label>Espaço Pilates</label>
+            </value>
+            <value>
+                <fullName>Estúdio de arte</fullName>
+                <default>false</default>
+                <label>Estúdio de arte</label>
+            </value>
+            <value>
+                <fullName>Estúdio de fotografia</fullName>
+                <default>false</default>
+                <label>Estúdio de fotografia</label>
+            </value>
+            <value>
+                <fullName>Horta comunitária</fullName>
+                <default>false</default>
+                <label>Horta comunitária</label>
+            </value>
+            <value>
+                <fullName>Jardim Interno</fullName>
+                <default>false</default>
+                <label>Jardim Interno</label>
+            </value>
+            <value>
+                <fullName>Minicampo de golfe</fullName>
+                <default>false</default>
+                <label>Minicampo de golfe</label>
+            </value>
+            <value>
+                <fullName>Minipista de boliche</fullName>
+                <default>false</default>
+                <label>Minipista de boliche</label>
+            </value>
+            <value>
+                <fullName>Paredão de escalada</fullName>
+                <default>false</default>
+                <label>Paredão de escalada</label>
+            </value>
+            <value>
+                <fullName>Parque Interno</fullName>
+                <default>false</default>
+                <label>Parque Interno</label>
+            </value>
+            <value>
+                <fullName>Pet play</fullName>
+                <default>false</default>
+                <label>Pet play</label>
+            </value>
+            <value>
+                <fullName>Piscina</fullName>
+                <default>false</default>
+                <label>Piscina</label>
+            </value>
+            <value>
+                <fullName>Piscina Coberta</fullName>
+                <default>false</default>
+                <label>Piscina Coberta</label>
+            </value>
+            <value>
+                <fullName>Pista de Skate</fullName>
+                <default>false</default>
+                <label>Pista de Skate</label>
+            </value>
+            <value>
+                <fullName>Pistas de corrida ou ciclismo</fullName>
+                <default>false</default>
+                <label>Pistas de corrida ou ciclismo</label>
+            </value>
+            <value>
+                <fullName>Playground</fullName>
+                <default>false</default>
+                <label>Playground</label>
+            </value>
+            <value>
+                <fullName>Playground aquático</fullName>
+                <default>false</default>
+                <label>Playground aquático</label>
+            </value>
+            <value>
+                <fullName>Quadra de badminton</fullName>
+                <default>false</default>
+                <label>Quadra de badminton</label>
+            </value>
+            <value>
+                <fullName>Quadra de basquete</fullName>
+                <default>false</default>
+                <label>Quadra de basquete</label>
+            </value>
+            <value>
+                <fullName>Quadra de Beach Tenis</fullName>
+                <default>false</default>
+                <label>Quadra de Beach Tenis</label>
+            </value>
+            <value>
+                <fullName>Quadra de Squash</fullName>
+                <default>false</default>
+                <label>Quadra de Squash</label>
+            </value>
+            <value>
+                <fullName>Quadra de Tênis</fullName>
+                <default>false</default>
+                <label>Quadra de Tênis</label>
+            </value>
+            <value>
+                <fullName>Quadra de vôlei de areia</fullName>
+                <default>false</default>
+                <label>Quadra de vôlei de areia</label>
+            </value>
+            <value>
+                <fullName>Quadra poliesportiva</fullName>
+                <default>false</default>
+                <label>Quadra poliesportiva</label>
+            </value>
+            <value>
+                <fullName>Sala de Cinema</fullName>
+                <default>false</default>
+                <label>Sala de Cinema</label>
+            </value>
+            <value>
+                <fullName>Sala de karaokê</fullName>
+                <default>false</default>
+                <label>Sala de karaokê</label>
+            </value>
+            <value>
+                <fullName>Sala de massagem</fullName>
+                <default>false</default>
+                <label>Sala de massagem</label>
+            </value>
+            <value>
+                <fullName>Sala de meditação</fullName>
+                <default>false</default>
+                <label>Sala de meditação</label>
+            </value>
+            <value>
+                <fullName>Sala de música</fullName>
+                <default>false</default>
+                <label>Sala de música</label>
+            </value>
+            <value>
+                <fullName>Salão de beleza ou barbearia</fullName>
+                <default>false</default>
+                <label>Salão de beleza ou barbearia</label>
+            </value>
+            <value>
+                <fullName>Salão de festas</fullName>
+                <default>false</default>
+                <label>Salão de festas</label>
+            </value>
+            <value>
+                <fullName>Salão de festas gourmet</fullName>
+                <default>false</default>
+                <label>Salão de festas gourmet</label>
+            </value>
+            <value>
+                <fullName>Salão de festas infantil</fullName>
+                <default>false</default>
+                <label>Salão de festas infantil</label>
+            </value>
+            <value>
+                <fullName>Salão de Jogos</fullName>
+                <default>false</default>
+                <label>Salão de Jogos</label>
+            </value>
+            <value>
+                <fullName>Salão de jogos eletrônicos</fullName>
+                <default>false</default>
+                <label>Salão de jogos eletrônicos</label>
+            </value>
+            <value>
+                <fullName>Sauna seca</fullName>
+                <default>false</default>
+                <label>Sauna seca</label>
+            </value>
+            <value>
+                <fullName>Sauna úmida</fullName>
+                <default>false</default>
+                <label>Sauna úmida</label>
+            </value>
+            <value>
+                <fullName>Spa</fullName>
+                <default>false</default>
+                <label>Spa</label>
+            </value>
+            <value>
+                <fullName>Trilhas para caminhada ou corrida</fullName>
+                <default>false</default>
+                <label>Trilhas para caminhada ou corrida</label>
+            </value>
+            <value>
+                <fullName>Viveiro de aves</fullName>
+                <default>false</default>
+                <label>Viveiro de aves</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>5</visibleLines>
+</CustomField>
