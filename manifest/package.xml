@@ -13,5 +13,9 @@
         <members>TabelaVendaTrigger</members>
         <name>ApexTrigger</name>
     </types>
+    <types>
+		<members>Empreendimento__c.MetragemPrivativaTotal__c</members>
+		<name>CustomField</name>
+	</types>
     <version>62.0</version>
 </Package>
