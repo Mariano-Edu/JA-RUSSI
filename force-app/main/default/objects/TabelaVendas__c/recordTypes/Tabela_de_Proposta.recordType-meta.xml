@@ -6,15 +6,15 @@
     <picklistValues>
         <picklist>PeriodicidadeParcela__c</picklist>
         <values>
-            <fullName>Anual</fullName>
+            <fullName>1</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Mensal</fullName>
+            <fullName>12</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Semestral</fullName>
+            <fullName>6</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -44,7 +44,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Venda á Vista</fullName>
+            <fullName>Venda à Vista</fullName>
             <default>false</default>
         </values>
     </picklistValues>

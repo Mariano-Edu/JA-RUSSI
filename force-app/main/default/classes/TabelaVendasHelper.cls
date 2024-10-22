@@ -169,8 +169,8 @@ public with sharing class TabelaVendasHelper {
             if (itab.Id == Null) {
                 
                 for (TabelaVendas__c existingTab : existingTabelas) {
-                    if (existingTab.Name == iTab.Name && existingTab.Id != iTab.Id) {
-                        iTab.addError('Já existe uma tabela de vendas com este nome.');
+                    if (existingTab.Name == iTab.Name && existingTab.Id != iTab.Id ) {
+                        iTab.addError('Já existe uma tabela de vendas ativa com este nome.');
                         break;
                     }
                 }
@@ -191,13 +191,12 @@ public with sharing class TabelaVendasHelper {
             }
         }
     }
-    
+
     public static void clonarSeriePagamento(List<TabelaVendas__c> tabelas) {
-        System.debug('Iniciando clonarSeriePagamento');
-        
         Set<String> setNome = new Set<String>();
         Set<Id> setEmpreendimento = new Set<Id>();
-        
+        Set<String> setTipoVenda = new Set<String>();
+    
         for (TabelaVendas__c iTab : tabelas) {
             if (iTab.Name != null) {
                 setNome.add(iTab.Name);
@@ -205,97 +204,154 @@ public with sharing class TabelaVendasHelper {
             if (iTab.Empreendimento__c != null) {
                 setEmpreendimento.add(iTab.Empreendimento__c);
             }
+            if (iTab.TipoVenda__c != null) {
+                setTipoVenda.add(iTab.TipoVenda__c);
+            }
         }
-        System.debug('setNome: ' + setNome);
-        System.debug('setEmpreendimento: ' + setEmpreendimento);
-        
+    
         List<TabelaVendas__c> existingTabelas = [
             SELECT 
-            Id, 
-            Name, 
-            Ativo__c, 
-            OrigemTabelaDeVenda__c, 
-            Empreendimento__c
+                Id, 
+                Name,
+                OrigemTabelaDeVenda__c,
+                Ativo__c,
+                TipoVenda__c,
+                Empreendimento__c,
+                VigenciaInicio__c,
+                VigenciaFim__c    
             FROM TabelaVendas__c
-            WHERE (Name IN :setNome OR Empreendimento__c IN :setEmpreendimento) AND Ativo__c = true
+            WHERE 
+                Empreendimento__c IN :setEmpreendimento
+                AND TipoVenda__c IN :setTipoVenda
+                AND Ativo__c = true
         ];
-        System.debug('existingTabelas: ' + existingTabelas);
-        
-        Map<Id, Id> empreendimentoToActiveTabelaMap = new Map<Id, Id>();
-        Map<Id, String> tabelaIdToNameMap = new Map<Id, String>();
-        
+    
+        Map<Id, Id> oldToNewTabelaMap = new Map<Id, Id>();
+        Map<Id, TabelaVendas__c> empreendimentoToActiveTabelaMap = new Map<Id, TabelaVendas__c>();
+    
         for (TabelaVendas__c existingTabela : existingTabelas) {
-            empreendimentoToActiveTabelaMap.put(existingTabela.Empreendimento__c, existingTabela.Id);
-            tabelaIdToNameMap.put(existingTabela.Id, existingTabela.Name);
+            empreendimentoToActiveTabelaMap.put(existingTabela.Empreendimento__c, existingTabela);
         }
-        System.debug('empreendimentoToActiveTabelaMap: ' + empreendimentoToActiveTabelaMap);
-        System.debug('tabelaIdToNameMap: ' + tabelaIdToNameMap);
-        
+    
+        List<TabelaVendas__c> novasTabelas = new List<TabelaVendas__c>();
+    
         for (TabelaVendas__c iTab : tabelas) {
-            if (iTab.Id == null && empreendimentoToActiveTabelaMap.containsKey(iTab.Empreendimento__c)) {
-                iTab.OrigemTabelaDeVenda__c = empreendimentoToActiveTabelaMap.get(iTab.Empreendimento__c);
-            } else if (iTab.Ativo__c == true) {
-                iTab.OrigemTabelaDeVenda__c = iTab.Id;
+            TabelaVendas__c novaTabela = iTab.clone(); 
+            novaTabela.Id = null;
+            novaTabela.Name = null; 
+            novaTabela.Ativo__c = false;
+    
+            TabelaVendas__c tabelaAtiva = empreendimentoToActiveTabelaMap.get(iTab.Empreendimento__c);
+            if (tabelaAtiva != null && tabelaAtiva.Id != iTab.Id) {
+                novaTabela.OrigemTabelaDeVenda__c = tabelaAtiva.Id; 
             }
-        }
-        System.debug('tabelas após ajuste de OrigemTabelaDeVenda__c: ' + tabelas);
-        
-        Set<Id> idsDeOrigem = new Set<Id>();
-        for (TabelaVendas__c iTab : tabelas) {
-            if (iTab.OrigemTabelaDeVenda__c != null) {
-                idsDeOrigem.add(iTab.OrigemTabelaDeVenda__c);
+    
+            if (novaTabela.VigenciaInicio__c != null) {
+                novaTabela.VigenciaInicio__c = novaTabela.VigenciaInicio__c.addDays(30);
             }
+            if (novaTabela.VigenciaFim__c != null) {
+                novaTabela.VigenciaFim__c = novaTabela.VigenciaFim__c.addDays(30); 
+            }
+    
+            Boolean nomeDuplicado = false;
+            for (TabelaVendas__c existing : existingTabelas) {
+                if (existing.Name == novaTabela.Name) {
+                    nomeDuplicado = true;
+                    break; 
+                }
+            }
+    
+            if (nomeDuplicado) {
+                novaTabela.Name += ' (Cópia)'; 
+            }
+    
+            novasTabelas.add(novaTabela);
         }
-        System.debug('idsDeOrigem: ' + idsDeOrigem);
-        
+    
+        if (!novasTabelas.isEmpty()) {
+            insert novasTabelas;
+        }
+    
+        for (Integer i = 0; i < tabelas.size(); i++) {
+            oldToNewTabelaMap.put(tabelas[i].Id, novasTabelas[i].Id);
+        }
+    
         List<SeriePagamentos__c> seriesDePagamentos = [
             SELECT 
-            Id, 
-            TabelaVenda__c, 
-            TipoCondicao__c,
-            InicioPagamento__c,
-            QuantidadeParcelas__c,
-            ValorTotal__c
+                Id, 
+                TabelaVenda__c, 
+                TipoCondicao__c,
+                InicioPagamento__c,
+                QuantidadeParcelas__c,
+                ValorTotal__c
             FROM SeriePagamentos__c 
+            WHERE TabelaVenda__c IN :empreendimentoToActiveTabelaMap.values()
         ];
-        System.debug('seriesDePagamentos: ' + seriesDePagamentos);
-        
-        Map<Id, List<SeriePagamentos__c>> tabelaToSeriesMap = new Map<Id, List<SeriePagamentos__c>>();
+    
+        Map<Id, List<SeriePagamentos__c>> tabelaToSeriesMap = new Map<Id,List<SeriePagamentos__c>>();
+
         for (SeriePagamentos__c serie : seriesDePagamentos) {
+
             if (!tabelaToSeriesMap.containsKey(serie.TabelaVenda__c)) {
                 tabelaToSeriesMap.put(serie.TabelaVenda__c, new List<SeriePagamentos__c>());
             }
+
             tabelaToSeriesMap.get(serie.TabelaVenda__c).add(serie);
         }
-        System.debug('tabelaToSeriesMap: ' + tabelaToSeriesMap);
-        
+    
         List<SeriePagamentos__c> novasSeries = new List<SeriePagamentos__c>();
-        for (TabelaVendas__c iTab : tabelas) {
-            if (iTab.OrigemTabelaDeVenda__c != null && tabelaToSeriesMap.containsKey(iTab.OrigemTabelaDeVenda__c)) {
-                List<SeriePagamentos__c> seriesRelacionadas = tabelaToSeriesMap.get(iTab.OrigemTabelaDeVenda__c);
+
+        System.debug(empreendimentoToActiveTabelaMap);
+    
+        for (TabelaVendas__c novaTabela : novasTabelas) {
+            TabelaVendas__c tabelaRelacionada = empreendimentoToActiveTabelaMap.get(novaTabela.Empreendimento__c);
+    
+            if (tabelaRelacionada != null && tabelaToSeriesMap.containsKey(tabelaRelacionada.Id)) {
+
+                List<SeriePagamentos__c> seriesRelacionadas = tabelaToSeriesMap.get(tabelaRelacionada.Id);
+
                 for (SeriePagamentos__c serie : seriesRelacionadas) {
-                    if (iTab.OrigemTabelaDeVenda__c != iTab.Id) {
-                        SeriePagamentos__c novaSerie = new SeriePagamentos__c();
-                        novaSerie.TabelaVenda__c = iTab.Id;
-                        if (String.isBlank(serie.OrigemSeriePagamento__c)) {
-                            novaSerie.OrigemSeriePagamento__c = tabelaIdToNameMap.get(serie.TabelaVenda__c);
-                        } else {
-                            novaSerie.OrigemSeriePagamento__c = serie.OrigemSeriePagamento__c;
-                        }
-                        novaSerie.TipoCondicao__c = serie.TipoCondicao__c;
-                        novaSerie.InicioPagamento__c = serie.InicioPagamento__c;
-                        novaSerie.QuantidadeParcelas__c = serie.QuantidadeParcelas__c;
-                        novaSerie.ValorTotal__c = serie.ValorTotal__c;
-                        novasSeries.add(novaSerie);
-                    }
+                    SeriePagamentos__c novaSerie = new SeriePagamentos__c();
+                    novaSerie.TabelaVenda__c = oldToNewTabelaMap.get(serie.TabelaVenda__c); 
+                    novaSerie.TipoCondicao__c = serie.TipoCondicao__c;
+                    novaSerie.TabelaVenda__c = serie.TabelaVenda__c;
+                    novaSerie.InicioPagamento__c = serie.InicioPagamento__c;
+                    novaSerie.QuantidadeParcelas__c = serie.QuantidadeParcelas__c;
+                    novaSerie.ValorTotal__c = serie.ValorTotal__c;
+                    novasSeries.add(novaSerie);
                 }
             }
         }
-        System.debug('novasSeries: ' + novasSeries);
-        
+    
         if (!novasSeries.isEmpty()) {
             insert novasSeries;
-            System.debug('Novas séries de pagamento inseridas: ' + novasSeries);
+        }
+    
+        List<UnidadeTabelaVendas__c> unidadesRelacionadas = [
+            SELECT 
+                Id, 
+                Unidade__c, 
+                TabelaVenda__c 
+            FROM UnidadeTabelaVendas__c 
+            WHERE TabelaVenda__c IN :empreendimentoToActiveTabelaMap.values()
+        ];
+    
+        List<UnidadeTabelaVendas__c> novasUnidades = new List<UnidadeTabelaVendas__c>();
+    
+        for (UnidadeTabelaVendas__c unidade : unidadesRelacionadas) {
+            UnidadeTabelaVendas__c novaUnidade = unidade.clone();
+            novaUnidade.Id = null; 
+    
+            TabelaVendas__c tabelaCorrespondente = empreendimentoToActiveTabelaMap.get(unidade.TabelaVenda__c);
+            if (tabelaCorrespondente != null) {
+                novaUnidade.TabelaVenda__c = tabelaCorrespondente.Id; 
+                novasUnidades.add(novaUnidade);
+            }
+        }
+    
+        if (!novasUnidades.isEmpty()) {
+            insert novasUnidades;
         }
     }
+    
 }

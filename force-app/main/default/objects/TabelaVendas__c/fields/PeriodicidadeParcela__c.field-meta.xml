@@ -11,17 +11,17 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Mensal</fullName>
+                <fullName>1</fullName>
                 <default>false</default>
                 <label>Mensal</label>
             </value>
             <value>
-                <fullName>Semestral</fullName>
+                <fullName>6</fullName>
                 <default>false</default>
                 <label>Semestral</label>
             </value>
             <value>
-                <fullName>Anual</fullName>
+                <fullName>12</fullName>
                 <default>false</default>
                 <label>Anual</label>
             </value>

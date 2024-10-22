@@ -3,15 +3,12 @@
     <fullName>Situacao__c</fullName>
     <externalId>false</externalId>
     <formula>IF(
-    AND(
-        TODAY() &gt;= VigenciaInicio__c ,
-        TODAY() &lt;= VigenciaFim__c
-    ),
-    &quot;Em vigor&quot;,
-    &quot;Suspensa&quot;
+    OR(TODAY() &gt; VigenciaFim__c, TODAY() &lt; VigenciaInicio__c),
+				&quot;Fora da Vigência&quot;,
+				IF(Ativo__c, &quot;Em vigor&quot;, &quot;Suspensa&quot;)
 )</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-    <inlineHelpText>Em vigor- Dentro da vigência / Suspensa - Fora da vigência</inlineHelpText>
+    <inlineHelpText>Em vigor - Dentro da vigência e ativo /  Suspensa - Dentro da vigência e desativada / Fora da Vigência - Fora do período de vigência</inlineHelpText>
     <label>Situação</label>
     <required>false</required>
     <trackHistory>false</trackHistory>
