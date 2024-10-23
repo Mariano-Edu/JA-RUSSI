@@ -13,11 +13,11 @@ public class ComparativoService {
 
     public static List<ComparacaoResultado> calcularComparacao(Id tabelaId, List<SeriePagamentos__c> proposta) {
         System.debug(proposta);
-        TabelaVendas__c tabelaVenda = TabelaVendaSelector.obterTabelasRelacionadas(tabelaId);
+        TabelaVendas__c tabelaVenda = TabelaVendasSelector.obterTabelasRelacionadas(tabelaId);
         Decimal valorProposta = proposta[0].ValorTotal__c;
         System.debug(valorProposta);
         
-        List<UnidadeTabelaVendas__c> tabelaVendaUnidades = TabelaVendaSelector.obterUnidadeTabelasPorId(tabelaId);
+        List<UnidadeTabelaVendas__c> tabelaVendaUnidades = TabelaVendasSelector.obterUnidadeTabelasPorId(tabelaId);
         System.debug(tabelaVendaUnidades);
         List<ComparacaoResultado> resultados = new List<ComparacaoResultado>();
 
