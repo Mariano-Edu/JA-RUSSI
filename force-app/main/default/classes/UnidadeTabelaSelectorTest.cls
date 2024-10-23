@@ -65,7 +65,7 @@ private class UnidadeTabelaSelectorTest {
         ];
 
         Test.startTest();
-        UnidadeTabelaVendas__c actual = UnidadeTabelaSelector.obterUnidadesTabelaPorIdUnidade(unidade.Id);
+        UnidadeTabelaVendas__c actual = UnidadeTabelaSelector.obterUnidadesTabelaPorIdUnidade(unidade.Unidade__c);
         Test.stopTest();
 
         Assert.areEqual(unidade, actual);
