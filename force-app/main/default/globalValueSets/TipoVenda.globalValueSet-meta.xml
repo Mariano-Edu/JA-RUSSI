@@ -6,9 +6,9 @@
         <label>Financiamento Bancário</label>
     </customValue>
     <customValue>
-        <fullName>Venda á Vista</fullName>
+        <fullName>Venda à Vista</fullName>
         <default>false</default>
-        <label>Venda á Vista</label>
+        <label>Venda à Vista</label>
     </customValue>
     <customValue>
         <fullName>Financiamento Direto</fullName>
