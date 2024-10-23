@@ -1,7 +1,6 @@
 public class TabelaVendaHandler extends TriggerHandler {
     public override void afterInsert() {
         TabelaVendasHelper.inserirUnidadesTabelas((List<TabelaVendas__c>) Trigger.new);
-        TabelaVendasHelper.clonarSeriePagamento((List<TabelaVendas__c>) Trigger.new);
     }
 
     public override void afterUpdate() {
