@@ -11,7 +11,7 @@ public class UnidadeTabelaSelector {
     }
 
     public static Map<Id, UnidadeTabelaVendas__c> obterUnidadesTabelaExistentes(set<Id> tabelavendasIds){
-        Map<Id, UnidadeTabelaVendas__c> unidadesTabelaMap = new Map<Id, UnidadeTabelaVendas__c>([
+        Map<Id,UnidadeTabelaVendas__c> unidadesTabelaMap = new Map<Id, UnidadeTabelaVendas__c>([
             SELECT Id, Name, PrecoLista__c, CoeficienteTabela__c, MetragemUnidade__c, Unidade__c, TabelaVenda__c
             FROM UnidadeTabelaVendas__c
             WHERE TabelaVenda__c IN :tabelaVendasIds
