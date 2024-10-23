@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>*</members>
+        <members>TabelaVendaController</members>
+        <members>TabelaVendaHandler</members>
+        <members>TabelaVendasSelector</members>
+        <members>TabelaVendaService</members>
+        <members>TabelaVendasHelperTest</members>
+        <members>TabelaVendasHelper</members>
         <name>ApexClass</name>
     </types>
     <types>
@@ -17,7 +22,7 @@
         <name>ApexTestSuite</name>
     </types>
     <types>
-        <members>*</members>
+        <members>TabelaVendaTrigger</members>
         <name>ApexTrigger</name>
     </types>
     <types>
@@ -25,12 +30,21 @@
         <name>AuraDefinitionBundle</name>
     </types>
     <types>
-        <members>*</members>
+        <members>clonarTabelas.css</members>
         <name>LightningComponentBundle</name>
     </types>
     <types>
         <members>*</members>
         <name>StaticResource</name>
+    </types>
+    <types>
+        <members>TabelaVendas__c.Clonado__c</members>
+        <members>TabelaVendas__c.TipoVenda__c</members>
+        <members>TabelaVendas__c.ClonadoPor__c</members>
+        <members>TabelaVendas__c.DataDaClonagem__c</members>
+        <members>TabelaVendas__c.DataDaClonagem__c</members>
+        <members>Opportunity.TipoVenda__c</members>
+    <name>CustomField</name>
     </types>
     <version>62.0</version>
 </Package>
