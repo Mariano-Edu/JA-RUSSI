@@ -25,6 +25,16 @@ public class SeriePagamentosService {
         return retorno;
     }
 
+    public static Map<String, Decimal> setValorRealVPLTabelaVendas(Id idTabelaVendas){
+        valorTotalPropostaValido = 0.0;
+        limparListas();
+        setarHabiteSe(idTabelaVendas);
+        Map<Id, SeriePagamentos__c> series = new Map<Id, SeriePagamentos__c> (SeriePagamentoSelector.obterSeriesPorIdTabela(idTabelaVendas));
+        inicioSerieTabelaVendas(series);
+        Map<String, Decimal> retorno = retornoValoresReaisVPL;
+        return retorno;
+    }
+
     //Metodo para setar as infomorções nescessarias da tabela de vendas
     public static void setarHabiteSe (Id tabelaVenda){
         TabelaVendas__c tabelaRelacionada = TabelaVendasSelector.obterTabelasRelacionadas(tabelaVenda);

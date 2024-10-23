@@ -3,8 +3,18 @@ private class TestDataFactoryTest {
 
     @TestSetup
     static void makeData() {
-        insert TestDataFactory.gerarProduto();
-        insert TestDataFactory.gerarTabelaVendas();
+        Product2 produto = new Product2();
+        produto.Name = 'Produto de Teste';
+        produto.ProductCode = 'Teste-1';
+        produto.isActive = true;
+        produto.NumeroDaUnidade__c = 777;
+        insert produto;
+
+        TabelaVendas__c tabelaVendas = new TabelaVendas__c();
+        tabelaVendas.Name = 'Teste'; 
+        tabelaVendas.PeriodicidadeParcelaPos__c = 1;
+        tabelaVendas.PeriodicidadeParcela__c = '1';
+        insert tabelaVendas;
     }
     
     @isTest

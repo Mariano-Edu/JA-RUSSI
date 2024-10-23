@@ -11,7 +11,17 @@ public with sharing class SeriePagamentosServiceTest {
         insert seriesTabela;
 
         UnidadeTabelaVendas__c unidadeTabela = TestDataFactory.gerarUnidadeTabelaVendas(tabela.id);
-        insert unidadeTabela;   
+        insert unidadeTabela;     
+    }
+
+    @isTest
+    public static void testSetValorRealVPLTabelaVendas(){
+        TabelaVendas__c tabela = [SELECT id FROM TabelaVendas__c LIMIT 1];
+        Test.startTest();
+        Map<String, Decimal> retornoValoresReaisVPL = SeriePagamentosService.setValorRealVPLTabelaVendas(tabela.Id);
+        Test.stopTest();
+
+        Assert.areEqual(3000.00, retornoValoresReaisVPL.get('valorVPL'), 'Os valores devem ser iguais.');
     }
 
     @isTest
