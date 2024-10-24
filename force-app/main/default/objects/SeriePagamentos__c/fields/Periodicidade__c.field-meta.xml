@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Periodicidade__c</fullName>
+    <externalId>false</externalId>
+    <formula>CASE(
+     TipoCondicao__c ,
+    &quot;Mensais&quot;, 1,
+    &quot;Ato&quot;, 1,
+    &quot;Sinal&quot;, 1,
+    &quot;Única&quot;, 1,
+    &quot;Financiamento&quot;, 1,
+    &quot;Periódica&quot;, 1,
+    &quot;Bimestral&quot;, 2,
+    &quot;Trimestral&quot;, 3,
+    &quot;Semestrais&quot;, 6,
+    &quot;Anuais&quot;, 12,
+    0
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>Periodicidade, em MESES, em que cada parcela do Tipo de Condição será cobrada</inlineHelpText>
+    <label>Periodicidade</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

@@ -72,9 +72,9 @@ private class ProdutoSelectorTest {
             SELECT
                 Id,
                 Name,
-                PrecoLista__c,
+                ValorDaUnidade__c,
                 Coeficiente__c,
-                MetragemTotal__c,
+                MetragemDaUnidadeM__c,
                 Empreendimento__c
             FROM Product2 
             WHERE Empreendimento__c IN :idsEmpreendimentos

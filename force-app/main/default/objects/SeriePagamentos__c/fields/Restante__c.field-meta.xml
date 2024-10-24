@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Restante__c</fullName>
+    <defaultValue>false</defaultValue>
+    <inlineHelpText>Marca o item que completará 100% do valor da venda.</inlineHelpText>
+    <label>Restante</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

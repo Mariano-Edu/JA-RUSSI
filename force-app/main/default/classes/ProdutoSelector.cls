@@ -3,6 +3,9 @@ public class ProdutoSelector {
     .get('Vaga')
     .getRecordTypeId();
 
+
+
+
     public static Product2 getProdutosById(Id id){
         return [
             SELECT
@@ -30,14 +33,14 @@ public class ProdutoSelector {
         return produtoMap;
     }
 
-    public static Map<Id, Product2> obterUnidadesRelacionadas(Set<Id> empreendimento){
+    public static Map<Id,Product2> obterUnidadesRelacionadas(Set<Id> empreendimento){
         Map<Id, Product2> unidadesMap = new Map<Id, Product2>([
             SELECT
                 Id,
                 Name,
-                PrecoLista__c,
+                ValorDaUnidade__c,
                 Coeficiente__c,
-                MetragemTotal__c,
+                MetragemDaUnidadeM__c,
                 Empreendimento__c
             FROM Product2 
             WHERE Empreendimento__c IN :empreendimento

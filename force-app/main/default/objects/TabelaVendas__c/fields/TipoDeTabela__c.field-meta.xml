@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TipoDeTabela__c</fullName>
+    <label>Tipo de tabela</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Financiamento Bancário</fullName>
+                <default>false</default>
+                <label>Financiamento Bancário</label>
+            </value>
+            <value>
+                <fullName>Financiamento Construtora</fullName>
+                <default>false</default>
+                <label>Financiamento Construtora</label>
+            </value>
+            <value>
+                <fullName>A Vista</fullName>
+                <default>false</default>
+                <label>A Vista</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

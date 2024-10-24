@@ -73,26 +73,24 @@ public class EspelhoVendasServiceTest {
         System.assertNotEquals(0, result.size(), 'Deve retornar uma lista de nomes de empreendimentos');
     }
 
-    // @isTest
-    // static void testGetConfiguracaoEspelho() {
-    //     Test.startTest();
-    //     // Simula a recuperação de dados de metadados personalizados
-    //     List<Configura_o_de__mdt> configuracoes = new List<Configura_o_de__mdt>();
+    @isTest
+    static void testGetConfiguracaoEspelho() {
+        Test.startTest();
+        // Simula a recuperação de dados de metadados personalizados
+        List<ConfiguracaoSimulador__mdt> configuracoes = new List<ConfiguracaoSimulador__mdt>();
 
-    //     for (Integer i = 0; i < 3; i++) {
-    //         Configura_o_de__mdt config = new Configura_o_de__mdt();
-    //         config.Status__c = 'Status ' + i;
-    //         config.Cor__c = 'Cor ' + i;
-    //         configuracoes.add(config);
-    //     }
-
-    //     Test.setMock(Configura_o_de__mdt.class, configuracoes);
+        for (Integer i = 0; i < 3; i++) {
+            ConfiguracaoSimulador__mdt config = new ConfiguracaoSimulador__mdt();
+            config.Status__c = 'Status ' + i;
+            config.Cor__c = 'Cor ' + i;
+            configuracoes.add(config);
+        }
         
-    //     List<Configura_o_de__mdt> result = EspelhoVendasService.getConfiguracaoEspelho();
-    //     Test.stopTest();
+        List<ConfiguracaoSimulador__mdt> result = EspelhoVendasService.getConfiguracaoEspelho();
+        Test.stopTest();
 
-    //     System.assertNotEquals(0, result.size(), 'Deve retornar uma lista de configurações de espelho');
-    // }
+        System.assertNotEquals(0, result.size(), 'Deve retornar uma lista de configurações de espelho');
+    }
 
     @isTest
     static void testBuscarStatusUnidades() {

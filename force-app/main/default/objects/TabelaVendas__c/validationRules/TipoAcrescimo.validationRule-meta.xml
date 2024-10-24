@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TipoAcrescimo</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+    NOT(ISBLANK(ValorDeAcrescimo__c)),
+    NOT(ISBLANK(PercentualDeAcrescimo__c))
+)</errorConditionFormula>
+    <errorMessage>Apenas um tipo de acréscimo pode ser preenchido</errorMessage>
+</ValidationRule>

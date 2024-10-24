@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CalcularSeriePagamentos</fullName>
+    <availability>online</availability>
+    <displayType>button</displayType>
+    <linkType>javascript</linkType>
+    <masterLabel>Calcular Série de Pagamentos</masterLabel>
+    <openType>onClickJavaScript</openType>
+    <protected>false</protected>
+    <url>{!REQUIRESCRIPT(&quot;/soap/ajax/52.0/connection.js&quot;)}
+{!REQUIRESCRIPT(&quot;/soap/ajax/52.0/apex.js&quot;)}
+
+// ID do registro atual
+var serieDePagamentosId = &apos;{!TabelaVendas__c.Id}&apos;;
+
+try {
+    // Chama a classe Apex
+    var result = sforce.apex.execute(
+        &quot;SeriePagamentosService&quot;,
+        &quot;calcularSerieDePagamentos&quot;,
+        { serieDePagamentosId: serieDePagamentosId }
+    );
+
+    // Mensagem de sucesso
+    alert(&apos;Série de pagamentos calculada com sucesso!&apos;);
+} catch (e) {
+    // Mensagem de erro
+    alert(&apos;Erro ao calcular série de pagamentos: &apos; + e);
+}</url>
+</WebLink>

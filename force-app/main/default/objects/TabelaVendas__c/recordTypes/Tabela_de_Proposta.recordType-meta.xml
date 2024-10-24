@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Tabela_de_Proposta</fullName>
+    <active>true</active>
+    <label>Tabela de Proposta</label>
+    <picklistValues>
+        <picklist>PeriodicidadeParcela__c</picklist>
+        <values>
+            <fullName>1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>12</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>6</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>TipoDeTabela__c</picklist>
+        <values>
+            <fullName>A Vista</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Financiamento Bancário</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Financiamento Construtora</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>TipoVenda__c</picklist>
+        <values>
+            <fullName>Financiamento Bancário</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Financiamento Direto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Venda à Vista</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>
