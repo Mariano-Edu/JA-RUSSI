@@ -11,7 +11,7 @@ public with sharing class TabelaVendasSelector {
     }
 
     public static TabelaVendas__c getTabelaVendasPorId(Id id) {
-        return [
+        List<TabelaVendas__c> result = [
             SELECT 
             Id, 
             Name,
@@ -26,6 +26,8 @@ public with sharing class TabelaVendasSelector {
             WHERE Id = :id 
             LIMIT 1
         ];
+        
+        return result.isEmpty() ? null : result[0];
     } 
 
     public static List<SeriePagamentos__c> getSeriesPagamentosPorTabela(Id idTabela) {
