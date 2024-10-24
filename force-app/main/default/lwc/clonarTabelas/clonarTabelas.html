@@ -1,0 +1,35 @@
+<template>
+    <div class="form-container slds-theme_default slds-p-around_medium">
+        <div class="custom-title">
+            <p>Clone da Tabela: {nomeTabela}</p>
+        </div>
+
+        <lightning-record-edit-form id="recordEditForm" record-id={recordId} object-api-name={objectApiName}>
+            <template for:each={campos} for:item="campo">
+                <div class="custom-input slds-form-element" key={campo}>
+                    <lightning-input-field
+                        required={campo.isObrigatorio}
+                        field-name={campo.apiName}
+                        data-field={campo.apiName}
+                        onchange={handleInputChange}>
+                    </lightning-input-field>
+                </div>
+            </template>
+
+            <div class="custom-button">
+                <lightning-button 
+                    label="Cancelar"
+                    onclick={handleCancelar}
+                    class="slds-button_neutral slds-m-right_small">
+                </lightning-button>
+
+                <lightning-button 
+                    variant="brand"
+                    label="Clonar Tabela"
+                    onclick={handleClonarTabela}
+                    class="slds-button_brand">
+                </lightning-button>
+            </div>
+        </lightning-record-edit-form>
+    </div>
+</template>
