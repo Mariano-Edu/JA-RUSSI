@@ -19,24 +19,17 @@ export default class ChecklistDocumentos extends NavigationMixin(LightningElemen
     }
 
     handleDelete(event) {
-        const index = this.documentos.findIndex(doc => doc.Id === event.target.dataset.iddoc);
-        if (index !== -1) {
-            const documentosAtualizados = [...this.documentos];
-            documentosAtualizados[index] = {
-                ...documentosAtualizados[index],
-                isLoading: true
-            };
-            this.documentos = documentosAtualizados;
-        }
+        const idDocumento = event.target.dataset.iddoc;
+        this.setDocumentoCarregando(idDocumento, true);
 
-        obterLinksDocumentosPorLinkedEntityId({ linkedEntityId: event.target.dataset.iddoc })
+        obterLinksDocumentosPorLinkedEntityId({ linkedEntityId: idDocumento })
             .then(res => {
                 if (res.length === 0) return;
 
                 const selectedRecordId = res[0].ContentDocumentId;
                 deleteRecord(selectedRecordId)
                     .then(() => {
-                        this.template.querySelector(`input[data-iddoc=${event.target.dataset.iddoc}]`).value = '';
+                        this.template.querySelector(`input[data-iddoc=${idDocumento}]`).value = '';
 
                         this.dispatchEvent(
                             new ShowToastEvent({
@@ -116,25 +109,14 @@ export default class ChecklistDocumentos extends NavigationMixin(LightningElemen
         reader.onload = () => {
             const readerBase64 = reader.result.split(',')[1];
 
-            const index = this.documentos.findIndex(doc => doc.Id === idDocumento);
-            if (index !== -1) {
-                const documentosAtualizados = [...this.documentos];
-                documentosAtualizados[index] = {
-                    ...documentosAtualizados[index],
-                    isLoading: true
-                };
-                this.documentos = documentosAtualizados;
-            }
+            this.setDocumentoCarregando(idDocumento, true);
             
             carregarArquivo({ base64: readerBase64, filename: file.name, recordId: idDocumento, extensao: file.type.split('/')[1] })
                 .then(result => {
                     if (result && !result.includes('Erro')) {
                         this.toast(`${file.name} carregado com sucesso!`);
-                        this.uploadedfiles[idDocumento] = true;
-
-                        const iconClassList = this.template.querySelector(`lightning-icon[data-iddoc=${idDocumento}]`).classList;
-                        iconClassList.remove(iconClassList[0]);
-                        iconClassList.add('Entregue');
+                        this.documentos[this.documentos.findIndex(doc => doc.Id === idDocumento)].isUploaded = true;
+                        this.dispatchEvent(new CustomEvent('atualizarchecklist'));
                     } else {
                         this.toast(result, 'error');
                     }
@@ -143,7 +125,7 @@ export default class ChecklistDocumentos extends NavigationMixin(LightningElemen
                     console.log(`Erro ao carregar arquivo: ${JSON.stringify(error)}`);
                 })
                 .finally(() => {
-                    this.dispatchEvent(new CustomEvent('atualizarchecklist'));
+                    this.setDocumentoCarregando(idDocumento, false);
                 });
         };
 
@@ -163,5 +145,17 @@ export default class ChecklistDocumentos extends NavigationMixin(LightningElemen
         const validFileTypes = ['image/jpeg', 'image/png', 'application/pdf'];
         
         return validFileTypes.includes(fileType);
+    }
+
+    setDocumentoCarregando(idDocumento, isLoading) {
+        const index = this.documentos.findIndex(doc => doc.Id === idDocumento);
+
+        const documentosAtualizados = [...this.documentos];
+        documentosAtualizados[index] = {
+            ...documentosAtualizados[index],
+            isLoading: isLoading
+        };
+
+        this.documentos = documentosAtualizados;
     }
 }
