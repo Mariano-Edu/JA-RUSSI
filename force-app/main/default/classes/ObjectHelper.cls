@@ -119,4 +119,14 @@ public with sharing class ObjectHelper {
 
         return pickListValues;
     }
+
+    public static List<SObject> filterObjectsByFieldValue(List<SObject> objects, String field, Object value) {
+        List<SObject> filteredObjects = new List<SObject>();
+
+        for(SObject iObject : objects) {
+            if(iObject.get(field) != null && iObject.get(field).equals(value)) { filteredObjects.add(iObject); }
+        }
+
+        return filteredObjects;
+    }
 }

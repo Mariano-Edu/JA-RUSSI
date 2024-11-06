@@ -4,10 +4,11 @@ public class TestDataFactory {
     public static Account gerarConta(){
         Account conta = new Account();
         conta.Name = 'Conta de Teste';
+        conta.CNPJ__c = '66077848000127';
         return conta;
     }
 
-    public static Product2 gerarProduto(){
+    public static Product2 gerarProduto() {
         Product2 produto = new Product2();
         produto.Name = 'Produto de Teste';
         produto.ProductCode = 'Teste-1';
@@ -27,7 +28,7 @@ public class TestDataFactory {
     }
 
     //Registros simulador de vendas
-    public static Empreendimento__c gerarEmpreendimento(){
+    public static Empreendimento__c gerarEmpreendimento() {
         Empreendimento__c empreendimento = new Empreendimento__c();
         empreendimento.Name = 'Empreendimento de Teste';
         empreendimento.CNPJ__c = '22151181000190';
@@ -70,5 +71,23 @@ public class TestDataFactory {
         unidadeVenda.TabelaVenda__c = idTabela;
         unidadeVenda.PrecoLista__c = 300000;
         return unidadeVenda;
-    } 
+    }
+
+    public static Quote gerarCotacao(Id idTabela, Id idOpp) {
+        Quote cotacao = new Quote();
+        cotacao.Name = 'Cotação Teste';
+        cotacao.TabelaDeVenda__c = idTabela;
+        cotacao.OpportunityId = idOpp;
+        return cotacao;
+    }
+
+    public static Opportunity gerarOportunidade(Id idConta) {
+        Opportunity opp = new Opportunity();
+        opp.Name = 'Oportunidade 1';
+        opp.StageName = 'Proposta';
+        opp.CloseDate = System.today().addMonths(1);
+        opp.AccountId = idConta;
+        //opp.ResponsavelPeloLead__c = user.Id;
+        return opp;
+    }
 }
