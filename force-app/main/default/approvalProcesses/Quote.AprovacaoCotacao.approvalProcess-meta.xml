@@ -26,7 +26,7 @@
         </approvalActions>
         <assignedApprover>
             <approver>
-                <name>jonnas.oliveira@jarussi.com.br</name>
+                <name>felipe@jarussi.com.br</name>
                 <type>user</type>
             </approver>
             <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>

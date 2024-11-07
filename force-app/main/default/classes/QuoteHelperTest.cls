@@ -62,12 +62,6 @@ private class QuoteHelperTest {
         insert quotes;
     }
 
-
-    @isTest
-    private static void handleAfterInsertTest() {
-        Assert.isTrue(true);
-    }
-
     @isTest
     private static void handleAfterUpdateTest() {
         List<Quote> quotes = [SELECT Status FROM Quote];
@@ -92,10 +86,5 @@ private class QuoteHelperTest {
 
         Assert.isTrue(pedidosAprovacao.size() == 1);
         Assert.areEqual(pedidosAprovacao.get(0).TargetObjectId, quotes.get(0).Id);
-    }
-
-    @isTest
-    private static void handleBeforeInsert() {
-        Assert.isFalse(false);
     }
 }
