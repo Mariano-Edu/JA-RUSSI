@@ -21,6 +21,7 @@ private class TestDataFactoryTest {
     private static void gerarContaTest(){
         Account expectedAccount = new Account();
         expectedAccount.Name = 'Conta de Teste';
+        expectedAccount.CNPJ__c = '66077848000127';
 
         Test.startTest();
         Account actualAccount = TestDataFactory.gerarConta();
