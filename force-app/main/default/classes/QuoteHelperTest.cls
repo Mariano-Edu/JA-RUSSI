@@ -87,4 +87,5 @@ private class QuoteHelperTest {
         Assert.isTrue(pedidosAprovacao.size() == 1);
         Assert.areEqual(pedidosAprovacao.get(0).TargetObjectId, quotes.get(0).Id);
     }
+    
 }
