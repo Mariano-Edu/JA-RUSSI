@@ -1,0 +1,6 @@
+A seguinte cotação foi aprovada automaticamente pois atende todos os critérios estabelecidos na tabela
+
+Proprietário da Oportunidade: {!Quote.NomeProprietarioOportunidade__c}
+Quantidade de Itens: {!Quote.LineItemCount}
+Valor da Unidade na Proposta: R${!Quote.TotalPrice}
+Valor da Unidade na Tabela: R${!Quote.PrecoLista__c}

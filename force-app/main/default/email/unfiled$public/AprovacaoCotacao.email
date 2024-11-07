@@ -1,0 +1,11 @@
+Essa cotação requer aprovação uma vez que o desconto em seu valor é maior do que sua Tabela de Vendas selecionada.
+
+Proprietário da Oportunidade: {!Quote.NomeProprietarioOportunidade__c}
+Quantidade de Itens: {!Quote.LineItemCount}
+Valor da Unidade na Proposta: R${!Quote.TotalPrice}
+Valor da Unidade na Tabela: R${!Quote.PrecoLista__c}
+
+Palavras-chave de resposta:
+
+Aprovação: sim, aprovar, aprovado
+Reprovação: não, rejeitar, rejeitado
