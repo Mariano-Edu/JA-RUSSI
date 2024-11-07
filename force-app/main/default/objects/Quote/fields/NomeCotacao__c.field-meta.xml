@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NomeCotacao__c</fullName>
+    <description>Geração de nome automático para cotação</description>
+    <displayFormat>P-{00000}</displayFormat>
+    <externalId>false</externalId>
+    <label>Nome Cotação</label>
+    <trackHistory>false</trackHistory>
+    <type>AutoNumber</type>
+</CustomField>

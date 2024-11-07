@@ -3,6 +3,14 @@ private class TestDataFactoryTest {
 
     @TestSetup
     static void makeData() {
+        Pricebook2 standardPricebook = new Pricebook2(
+            Id = Test.getStandardPricebookId(),
+            IsActive = true
+        );
+
+        update standardPricebook;
+
+
         Product2 produto = new Product2();
         produto.Name = 'Produto de Teste';
         produto.ProductCode = 'Teste-1';
@@ -21,6 +29,7 @@ private class TestDataFactoryTest {
     private static void gerarContaTest(){
         Account expectedAccount = new Account();
         expectedAccount.Name = 'Conta de Teste';
+        expectedAccount.CNPJ__c = '66077848000127';
 
         Test.startTest();
         Account actualAccount = TestDataFactory.gerarConta();
