@@ -25,7 +25,7 @@ public class TestDataFactory {
         pricebookEntry.UnitPrice = 100;
         pricebookEntry.IsActive = true;
         return pricebookEntry;
-    }
+}
 
     //Registros simulador de vendas
     public static Empreendimento__c gerarEmpreendimento() {
