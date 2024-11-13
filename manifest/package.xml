@@ -19,6 +19,10 @@
         <name>CustomField</name>
     </types>
   
+  <types>
+        <members>TabelaVendas__c</members>
+        <name>CustomObject</name>
+    </types>
   
     <version>62.0</version>
 </Package>
