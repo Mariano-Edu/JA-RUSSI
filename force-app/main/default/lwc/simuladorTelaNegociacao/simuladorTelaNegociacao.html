@@ -1,0 +1,48 @@
+<template>
+    <p>{activeSectionsMessage}</p>
+    <!-- tabelas-vendas={getTabelaOptions} -->
+    
+    <lightning-accordion allow-multiple-sections-open active-section-name={activeSections}>
+        <lightning-accordion-section name="Selecione uma tabela de vendas" label="Selecione uma tabela de vendas">
+            <c-simulador-tela-negociacao-tabela-vendas
+                tabela-mes-vigencia={getTabelaMesVigencia}
+                entrada-precos-map={getEntradaPrecosMap}
+                tabela-options={getTabelaOptions}
+                tabela-vendas={getTabelasVendas}
+                produto-selecionado={getProdutoSelecionado}
+                tabela-selecionada={tabelaSelecionada}
+                ultima-tabela-selecionada={ultimaTabelaSelecionada}  
+                onsettabelaselecionada={handleSetTabelaSelecionada} 
+                onsetseriespagamentoproposta={changeSeriesPagamentoProposta} 
+                tabela-vingente-value={tabelaVendaVingenteValue} 
+                onselecionarserie={handleSelecionarSerie}
+                unidade-selecionada={produtoSelecionado}>
+            </c-simulador-tela-negociacao-tabela-vendas>
+        </lightning-accordion-section>
+
+        <!-- <lightning-accordion-section name="Informações complementares" label="Informações complementares">
+            <c-simulador-tela-negociacao-info-complementares info-complementares ={infoComplementares}>
+            </c-simulador-tela-negociacao-info-complementares>
+        </lightning-accordion-section> -->
+
+        <lightning-accordion-section name="Proposta do cliente" label="Proposta do cliente">
+            <c-simulador-tela-negociacao-proposta-cliente  
+                unidade-selecionada={produtoSelecionado} 
+                entrada-precos-map={getEntradaPrecosMap}
+                onaplicardesconto={handleAplicarDesconto} 
+                onhandlepagaravista={handlePagarAVista} 
+                onhandleigualartabelas={handleIgualarTabelas} 
+                onchangecondicaodata={handleChangeCondicaoData} 
+                valor-vpl-proposta-data={valorVplProposta} 
+                valor-nominal-proposta-data={valorNominalProposta} 
+                propostas-cliente-data = {propostasCliente}
+                onadicionarcondicaodata={handleAdicionarCondicaoData} 
+                ondeletecondicaodata={handleDeleteCondicaoData}
+                onzerarcondicao={handleZerarCondicao}
+                desconto-nominal={getDescontoNominal}
+                desconto-percentual={getDescontoPercentual}
+                ondividircondicao={handleDivdirCondicao}>
+            </c-simulador-tela-negociacao-proposta-cliente>
+        </lightning-accordion-section>
+    </lightning-accordion>
+</template>

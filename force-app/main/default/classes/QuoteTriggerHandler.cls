@@ -11,4 +11,8 @@ public class QuoteTriggerHandler extends TriggerHandler {
         QuoteHelper.handleAfterUpdate(Trigger.new, (Map<Id,Quote>)Trigger.oldMap);
     }
 
+    public override void beforeUpdate() {
+        QuoteHelper.handleBeforeUpdate(Trigger.new);
+    }
+
 }

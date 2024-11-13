@@ -1,0 +1,109 @@
+<template>
+  <lightning-card class="slds-col slds-p-horizontal_large" icon-name="standard:account" title="Informações da unidade" variant="narrow">
+    <div class="slds-box slds-col slds-grid slds-wrap" style="padding: 3rem;">
+      <template lwc:if={produtoSelecionadoId}>
+        <div class="slds-clearfix slds-col slds-size_1-of-1">
+          <div class="slds-float_right">
+            <lightning-button-icon onclick={redirectToEmpreendimento} icon-name="utility:preview" variant="border-filled" alternative-text="Visualizar empreendimento"></lightning-button-icon>
+          </div>
+        </div>
+      </template>
+
+      <template lwc:if={produtoSelecionadoEmpreendimento}>
+        <div class="slds-col slds-grid slds-wrap slds-size_1-of-2 slds-p-around_medium">
+          <b class="slds-col slds-size_1-of-1">Empreendimento</b>
+          <span class="slds-col slds-size_1-of-1">{produtoSelecionadoEmpreendimento}</span>
+        </div>
+      </template>
+
+      <template lwc:if={produtoSelecionadoNomeTorre}>
+        <div class="slds-col slds-grid slds-wrap slds-size_1-of-2 slds-p-around_medium">
+          <b class="slds-col slds-size_1-of-1">Bloco</b>
+          <span class="slds-col slds-size_1-of-1">{produtoSelecionadoNomeTorre}</span>
+        </div>
+      </template>
+
+      <template lwc:if={produtoSelecionadoName}>
+        <div class="slds-col slds-grid slds-wrap slds-size_1-of-2 slds-p-around_medium">
+          <b class="slds-col slds-size_1-of-1">Nome do produto</b>
+          <span class="slds-col slds-size_1-of-1">{produtoSelecionadoName}</span>
+        </div>
+      </template>
+
+      <template lwc:if={produtoSelecionadoNumeroUnidade}>
+        <div class="slds-col slds-grid slds-wrap slds-size_1-of-2 slds-p-around_medium">
+          <b class="slds-col slds-size_1-of-1">Número da unidade</b>
+          <span class="slds-col slds-size_1-of-1">{produtoSelecionadoNumeroUnidade}</span>
+        </div>
+      </template>
+
+      <template lwc:if={produtoSelecionadoTipoUnidade}>
+        <div class="slds-col slds-grid slds-wrap slds-size_1-of-2 slds-p-around_medium">
+          <b class="slds-col slds-size_1-of-1">Família de produtos</b>
+          <span class="slds-col slds-size_1-of-1">{produtoSelecionadoTipoUnidade}</span>
+        </div>
+      </template>
+
+      <template lwc:if={produtoSelecionadoAndar}>
+        <div class="slds-col slds-grid slds-wrap slds-size_1-of-2 slds-p-around_medium">
+          <b class="slds-col slds-size_1-of-1">Andar</b>
+          <span class="slds-col slds-size_1-of-1">{produtoSelecionadoAndar}</span>
+        </div>
+      </template>
+
+      <template lwc:if={produtoSelecionadoQuartos}>
+        <div class="slds-col slds-grid slds-wrap slds-size_1-of-2 slds-p-around_medium">
+          <b class="slds-col slds-size_1-of-1">Quartos</b>
+          <span class="slds-col slds-size_1-of-1">{produtoSelecionadoQuartos}</span>
+        </div>
+      </template>
+
+      <template lwc:if={produtoSelecionadoMetragemUnidade}>
+        <div class="slds-col slds-grid slds-wrap slds-size_1-of-2 slds-p-around_medium">
+          <b class="slds-col slds-size_1-of-1">Metragem da unidade (privativa)</b>
+          <span class="slds-col slds-size_1-of-1">{produtoSelecionadoMetragemUnidade}m²</span>
+        </div>
+      </template>
+
+      <template lwc:if={produtoSelecionadoPrecoLista}>
+        <div class="slds-col slds-grid slds-wrap slds-size_1-of-2 slds-p-around_medium">
+          <b class="slds-col slds-size_1-of-1">Preço de lista</b>
+          <span class="slds-col slds-size_1-of-1">{produtoSelecionadoPrecoLista}</span>
+        </div>
+      </template>
+
+      <template lwc:if={vagasSelecionadasInfo}>
+        <div style="width:68%; display:flex; justify-content:space-between; flex-wrap:wrap; margin-left:5px;">
+          <div style="margin-left: 1.5%; margin-top:1%;">
+            <p style="font-weight: 700; padding-bottom:1%">Vagas Selecionadas:</p>
+            <ul>
+              <template for:each={vagasSelecionadasInfo} for:item="vaga">
+                <li key={vaga.id}>
+                  Vaga {vaga.nome} - {vaga.tipoVaga}
+                  <span if:true={vaga.isExtra}> (Extra) </span>
+                </li>
+              </template>
+            </ul>
+          </div>
+      
+          
+          <template if:true={hasExtraVagas}>
+            <div style="margin-top:2%; width: 200px;">
+              <p style="font-weight: 700; padding-bottom:1%">Preço Vaga:</p>
+              <ul>
+                <template for:each={formattedVagasSelecionadasInfo} for:item="vaga">
+                  <li style="width: 300px;" key={vaga.id}>
+                      <div style="width: 100%;" if:true={vaga.isExtra}> 
+                          Vaga {vaga.nome} -
+                          Valor da Vaga: {vaga.valorVagaFormatado}
+                      </div> 
+                  </li>
+              </template>
+              </ul>
+            </div>
+          </template>
+        </div>
+      </template>
+    </div>
+  </lightning-card>
+</template>

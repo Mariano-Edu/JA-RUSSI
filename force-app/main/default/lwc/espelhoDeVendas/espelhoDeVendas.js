@@ -1,4 +1,4 @@
-import { LightningElement, track, wire } from 'lwc';
+import { LightningElement, track, wire, api } from 'lwc';
 import { CurrentPageReference } from 'lightning/navigation';
 import buscarBlocosPorEmpreendimento from '@salesforce/apex/EspelhoVendasController.buscarBlocosPorEmpreendimento';
 
@@ -6,9 +6,26 @@ export default class EspelhoDeVendas extends LightningElement {
     @track apartments = [];
     @track filteredApartments = [];
     @track blocoOptions = [];
-    @track empreendimentoSelecionado;
+    @track opportunityId;
+    @api tabelaOptions;
+    @api empreendimentoSelecionado;
+    @api opportunitySelecionada;
+    @api entradaPrecosMap;
+    @api cotacaoId;
+
     disponivel;
-    recordId;
+    empreendimentoId;
+    opportunityTipoVenda;
+
+    @api
+    get getTabelaOptions() {
+        return this.tabelaOptions;
+    }
+
+    @api
+    get getEntradaPrecosMap() {
+        return this.entradaPrecosMap;
+    }
 
     get getEmpreendimentoSelecionado() {
         return this.empreendimentoSelecionado;
@@ -23,46 +40,62 @@ export default class EspelhoDeVendas extends LightningElement {
     }
 
     @wire(CurrentPageReference)
-    pageRef(newPageRef) {
-        if(newPageRef) {
-            const pageReference = newPageRef.state;
-            const newRecordId = pageReference?.c__recordId;
-            
-            const disponivel = pageReference?.c__disponivel !== undefined 
-                ? Number(pageReference?.c__disponivel) 
-                : 1;
+    pageRef({ state }) {
+        if (!state) return;
 
-            this.disponivel = disponivel;
+        const newEmpreendimentoId = state?.c__empreendimentoId;
+        
+        const disponivel = state?.c__disponivel !== undefined 
+            ? Number(state?.c__disponivel) 
+            : 1;
 
-            if(newRecordId && newRecordId !== this.recordId) {
-                this.recordId = newRecordId;
-                this.handleIdEmpreendimentoChange();
-            }
+        this.disponivel = disponivel;
+
+        if(newEmpreendimentoId && newEmpreendimentoId !== this.empreendimentoId) {
+            this.empreendimentoId = newEmpreendimentoId;
+            this.handleIdEmpreendimentoChange();
         }
+
+        const newOpportunityId = state?.c__opportunityId;
+        if(newOpportunityId && newOpportunityId !== this.opportunityId) {
+            this.opportunityId = newOpportunityId;
+        }
+        
     }
 
     renderedCallback() {
         const urlParams = new URLSearchParams(window.location.search);
-        const newRecordId = urlParams.get('c__recordId');
+        const newEmpreendimentoId = urlParams.get('c__empreendimentoId');
+        const newOpportunityId = urlParams.get('c__opportunityId');
         const disponivel = urlParams.get('c__disponivel') !== undefined 
             ? Number(urlParams.get('c__disponivel')) 
             : 1;
 
-        if(newRecordId && newRecordId !== this.recordId) {
-            this.recordId = newRecordId;
+        if(newEmpreendimentoId && newEmpreendimentoId !== this.empreendimentoId) {
+            this.empreendimentoId = newEmpreendimentoId;
             this.disponivel = disponivel;
             this.handleIdEmpreendimentoChange();
         }
+
+        if(newOpportunityId && newOpportunityId !== this.opportunityId) {
+            this.opportunityId = newOpportunityId
+        };
+
     }
 
     handleIdEmpreendimentoChange() {
-        this.empreendimentoSelecionado = this.recordId;
-        this.buscarBlocos();
+        this.empreendimentoSelecionado = this.empreendimentoId;
+        // this.buscarTabelas(this.opportunitySelecionada);
     }
 
     selectEmpreendimento(event) {
         this.empreendimentoSelecionado = event.detail.idEmpreendimento;
-        this.buscarBlocos();
+        // this.buscarTabelas(this.opportunitySelecionada);
+    }
+
+    selectTabela(event) {
+        this.tabelaSelecionada = event.detail.idTabela;
+        this.dispatchEvent(new CustomEvent('selecionartabela', { detail: { idTabela: this.tabelaSelecionada, tabelaOptions: this.tabelaOptions } }));
     }
 
     changeApartments(event) {
@@ -73,23 +106,41 @@ export default class EspelhoDeVendas extends LightningElement {
         this.filteredApartments = event.detail;
     }
 
-    handleRecarregarEspelho() {
-        location.reload();
+    get getFilteredApartments() {
+        return this.filteredApartments;
     }
     
     selecionarUnidade(event){
         this.dispatchEvent(new CustomEvent('selecionarunidade', { detail: event.detail }));
     }
 
-    buscarBlocos(){
-        buscarBlocosPorEmpreendimento({ idEmpreendimento: this.empreendimentoSelecionado })
-            .then(response => {
-                this.blocoOptions = response.map(bloco => {
-                    return {
-                        'label': bloco.Name,
-                        'value': bloco.Id
-                    }
-                });
-            })
+    @wire(buscarBlocosPorEmpreendimento, { 
+        idEmpreendimento: '$empreendimentoSelecionado' 
+    })
+    wiredBlocos({ error, data }) {
+        if (data) {
+            const mappedOptions = data.map(bloco => ({
+                label: bloco.Name,
+                value: bloco.Id
+            }));
+            
+            this.blocoOptions = [
+                ...mappedOptions,
+                { label: 'Todos', value: '' }
+            ];
+        } else if (error) {
+            console.error('Erro ao buscar blocos: ', error);
+        }
+    }
+
+    handleRecarregarEspelho() {
+        this.filteredApartments = [];
+        this.blocoOptions = [];
+        this.tabelaOptions = [];
+        this.opportunityTipoVenda = null;
+        this.empreendimentoSelecionado = null;
+
+        this.handleIdEmpreendimentoChange();
+        // this.buscarTabelas(this.opportunitySelecionada);
     }
 }

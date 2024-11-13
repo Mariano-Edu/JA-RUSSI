@@ -6,19 +6,33 @@ public class QuoteHelper {
     public static void handleAfterInsert(List<Quote> quotes) {
         handleUpdateName(quotes);
     }
+
+    public static void handleBeforeUpdate(List<Quote> quotes) {
+        approveQuotes(quotes);
+    }
     
     public static void handleAfterUpdate(List<Quote> quotes, Map<Id,Quote> oldQuotes) {
         List<Quote> quotesToValidate = ObjectHelper.filterObjectsByFieldValue(quotes, 'Status', 'Em Aprovação');
         List<Quote> approvedQuotes = ObjectHelper.filterObjectsByFieldValue(quotes, 'Status', 'Aprovada');
-
         handleApprovalRequests(quotesToValidate);
-        changeQuotesOppStatus(approvedQuotes);
+        handleApprovedQuotes(approvedQuotes);
     }
 
     private static void handleStandardPricebook(List<Quote> quotes) {
         for(Quote quote : quotes) {
             if(quote.Pricebook2Id == null) {
                 quote.Pricebook2Id = [SELECT Id FROM Pricebook2 WHERE isStandard = true LIMIT 1].Id;
+            }
+        }
+    }
+
+    private static void approveQuotes(List<Quote> quotes) {
+        List<Quote> approvedQuotes = new List<Quote>();
+
+        for(Quote iQuote : quotes) {
+            if(iQuote.DescontoConformeTabela__c && iQuote.ComissaoConformeTabela__c) {
+                approvedQuotes.add(iQuote);
+                iQuote.Status = 'Aprovada';
             }
         }
     }
@@ -105,7 +119,7 @@ public class QuoteHelper {
         emailBody = emailBody.replace('{!Quote.NomeProprietarioOportunidade__c}', quote.NomeProprietarioOportunidade__c);
         emailBody = emailBody.replace('{!Quote.LineItemCount}', String.valueOf(quote.LineItemCount));
         emailBody = emailBody.replace('{!Quote.TotalPrice}', String.valueOf(quote.TotalPrice).replace('.', ','));
-        emailBody = emailBody.replace('{!Quote.PrecoLista__c}', String.valueOf(quote.PrecoLista__c).replace('.', ','));
+        emailBody = emailBody.replace('{!Quote.PrecoLista__c}', quote.PrecoLista__c != null ? String.valueOf(quote.PrecoLista__c).replace('.', ',') : '0,00');
 
         Messaging.SingleEmailMessage message = new Messaging.SingleEmailMessage();
 
@@ -120,7 +134,7 @@ public class QuoteHelper {
         return message;
     }
 
-    private static void changeQuotesOppStatus(List<Quote> quotes) {
+    private static void handleApprovedQuotes(List<Quote> quotes) {
         Map<Id,Opportunity> opps = new Map<Id,Opportunity>(
             OpportunityDA.getOpportunitiesById(
                 new Set<String>{'Id', 'StageName'},
@@ -144,5 +158,7 @@ public class QuoteHelper {
         if(!oppsToUpdate.isEmpty()) {
             update oppsToUpdate;
         }
+
+        sendAutomaticApprovalsEmails(quotes);
     }
 }

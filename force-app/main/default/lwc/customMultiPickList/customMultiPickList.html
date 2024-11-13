@@ -4,16 +4,9 @@
             <abbr if:true={required} title="required" class="slds-required">*</abbr>{label}
         </label>
         <div class="slds-input-has-icon slds-input-has-icon_right">                
-            <lightning-icon icon-name="utility:down" size="xx-small" class="slds-icon slds-input__icon slds-input__icon_right" style="margin-right:-0.2rem;top:15px;"></lightning-icon>
-
-            <lightning-input 
-                type="text" 
-                placeholder={placeholder} 
-                onchange={onSearch} 
-                class="cmpl-input" 
-                variant="label-hidden" 
-                disabled={getDisabled}>
-            </lightning-input>
+            <lightning-icon icon-name="utility:down" size="xx-small" class="slds-icon slds-input__icon slds-input__icon_right" 
+                                                    style="margin-right:-0.2rem;top:15px;"></lightning-icon>
+            <lightning-input type="text" placeholder={placeholder} onchange={onSearch} class="cmpl-input" variant="label-hidden" disabled={getDisabled}></lightning-input>
         </div>
         <template if:true={showDD}>
             <div class="slds-dropdown slds-dropdown_length-10 slds-dropdown_fluid">
@@ -57,18 +50,12 @@
         </template>    
         <template if:true={showPillView}>
             <div class="slds-m-top_x-small slds-grid">    
-                <div style="position: relative; padding: 0; height: fit-content;">
+                <div style="    position: relative; padding: 0; height: fit-content;">
                     <ul class="slds-listbox slds-is-relative slds-listbox_horizontal" role="listbox">
                         <template for:each={options} for:item="option">
                             <template if:true={option.checked}>
                                 <li key={option.index} class="slds-listbox-item">
-                                    <lightning-pill
-                                        label={option.label}
-                                        name={option.label}
-                                        onremove={onRemove}
-                                        role="pill"
-                                    >
-                                    </lightning-pill>
+                                    <lightning-pill label={option.label} name={option.label} onremove={onRemove} role="pill"></lightning-pill>
                                 </li>
                             </template>
                         </template>

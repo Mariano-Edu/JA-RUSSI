@@ -11,77 +11,43 @@ public class ComparativoService {
         public Double diferenca { get; set; }
     }
 
-    public static List<ComparacaoResultado> calcularComparacao(Id tabelaId, List<SeriePagamentos__c> proposta) {
-        System.debug(proposta);
+    public static List<ComparacaoResultado> calcularComparacao(Id unidadeId, Id tabelaId, List<SeriePagamentos__c> proposta) {
         TabelaVendas__c tabelaVenda = TabelaVendasSelector.obterTabelasRelacionadas(tabelaId);
-        Decimal valorProposta = proposta[0].ValorTotal__c;
-        System.debug(valorProposta);
+
+        System.debug('proposta');
+        System.debug(proposta);
+
+        UnidadeTabelaVendas__c unidadeTabela = UnidadeTabelaSelector.obterEntradaPrecoPorId(unidadeId);
+        
+        Decimal valorProposta = 0.0;
+        System.debug(proposta);
+        for (SeriePagamentos__c serie : proposta) {
+            valorProposta += serie.ValorTotalNominal__c;
+        }   
         
         List<UnidadeTabelaVendas__c> tabelaVendaUnidades = TabelaVendasSelector.obterUnidadeTabelasPorId(tabelaId);
-        System.debug(tabelaVendaUnidades);
         List<ComparacaoResultado> resultados = new List<ComparacaoResultado>();
 
-
-        // 1. Valor do m²
         ComparacaoResultado valorM2 = new ComparacaoResultado();
         valorM2.item = 'Valor do m²';
-
-        // Null check
-        valorM2.valorTabela = (tabelaVenda != null && tabelaVenda.Empreendimento__r != null && tabelaVenda.Empreendimento__r.ValorMetroQuadrado__c	 != null) 
-                      ? tabelaVenda.Empreendimento__r.ValorMetroQuadrado__c	 
-                      : 0.0;
-                      System.debug('Valor m2 tabela'+valorM2.valorTabela);
-        
-        valorM2.valorProposta = valorProposta/tabelaVenda.Empreendimento__r.MetragemPrivativaTotal__c;
-        System.debug('Valor m2 proposta'+valorM2.valorProposta);
-        System.debug('Valor Proposta'+ valorM2.valorProposta);
-        valorM2.diferenca = valorM2.valorTabela - valorM2.valorProposta;
-        System.debug('Valor Diferenca'+valorM2.diferenca);
+        valorM2.valorTabela = unidadeTabela.ValorMetroQuadradoTabela__c;
+        valorM2.valorProposta = valorProposta / unidadeTabela.MetragemUnidade__c;
+        valorM2.diferenca =  valorM2.valorProposta - valorM2.valorTabela;
         resultados.add(valorM2);
-       
-        System.debug('Resultados'+resultados);
         
-
-        // 2. Valor do m² à vista
-        ComparacaoResultado valorM2Vista = new ComparacaoResultado();
-        valorM2Vista.item = 'Valor do m² à vista';
-        valorM2Vista.valorTabela = 0.0; // Substitua com o campo correto
-        valorM2Vista.valorProposta = 0.0; // Substitua com o campo correto
-        valorM2Vista.diferenca = valorM2Vista.valorTabela - valorM2Vista.valorProposta;
-        resultados.add(valorM2Vista);
-
-        // Captação até metado do prazo da obra
-        ComparacaoResultado captacaoObra= new ComparacaoResultado();
-        captacaoObra.item = 'Captação até metade do prazo da obra';
-        captacaoObra.valorTabela = 0.0; // Substitua com o campo correto
-        captacaoObra.valorProposta = 0.0; // Substitua com o campo correto
-        captacaoObra.diferenca = captacaoObra.valorTabela - captacaoObra.valorProposta;
-        resultados.add(captacaoObra);
-
-        // 4.Captação até habite-se
-        ComparacaoResultado captacaoAteHabiteSe = new ComparacaoResultado();
-        captacaoAteHabiteSe.item = '% de Captação até habite-se';
-        captacaoAteHabiteSe.valorTabela = 0.0; // Substitua com o campo correto
-        captacaoAteHabiteSe.valorProposta = 0.0; // Substitua com o campo correto
-        captacaoAteHabiteSe.diferenca = captacaoAteHabiteSe.valorTabela - captacaoAteHabiteSe.valorProposta;
-        resultados.add(captacaoAteHabiteSe);
-
-        // Captação após habita-se
-        ComparacaoResultado captacaoAposHabiteSe  = new ComparacaoResultado();
-        captacaoAposHabiteSe.item = 'Captação apos habite-se';
-        captacaoAposHabiteSe.valorTabela = 0.0; // Substitua com o campo correto
-        captacaoAposHabiteSe.valorProposta = 0.0; // Substitua com o campo correto
-        captacaoAposHabiteSe.diferenca = captacaoAposHabiteSe.valorTabela - captacaoAposHabiteSe.valorProposta;
-        resultados.add(captacaoAposHabiteSe);
-
-        // Desconto nominal
         ComparacaoResultado descontoNominal = new ComparacaoResultado();
         descontoNominal.item = 'Desconto Nominal';
-        descontoNominal.valorTabela = 0.0;  // Substitua com o campo correto
-        descontoNominal.valorProposta =0.0; // Substitua com o campo correto
-        descontoNominal.diferenca = descontoNominal.valorTabela - descontoNominal.valorProposta;
+        descontoNominal.valorTabela = unidadeTabela.ValorVenda__c - unidadeTabela.ValorMinimoVenda__c;
+        descontoNominal.valorProposta = unidadeTabela.ValorVenda__c - valorProposta;
+        descontoNominal.diferenca =  descontoNominal.valorProposta - descontoNominal.valorTabela;
         resultados.add(descontoNominal);
-
+        
+        ComparacaoResultado descontoPercentual = new ComparacaoResultado();
+        descontoPercentual.item = 'Desconto Percentual';
+        descontoPercentual.valorTabela = descontoNominal.valorTabela * 100 / unidadeTabela.ValorVenda__c; 
+        descontoPercentual.valorProposta = descontoNominal.valorProposta * 100 / valorProposta;
+        descontoPercentual.diferenca = descontoPercentual.valorProposta - descontoPercentual.valorTabela ;
+        resultados.add(descontoPercentual);
 
         return resultados;
     }

@@ -1,0 +1,12 @@
+.sucesso {
+    color: rgb(75, 202, 129) !important;
+}
+
+.slds-table td.error {
+    color: rgb(254, 92, 76) !important;
+}
+
+/* In your CSS file or style tag */
+.icon-success lightning-icon svg {
+    fill: rgb(2, 126, 70); /* This is the SLDS success color */
+}

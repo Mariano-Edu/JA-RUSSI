@@ -2,8 +2,10 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Unidade__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
-    <label>Unidade</label>
+    <externalId>false</externalId>
+    <label>Produto</label>
     <referenceTo>Product2</referenceTo>
+    <relationshipLabel>Entrada de Preços</relationshipLabel>
     <relationshipName>UnidadesTabelaVendas</relationshipName>
     <required>false</required>
     <trackHistory>false</trackHistory>

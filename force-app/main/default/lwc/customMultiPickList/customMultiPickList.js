@@ -1,13 +1,14 @@
-import { LightningElement, api } from 'lwc';
+import { LightningElement, api, wire, track } from 'lwc';
 
 export default class CustomMultiPickList extends LightningElement {
+
     placeholder = '';
-    showDD = false;
+    showDD=false;
     init = false; 
     isExpanded = false;
     isSelectAll = false;
 
-    @api options = [];    
+    @api options=[];    
     @api label;
     @api required;
     @api showpills;
@@ -27,15 +28,15 @@ export default class CustomMultiPickList extends LightningElement {
                     let opts = this.options ? this.options.filter((element) => element.show).length : 0;
                     this.showDD = opts > 0;
                 }
-
                 event.stopPropagation();
             });
-
-            this.template.addEventListener('click', event => event.stopPropagation());
-
-            document.addEventListener('click', () => this.showDD = false);
-
-            this.init = true;
+            this.template.addEventListener('click', (event) => {
+                event.stopPropagation();
+            });
+            document.addEventListener('click', () => {
+                this.showDD = false;
+            });
+            this.init=true;
         }
     }
 
@@ -43,11 +44,8 @@ export default class CustomMultiPickList extends LightningElement {
         this.options.forEach(option => {
             option.show = option.label.toLowerCase().startsWith(event.detail.value.toLowerCase());
         });
-
         let filteredopts = this.options.filter((element) => element.show);
-
         this.showDD = false;
-
         if(filteredopts.length > 0) {
             this.showDD = true;
         }      
@@ -66,19 +64,16 @@ export default class CustomMultiPickList extends LightningElement {
 
     onRemove(event) {
         this.options.find(option => option.label === event.detail.name).checked = false;
-        this.postSelect();   
+        this.postSelect();        
     }
 
     postSelect() {
-        const count = this.options.filter((element) => element.checked).length;
-
-        this.placeholder = count > 0 ? count + ' Item(s) Selecionados' : '';
-
-        this.isSelectAll = count === this.options.length;
-
+        let count = this.options.filter((element) => element.checked).length;
+        this.placeholder = count > 0 ? count+ ' Item(s) Selecionados' : '';
+        this.isSelectAll = (count == this.options.length);
         if(this.showpills) {
             let evnt = setInterval(() => {
-                if(count > 1) {
+                if(count > 1){
                     if(this.template.querySelector('[role="listbox"]').getBoundingClientRect().height > 
                         (this.template.querySelectorAll('[role="pill"]')[0].getBoundingClientRect().height+10)) {
                         this.template.querySelector('[role="more"]').classList.remove('slds-hide');
@@ -89,7 +84,6 @@ export default class CustomMultiPickList extends LightningElement {
                 clearInterval(evnt);
             }, 200);
         }
-
         if(this.required) {
             if(count == 0) {
                 this.template.querySelector('.cmpl-input').setCustomValidity('Please select item(s)');
@@ -99,6 +93,7 @@ export default class CustomMultiPickList extends LightningElement {
             this.template.querySelector('.cmpl-input').reportValidity();
         }
 
+         
         const selectedValues = this.getSelectedList();
 
         const selectionChangeEvent = new CustomEvent('selectionchange', {
@@ -113,7 +108,6 @@ export default class CustomMultiPickList extends LightningElement {
             let count = this.options ? this.options.filter((element) => element.checked).length : 0;
             return this.showpills && count > 0;
         }
-
         return false;
     }
 
@@ -131,15 +125,14 @@ export default class CustomMultiPickList extends LightningElement {
 
     @api
     getSelectedList() {
-        return this.options.filter(element => element.checked).map(element => element.value).join(';');
+        return this.options.filter((element) => element.checked).map((element) => element.value).join(';');
     }
 
     @api
-    clearSelectedList() {
+    clearSelectedList(){
         this.options.forEach(opcao =>{
             opcao.checked = false
-        });
-
+        })
         this.postSelect();
     }
 
@@ -148,22 +141,17 @@ export default class CustomMultiPickList extends LightningElement {
         selected?.split(';').forEach(name => {
             this.options.find(option => option.label === name).checked = true;
         });
-
         this.postSelect();
     }
 
     @api
     setOptions(opts) {
-        this.options = opts.map(opt => 
-            {
-                return {
-                    'label': opt.label,
-                    'value': opt.value,
-                    'show': true,
-                    'checked':false
-                };
-            }
-        );
+        this.options = opts.map(opt => {return {"label": opt.label, "value": opt.value, "show": true, "checked":false}});
+    }
+
+    @api
+    getOptions() {
+        return this.options;
     }
 
     @api
@@ -176,7 +164,6 @@ export default class CustomMultiPickList extends LightningElement {
                 return false;
             }            
         }
-
         return true;
     }
 

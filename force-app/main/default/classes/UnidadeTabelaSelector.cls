@@ -4,14 +4,18 @@ public class UnidadeTabelaSelector {
             SELECT
             Id,
             TabelaVenda__c,
-            PrecoLista__c
+            PrecoLista__c,
+            ValorVenda__c,
+            ValorMinimoVenda__c,
+            ValorMetroQuadradoTabela__c,
+            Unidade__c
             FROM UnidadeTabelaVendas__c 
             WHERE TabelaVenda__c = :tabelaVendaRelacionada
         ];
     }
 
     public static Map<Id, UnidadeTabelaVendas__c> obterUnidadesTabelaExistentes(set<Id> tabelavendasIds){
-        Map<Id,UnidadeTabelaVendas__c> unidadesTabelaMap = new Map<Id, UnidadeTabelaVendas__c>([
+        Map<Id, UnidadeTabelaVendas__c> unidadesTabelaMap = new Map<Id, UnidadeTabelaVendas__c>([
             SELECT Id, Name, PrecoLista__c, CoeficienteTabela__c, MetragemUnidade__c, Unidade__c, TabelaVenda__c
             FROM UnidadeTabelaVendas__c
             WHERE TabelaVenda__c IN :tabelaVendasIds
@@ -22,4 +26,21 @@ public class UnidadeTabelaSelector {
     public static UnidadeTabelaVendas__c obterUnidadesTabelaPorIdUnidade(Id idUnidade){
         return [SELECT id, ValorVenda__c, Unidade__c from UnidadeTabelaVendas__c where Unidade__c =: idUnidade limit 1];
     }
+
+    public static UnidadeTabelaVendas__c obterEntradaPrecoPorId(Id idEntradaPreco) {
+        return [
+            SELECT
+            Id,
+            TabelaVenda__c,
+            PrecoLista__c,
+            ValorVenda__c,
+            ValorMetroQuadradoTabela__c,
+            Unidade__c,
+            ValorMinimoVenda__c,
+            MetragemUnidade__c
+            FROM UnidadeTabelaVendas__c 
+            WHERE Id = :idEntradaPreco
+        ];
+    }
+    
 }

@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Percentualacrescimo__c</fullName>
-    <label>Percentual de acréscimo (%)</label>
+    <fullName>PercentualAcrescimo__c</fullName>
+    <externalId>false</externalId>
+    <formula>TabelaVenda__r.PercentualDeAcrescimo__c</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Valor de acréscimo Nominal (Moeda)</label>
     <precision>18</precision>
     <required>false</required>
     <scale>2</scale>
