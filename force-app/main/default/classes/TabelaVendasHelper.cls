@@ -130,7 +130,7 @@ public with sharing class TabelaVendasHelper {
         }
     }
     
-    public static void validarTabelaIguais(List<TabelaVendas__c> tabelas) {
+    public static void validarTabelaIguais(List<TabelaVendas__c> tabelas, Boolean isLwc) {
         Set<String> setNome = new Set<String>();
         Set<Id> setEmpreendimento = new Set<Id>();
     
@@ -148,6 +148,7 @@ public with sharing class TabelaVendasHelper {
                 Id, 
                 Name, 
                 Ativo__c, 
+                tipoVenda__c,
                 VigenciaInicio__c, 
                 VigenciaFim__c, 
                 Empreendimento__c
@@ -158,12 +159,10 @@ public with sharing class TabelaVendasHelper {
                 Empreendimento__c IN :setEmpreendimento
         ];
     
-
         if (existingTabelas.isEmpty()) {
             return;
-
         }
-
+    
         for (TabelaVendas__c iTab : tabelas) {
             if (iTab.Name == null) {
                 continue;
@@ -173,17 +172,31 @@ public with sharing class TabelaVendasHelper {
                 if (!existingTabelas.isEmpty()) {
                     for (TabelaVendas__c existingTab : existingTabelas) {
                         if (existingTab.Name == iTab.Name && existingTab.Id != iTab.Id) {
-                            throw new AuraHandledException('Já existe uma tabela de vendas  com este nome.');
+                            if (isLwc) {
+                                throw new AuraHandledException('Já existe uma tabela de vendas com este nome.');
+                            } else {
+                                iTab.addError('Já existe uma tabela de vendas com este nome.');
+                            }
                         }
                     }
     
                     for (TabelaVendas__c existingTab : existingTabelas) {
                         if (existingTab.Empreendimento__c == iTab.Empreendimento__c && existingTab.Id != iTab.Id) {
-                            if (iTab.VigenciaInicio__c <= existingTab.VigenciaFim__c && iTab.VigenciaFim__c >= existingTab.VigenciaInicio__c) {
-                                throw new AuraHandledException('As datas de vigência não podem se sobrepor às datas de uma tabela existente para o mesmo empreendimento com o mesmo tipo de venda.');
+                            if (iTab.VigenciaInicio__c <= existingTab.VigenciaFim__c 
+                                && iTab.VigenciaFim__c >= existingTab.VigenciaInicio__c
+                                && iTab.TipoVenda__c == existingTab.TipoVenda__c) {
+                                if (isLwc) {
+                                    throw new AuraHandledException('As datas de vigência não podem se sobrepor às datas de uma tabela existente para o mesmo empreendimento com o mesmo tipo de venda.');
+                                } else {
+                                    iTab.addError('As datas de vigência não podem se sobrepor às datas de uma tabela existente para o mesmo empreendimento com o mesmo tipo de venda.');
+                                }
                             }
                             if (iTab.Ativo__c == true && iTab.Id == null) {
-                                throw new AuraHandledException('A tabela só deve ser ativada após ela ser criada.');
+                                if (isLwc) {
+                                    throw new AuraHandledException('A tabela só deve ser ativada após ela ser criada.');
+                                } else {
+                                    iTab.addError('A tabela só deve ser ativada após ela ser criada.');
+                                }
                             }
                         }
                     }
@@ -191,4 +204,74 @@ public with sharing class TabelaVendasHelper {
             }
         }
     }
+
+    public static void handleBeforeUpdate(List<TabelaVendas__c> tabelas, Map<Id,TabelaVendas__c> oldMap) {
+        Map<Id,TabelaVendas__c> tabelasOrigemMap = getTabelaMap(tabelas, oldMap); 
+        List<TabelaVendas__c> tabelasParaAtualizar = new List<TabelaVendas__c>();
+    
+        
+        for (TabelaVendas__c iTab : tabelas) {
+            if(!tabelasOrigemMap.containsKey(iTab.OrigemTabelaDeVenda__c)) { continue; }
+            
+            TabelaVendas__c tabelaOrigem = tabelasOrigemMap.get(iTab.OrigemTabelaDeVenda__c);
+
+            tabelaOrigem.Ativo__c = false;
+            tabelasParaAtualizar.add(tabelaOrigem);
+            
+        }
+
+        if (!tabelasParaAtualizar.isEmpty()) {
+            TriggerHandler.bypass('TabelaVendaHandler');
+            update tabelasParaAtualizar;
+            TriggerHandler.clearBypass('TabelaVendaHandler');
+        }
+    }
+
+    private static Map<Id,List<TabelaVendas__c>> getTabelaListMap(
+        List<TabelaVendas__c> tabelas,
+        Map<Id,TabelaVendas__c> oldMap
+    ) {
+
+        Map<Id,List<TabelaVendas__c>> tabelaMap = new Map<Id,List<TabelaVendas__c>>();
+
+        for (TabelaVendas__c iTab : tabelas) {
+            if(iTab.OrigemTabelaDeVenda__c == null) { 
+                tabelaMap.put(iTab.Id, new List<TabelaVendas__c>()); 
+            } else { 
+                tabelaMap.get(iTab.OrigemTabelaDeVenda__c).add(iTab); 
+            }
+        }
+
+        return tabelaMap;
+    }
+
+
+    private static Map<Id,TabelaVendas__c> getTabelaMap(List<TabelaVendas__c> tabelas, Map<Id,TabelaVendas__c> oldMap) {
+        Set<Id> tabelaIds = new Set<Id>();
+
+
+        for (TabelaVendas__c iTab : tabelas) {
+            
+            if (iTab.OrigemTabelaDeVenda__c == null) {
+                return new Map<Id, TabelaVendas__c>();
+            }
+
+            if(iTab.Ativo__c && !oldMap.get(iTab.Id).Ativo__c) { tabelaIds.add(iTab.OrigemTabelaDeVenda__c); }
+        }
+
+        List<TabelaVendas__c> tabelasDaQuery = [
+            SELECT 
+                Id,
+                Ativo__c,
+                Empreendimento__c,
+                TipoVenda__c
+            FROM TabelaVendas__c
+            WHERE Id IN :tabelaIds 
+            AND Ativo__c = true
+            
+        ];
+    
+        return new Map<Id, TabelaVendas__c>(tabelasDaQuery);
+    }
+   
 }
