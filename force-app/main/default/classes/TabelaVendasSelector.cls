@@ -79,7 +79,9 @@ public with sharing class TabelaVendasSelector {
                    VigenciaInicio__c,
                    VigenciaFim__c,
                    TaxaDescontoVPL__c,
-                   TaxaTP__c
+                   TaxaTP__c,
+                   MesVigencia__c,
+
             FROM   TabelaVendas__c
             WHERE  Empreendimento__c  = :idEmpreendimento
         ];
@@ -94,7 +96,8 @@ public with sharing class TabelaVendasSelector {
                    VigenciaInicio__c,
                    VigenciaFim__c,
                    TaxaDescontoVPL__c,
-                   TaxaTP__c
+                   TaxaTP__c,
+                   MesVigencia__c
             FROM   TabelaVendas__c
             WHERE  
                 Empreendimento__c  = :idEmpreendimento

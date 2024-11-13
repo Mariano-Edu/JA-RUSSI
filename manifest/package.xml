@@ -15,8 +15,8 @@
     </types>
 
       <types>
-        <members>TabelaVendaTrigger</members>
-        <name>ApexTrigger</name>
+        <members>MesVigencia__c</members>
+        <name>CustomField</name>
     </types>
   
   
