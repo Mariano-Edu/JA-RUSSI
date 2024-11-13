@@ -9,10 +9,6 @@ export default class UnidadeCard extends LightningElement {
         return `slds-clearfix slds-p-around_small slds-grid slds-grid_vertical unidadeCard ${this.cardSelecionado ? 'cardSelecionado' : ''}`;
     }
 
-    renderedCallback() {
-        console.log(this.isInCotacao);
-    }
-
     @api
     setCardSelecionado(value) {
         this.cardSelecionado = value;

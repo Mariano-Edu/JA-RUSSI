@@ -71,9 +71,7 @@ export default class SimuladorTelaNegociacao extends LightningElement {
     }
 
     handleIgualarTabelas(){
-        console.log(1);
         this.dispatchEvent(new CustomEvent('handleigualartabelas'));
-        console.log(2);
     }
 
     handlePagarAVista(event){
