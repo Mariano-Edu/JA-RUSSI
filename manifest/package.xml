@@ -7,6 +7,7 @@
 		<members>ComparativoServiceTest</members>
 		<members>CotacaoController</members>
 		<members>CotacaoControllerTest</members>
+		<members>EntradaTabelaPrecoSelector</members>
 		<members>EspelhoVendasController</members>
 		<members>EspelhoVendasControllerTest</members>
 		<members>EspelhoVendasService</members>
@@ -14,6 +15,7 @@
 		<members>ExtratoTabelaService</members>
 		<members>ExtratoTabelaServiceTest</members>
 		<members>OpportunityController</members>
+		<members>OpportunitySelector</members>
 		<members>Product2Controller</members>
 		<members>Product2ControllerTest</members>
 		<members>Product2Helper</members>
@@ -25,21 +27,34 @@
 		<members>QuoteHelperTest</members>
 		<members>QuoteService</members>
 		<members>QuoteTriggerHandler</members>
+		<members>SeriePagamentoSelector</members>
+		<members>SeriePagamentoSelectorTest</members>
+		<members>SeriePagamentosService</members>
+		<members>SeriePagamentosServiceTest</members>
+		<members>SeriePagamentosTriggerHandler</members>
 		<members>SimuladorTelaNegociacaoController</members>
 		<members>SimuladorTelaNegociacaoControllerTest</members>
 		<members>SimuladorVendasController</members>
 		<members>SimuladorVendasControllerTest</members>
+		<members>TestDataFactory</members>
 		<members>UnidadeTabelaSelector</members>
 		<members>UnidadeTabelaSelectorTest</members>
+		<members>UnidadeTabelaService</members>
+		<members>UnidadeTabelaTriggerHandler</members>
 		<name>ApexClass</name>
 	</types>
 	<types>
 		<members>Product2Trigger</members>
 		<members>QuoteTrigger</members>
+		<members>SeriePagamentosTrigger</members>
 		<name>ApexTrigger</name>
 	</types>
 	<types>
+		<members>Empreendimento__c.VagasUnidade__c</members>
 		<members>Product2.Status__c</members>
+		<members>Product2.VagasDisponiveis__c</members>
+		<members>Product2.VagasUnidade__c</members>
+		<members>Product2.ValorVaga__c</members>
 		<members>Quote.ComissaoConformeTabela__c</members>
 		<members>Quote.DescontoConformeTabela__c</members>
 		<members>Quote.NomeCotacao__c</members>
@@ -72,11 +87,9 @@
 		<members>UnidadeTabelaVendas__c.DescontoNominalMoeda__c</members>
 		<members>UnidadeTabelaVendas__c.DescontoNominalPorcentagem__c</members>
 		<members>UnidadeTabelaVendas__c.MetragemUnidade__c</members>
-		<members>UnidadeTabelaVendas__c.PercentualAcrescimo__c</members>
 		<members>UnidadeTabelaVendas__c.PrecoLista__c</members>
 		<members>UnidadeTabelaVendas__c.TabelaVenda__c</members>
 		<members>UnidadeTabelaVendas__c.Unidade__c</members>
-		<members>UnidadeTabelaVendas__c.ValorAcrescimoNominalMoeda__c</members>
 		<members>UnidadeTabelaVendas__c.ValorMetroQuadradoTabela__c</members>
 		<members>UnidadeTabelaVendas__c.ValorMinimoVenda__c</members>
 		<members>UnidadeTabelaVendas__c.ValorOriginal__c</members>
@@ -88,6 +101,7 @@
 		<name>Layout</name>
 	</types>
 	<types>
+		<members>criarCotacao</members>
 		<members>customMultiPickList</members>
 		<members>espelhoDeVendas</members>
 		<members>espelhoDeVendasApartmentCards</members>
@@ -107,6 +121,10 @@
 		<members>unidadeCard</members>
 		<members>unidadeInfoDisplay</members>
 		<name>LightningComponentBundle</name>
+	</types>
+	<types>
+		<members>Opportunity.NovaProposta</members>
+		<name>QuickAction</name>
 	</types>
 	<types>
 		<members>SeriePagamentos__c.SerieCotacao</members>

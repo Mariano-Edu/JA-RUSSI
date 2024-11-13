@@ -18,6 +18,17 @@
                     </div>
                </div>
 
+                <div class="slds-col slds-grid slds-size_1-of-1">
+                    <div class="slds-col slds-size_1-of-1 slds-p-vertical_medium">
+                        <lightning-datatable
+                                key-field="id"
+                                data={condicoesPropostaCliente}
+                                columns={comissaoColunas}
+                                hide-checkbox-column>
+                        </lightning-datatable>
+                    </div>
+               </div>
+
                <div class="slds-col slds-grid">
                 <div class="slds-col slds-grid slds-size_1-of-1 slds-grid_align-end slds-p-vertical_medium">
                     <div class="slds-grid slds-wrap" style="width: 10rem;">

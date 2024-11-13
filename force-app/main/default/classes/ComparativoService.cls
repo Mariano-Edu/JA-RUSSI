@@ -14,13 +14,8 @@ public class ComparativoService {
     public static List<ComparacaoResultado> calcularComparacao(Id unidadeId, Id tabelaId, List<SeriePagamentos__c> proposta) {
         TabelaVendas__c tabelaVenda = TabelaVendasSelector.obterTabelasRelacionadas(tabelaId);
 
-        System.debug('proposta');
-        System.debug(proposta);
-
         UnidadeTabelaVendas__c unidadeTabela = UnidadeTabelaSelector.obterEntradaPrecoPorId(unidadeId);
-        
         Decimal valorProposta = 0.0;
-        System.debug(proposta);
         for (SeriePagamentos__c serie : proposta) {
             valorProposta += serie.ValorTotalNominal__c;
         }   

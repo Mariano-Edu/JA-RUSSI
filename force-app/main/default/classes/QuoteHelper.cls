@@ -21,7 +21,7 @@ public class QuoteHelper {
     private static void handleStandardPricebook(List<Quote> quotes) {
         for(Quote quote : quotes) {
             if(quote.Pricebook2Id == null) {
-                quote.Pricebook2Id = [SELECT Id FROM Pricebook2 WHERE isStandard = true LIMIT 1].Id;
+                quote.Pricebook2Id = getStandardPricebookId();
             }
         }
     }
@@ -160,5 +160,11 @@ public class QuoteHelper {
         }
 
         sendAutomaticApprovalsEmails(quotes);
+    }
+
+    public static Id getStandardPricebookId() {
+        return Test.isRunningTest() 
+            ? Test.getStandardPricebookId() 
+            : [SELECT Id FROM Pricebook2 WHERE IsStandard = true LIMIT 1].Id;
     }
 }

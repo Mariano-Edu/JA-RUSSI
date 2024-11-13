@@ -25,6 +25,11 @@ public class SeriePagamentosService {
         return retorno;
     }
 
+    public static List<SeriePagamentos__c> criarSeriePagamentos(List<SeriePagamentos__c> series) {
+        insert series;
+        return series;
+    }
+
     public static Map<String, Decimal> setValorRealVPLTabelaVendas(Id idTabelaVendas){
         valorTotalPropostaValido = 0.0;
         limparListas();
@@ -62,7 +67,6 @@ public class SeriePagamentosService {
             serieDTO.id = serie.Id;
             serieDTO.valorTotal = serie.ValorTotal__c;
             serieDTO.quantidadeParcelas = serie.QuantidadeParcelas__c.intValue();
-            serieDTO.periodicidade = serie.Periodicidade__c.intValue();
             serieDTO.inicioPagamento = serie.InicioPagamento__c.intValue();
             serieDTO.tabelaVenda = serie.TabelaVenda__c;
             serieDTO.aposHabiteSe = serie.AposHabiteSe__c;
@@ -79,6 +83,17 @@ public class SeriePagamentosService {
         }
 
         calcularSerieDePagamentos(seriesDePagamentosDTO);
+    }
+
+    public static Map<Id, UnidadeTabelaVendas__c> obterEntradaPrecoPorTabela(Id idTabela){
+        List<UnidadeTabelaVendas__c> entradas = UnidadeTabelaSelector.obterUnidadeTabelaPorId(idTabela);
+
+        Map<Id, UnidadeTabelaVendas__c> mapEntradas = new Map<Id, UnidadeTabelaVendas__c>();
+        for (UnidadeTabelaVendas__c entrada : entradas) {
+            mapEntradas.put(entrada.Unidade__c, entrada);
+        }
+
+        return mapEntradas;
     }
 
     //Metodo que inicia os calculos da series da proposta do cliente
