@@ -17,6 +17,7 @@ public with sharing class TabelaVendasSelector {
             Name,
             PeriodicidadeParcela__c,
             PercentualParcela__c,
+            MesVigencia__c,
             VigenciaInicio__c, 
             TipoVenda__c,
             Empreendimento__c,

@@ -13,6 +13,12 @@
         <members>TabelaVendaTrigger</members>
         <name>ApexTrigger</name>
     </types>
+
+      <types>
+        <members>TabelaVendaTrigger</members>
+        <name>ApexTrigger</name>
+    </types>
+  
   
     <version>62.0</version>
 </Package>
