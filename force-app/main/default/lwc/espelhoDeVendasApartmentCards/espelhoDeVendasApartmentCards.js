@@ -1,35 +1,12 @@
 import { LightningElement, wire, track , api } from 'lwc';
 import retornarUnidadesDisponiveis from '@salesforce/apex/EspelhoVendasController.retornarUnidadesDisponiveis';
 import { NavigationMixin } from 'lightning/navigation';
-import configuracaoCoresEspelho from '@salesforce/apex/EspelhoVendasController.getConfiguracaoEspelho';
 
-// colorMap.js
 const colorMap = {
-    'vermelho': '#F82525',
-    'verde': '#00FF7F',
-    'azul': '#00BFFF',
-    'amarelo': '#FFFF00',
-    'preto': '#000000',
-    'branco': '#FFFFFF',
-    'cinza': '#808080',
-    'laranja': '#FFA500',
-    'roxo': '#800080',
-    'rosa': '#FF1493',
-    'marrom': '#A52A2A',
-    'ciano': '#00FFFF',
-    'magenta': '#FF00FF',
-    'limão': '#00FF00',
-    'azul claro': '#ADD8E6',
-    'verde claro': '#90EE90',
-    'dourado': '#FFD700',
-    'prata': '#C0C0C0',
-    'violeta': '#EE82EE',
-    'índigo': '#4B0082',
-    'turquesa': '#40E0D0',
-    'salmon': '#FA8072',
-    'chocolate': '#D2691E',
-    'coral': '#FF7F50',
-    'caqui': '#F0E68C',
+    'Disponível': '#C7F6D4',
+    'Vendida': '#FDFD96',
+    'Bloqueado': '#FF9C9C',
+    'Reservada': '#F7CAE4'
 };
 
 export default class FloorApartmentComponent extends NavigationMixin(LightningElement) {
@@ -49,6 +26,7 @@ export default class FloorApartmentComponent extends NavigationMixin(LightningEl
     @track corVendida = '';
     @track idUnidadeSelecionada;
     @track qtdTotalVagas = 0;
+    @api entradaPrecosMap;
 
     _empreendimentoSelecionado;
     _filteredApartments
@@ -66,6 +44,18 @@ export default class FloorApartmentComponent extends NavigationMixin(LightningEl
     get empreendimentoSelecionado() {
         return this._empreendimentoSelecionado;
     }
+
+    get getVisibleFloors() {
+        return this.visibleFloors;
+    }
+
+    @api getEntradaPrecosMap() {
+        return this.entradaPrecosMap;
+    }
+
+    get isInCotacao() {
+        return this.entradaPrecosMap !== undefined;
+    }
     
     @api
     set filteredApartments(value){
@@ -76,35 +66,6 @@ export default class FloorApartmentComponent extends NavigationMixin(LightningEl
 
     get filteredApartments() {
         return this._filteredApartments;
-    }
-
-
-    @wire(configuracaoCoresEspelho)
-    retornarCores({ error, data }) {
-        if(data) {
-            this.configuracoesCores = data;
-                
-            this.cores = this.configuracoesCores.filter(corConfig => corConfig.Cor__c && corConfig.Status__c)
-                .map(corConfig => {
-                    return {
-                        status: corConfig.Status__c,
-                        corHexadecimal: colorMap[corConfig.Cor__c.toLowerCase()] || '#000000' 
-                    };
-                });
-
-            this.pintarCores();
-            return;
-        }
-
-        console.error('Erro ao carregar cores:', error);
-    }
-
-    
-    showAlert(message) {
-        console.log(
-            `%c${message}`,
-            'color: white; background-color: red; padding: 10px; border-radius: 5px; font-weight: bold;'
-        );
     }
       
     @api
@@ -175,6 +136,7 @@ export default class FloorApartmentComponent extends NavigationMixin(LightningEl
         floors.sort((a, b) => parseInt(a.andar) - parseInt(b.andar));
     
         // Atualiza visibleFloors com os andares filtrados
+
         this.visibleFloors = floors;
         this.totalPages = Math.ceil(floors.length / this.itemsPerPage); // Calcula o total de páginas
     }
@@ -248,35 +210,6 @@ export default class FloorApartmentComponent extends NavigationMixin(LightningEl
         let floors = [];
         let floorMap = new Map();
     
-        let corDisponivel = '';
-        let corReservado = '';
-        let corVendida = '';
-        let corBloqueado = '';
-    
-        this.configuracoesCores.forEach(config => {
-            switch(config.Status__c) {
-                case 'Livre':
-                    corDisponivel = config.Cor__c.toLowerCase(); 
-                    break;
-                case 'Reservada':
-                    corReservado = config.Cor__c.toLowerCase(); 
-                    break;
-                case 'Vendida':
-                    corVendida = config.Cor__c.toLowerCase(); 
-                    break;
-                case 'Bloqueado':
-                    corBloqueado = config.Cor__c.toLowerCase();
-                    break;
-                default:
-                    break;
-            }
-        });
-    
-        const corDisponivelRGB = colorMap[corDisponivel] || 'defaultColor'; // 'defaultColor' é uma cor padrão caso o nome não seja encontrado
-        const corReservadoRGB = colorMap[corReservado] || 'defaultColor';
-        const corVendidaRGB = colorMap[corVendida] || 'defaultColor';
-        const corBloqueadoRGB = colorMap[corBloqueado] || 'defaultColor';
-    
         units.forEach(unit => {
             let floorId = unit.Andar__c;
             if (!floorMap.has(floorId)) {
@@ -286,24 +219,13 @@ export default class FloorApartmentComponent extends NavigationMixin(LightningEl
                     apartments: []
                 });
             }
-    
-            let colorStyle = '';
-
-            if (unit.Status__c === 'Livre') {
-                colorStyle ='background-color: ' + corDisponivelRGB + ';';
-            } else if (unit.Status__c === 'Reservada') {
-                colorStyle = 'background-color: ' + corReservadoRGB + ';';
-            } else if (unit.Status__c === 'Vendida') {
-                colorStyle = 'background-color: ' + corVendidaRGB + ';';
-            } else if(unit.Status__c === 'Bloqueado') {
-                colorStyle = 'background-color: ' + corBloqueadoRGB + ';';
-            }
 
             let lastTwoDigits = this.pegarUltimosDoisNumeros(unit.NumeroDaUnidade__c);
     
             floorMap.get(floorId).apartments.push({
                 id: unit.Id,
-                preco: unit.ValorDaUnidade__c,
+                preco: this.entradaPrecosMap ? this.entradaPrecosMap[unit.Id]?.ValorVenda__c : 0,
+                // preco: unit.ValorDaUnidade__c,
                 metrosQuadrados: unit.MetragemDaUnidadeM__c,
                 area: unit.Area__c,
                 empreendimento: unit.Empreendimento__r ? unit.Empreendimento__r.Name : 'Desconhecido',
@@ -312,7 +234,7 @@ export default class FloorApartmentComponent extends NavigationMixin(LightningEl
                 bloco: unit.Bloco__r ? unit.Bloco__r.Name : 'Desconhecido',
                 status: unit.Status__c,
                 numeroQuartos: unit.NumeroQuartos__c,
-                color: colorStyle,
+                color: `background-color: ${colorMap[unit.Status__c] || '#EDEDED'};`,
                 numeroUnidade: lastTwoDigits,  // Use os últimos dois dígitos
                 tipo: unit.Tipo__c,
                 quantidadeSuites: unit.NumeroQuartos__c,
@@ -349,9 +271,9 @@ export default class FloorApartmentComponent extends NavigationMixin(LightningEl
     
         // Atualizar visibleFloors com todos os andares estruturados
         this.visibleFloors = floors;
-    
+        
         // Chamar pintarCores para garantir que todas as cores sejam aplicadas
-        this.pintarCores();
+        // this.pintarCores();
     
         const apartmentsEvent = new CustomEvent('apartmentschange', {
             detail: floors
@@ -361,21 +283,14 @@ export default class FloorApartmentComponent extends NavigationMixin(LightningEl
     }
     
     pintarCores() {
-        if (!this.cores || !this.visibleFloors) {
-            console.error('this.cores ou this.visibleFloors não estão definidos');
+        if (!this.visibleFloors) {
+            console.error('this.visibleFloors não está definido');
             return;
         }
-    
-        const floorMap = new Map();
-    
-        this.cores.forEach(cor => {
-            floorMap.set(cor.status, cor.corHexadecimal);
-        });
-    
+        
         this.visibleFloors.forEach(floor => {
             floor.apartments.forEach(apartment => {
-                const corHexadecimal = floorMap.get(apartment.status) || '#FFFFFF'; // Define branco como cor padrão
-                apartment.color = `background-color: ${corHexadecimal};`;
+                apartment.color = `background-color: ${colorMap[unit.Status__c] || '#EDEDED'};`;
             });
         });
 
@@ -392,7 +307,6 @@ export default class FloorApartmentComponent extends NavigationMixin(LightningEl
         if (numero.length >= 2) return numero.slice(-2);
         return '';
     }
-    
     
     chunkArray(array, chunkSize) {
         const results = [];
@@ -445,9 +359,14 @@ export default class FloorApartmentComponent extends NavigationMixin(LightningEl
             if(unidadeAnterior) {
                 unidadeAnterior.selected = false;
             }
-        }
+        }   
 
         unidadeSelecionada.selected = true;
+        this.template.querySelectorAll('c-unidade-card').forEach(card => {
+            card.setCardSelecionado(false);
+        });
+        
+        target.setCardSelecionado(true);
         this.idUnidadeSelecionada = unidadeSelecionada.id;
   
         this.dispatchEvent(new CustomEvent('selecionarunidade', {

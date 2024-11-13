@@ -2,11 +2,12 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>TabelaVenda__c</fullName>
     <deleteConstraint>Restrict</deleteConstraint>
+    <externalId>false</externalId>
     <label>Tabela de Venda</label>
     <referenceTo>TabelaVendas__c</referenceTo>
     <relationshipLabel>Series de Pagamentos</relationshipLabel>
     <relationshipName>SeriesPagamentos</relationshipName>
-    <required>true</required>
+    <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Lookup</type>
 </CustomField>

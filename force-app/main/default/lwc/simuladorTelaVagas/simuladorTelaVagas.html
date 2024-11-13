@@ -1,0 +1,153 @@
+<template>
+
+    <template if:true={filtro}>
+
+        <div class="container-filtro">
+
+        <div class="combo">
+            <lightning-combobox
+            name="status"
+            label="Status"
+            value={statusSelecionado}
+            placeholder="Selecione um Status"
+            options={getStatusOptions}
+            onchange={handleChangeStatus}>
+        </lightning-combobox>
+        </div>
+
+
+        <div class="qtd-vagas box">
+            <span style="border-bottom: solid 1px black; padding-bottom: 2%">Limite Total de Vagas: {qtdTotalVagas}</span>
+            <span>Vagas Adicionadas: {qtdVagasSelecionadas}</span>
+            <template if:true={showVagasExtras}>
+                <span id="vagaExtra">Vagas extras: {vagasExtras}</span>
+            </template>   
+         </div>
+
+         <div class="cards">
+            <template if:true={selectedVagas.length}>
+                <template for:each={selectedVagas} for:item="vaga">
+                    <div  key={vaga.id} class="mini-card">
+                        <p style="font-weight: bold;">{vaga.nome}</p>
+                        <p>{vaga.status}</p>
+                        <p style="font-weight: bold;">{vaga.tipoVaga}</p>
+                    </div>
+                </template>
+            </template>
+            <template if:false={selectedVagas.length}>
+                <p>Nenhuma vaga selecionada</p>
+            </template>
+        </div>
+            
+    </div>
+
+     </template>
+
+   
+
+     <template if:true={showModal}>
+        <div class="modal" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background-color: rgba(0, 0, 0, 0.5);">
+            <div class="modal-content" style="background-color: white; padding: 2px; border-radius: 5px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);">
+                <div class="titulo-modal">
+                    <p style="text-align: center; font-size:20px;">Deseja adicionar mais vagas?</p>       
+                </div>
+                <template if:true={isVaga}>
+                <div class="botoes-modal" style="width: 100%; display: flex; justify-content: center;">
+                    <button style="margin-right: 5px;" class="slds-button slds-button_text-destructive" onclick={handleNoClick}>Cancelar</button>
+
+                    <lightning-button 
+                    variant="brand"
+                    label="Adicionar Vaga Extra ? "
+                    onclick={handleAdicionarVagaExtra}></lightning-button>
+
+                </div>
+                </template>
+                    <template if:true={isExpanded}>
+                        <div class="novo-campo" style="margin-top: 10px; display: flex; align-items: center;">
+                            <label style="margin-right: 5px;" for="vagaValor">A vaga terá valor atribuído?</label>
+                            <div class="select-container">
+                                <select 
+                                    style="margin-right: 15px;" 
+                                    id="vagaValor" 
+                                    name="vagaValor" 
+                                    class="select-custom" 
+                                    onchange={handleValorChange}>
+                                    <option value="nao">Não</option>
+                                    <option value="sim">Sim</option>
+                                </select>                                
+                            </div>
+    
+                            <template if:true={showValorField}>
+                                <div style="display: flex; align-items: center; margin-left: 10px;">
+                                    <label for="valor">Valor:</label>
+                                <lightning-input 
+                                    placeholder="R$" 
+                                    type="number"
+                                    formatter="currency"
+                                    step="0.01" 
+                                    value={geValor} 
+                                    onchange={handleInputValorChange} 
+                                    style="margin-left: 5px; margin-bottom: 18px;">
+                                </lightning-input>                          
+                              </div>
+                            </template>
+                        </div>
+
+                    <template if:true={isVagaExtra}>
+                        <div class="div-add-vaga">
+                            <button style="margin-right: 5px; " class="slds-button slds-button_text-destructive" onclick={handleNoClick}>Cancelar</button>
+                          
+                            
+                            <lightning-button
+                            variant="brand"
+                            onclick={handleYesClick}
+                            disabled={isButtonDisabled}
+                            label="Adicionar Vaga"
+                             >
+                            </lightning-button>
+
+                        </div>
+                    </template>
+                </template>
+            </div>
+        </div>
+    </template>
+
+    <div class="container">  
+        <div class="tipo-container">
+            <template for:each={tipoVagaClasses} for:item="tipoVagaClass">
+                <div key={tipoVagaClass.tipoVaga} class={tipoVagaClass.class} data-tipo-vaga={tipoVagaClass.tipoVaga} onclick={handleTipoChange}>
+                    <div class="titulo">Vagas {tipoVagaClass.upperTipo}</div>
+                </div>
+            </template>
+        </div>
+
+        <div class="vagas-container">
+            <template for:each={paginatedVagas} for:item="vaga">
+                <div key={vaga.nome} class={vaga.class} style={vaga.style} data-nome={vaga.nome} data-is-extra={vaga.isExtra} onclick={handleVagaClick}>
+                    <div class="titulo">
+                        <span>Vaga {vaga.nome}</span>
+                        <span style="font-weight: bold;">{vaga.tipoVaga}</span>
+                        <span style="font-weight: bold;">M² {vaga.areaVaga}</span>
+                        <span>{vaga.status}</span>
+                        <lightning-button-icon variant="border-filled" icon-name="utility:preview" title="Detalhes do produto" data-id={vaga.id} onclick={handleDetalhes}></lightning-button-icon>                    </div>
+                </div>
+            </template>
+        </div>
+
+        <div class="pagination">
+        </div>
+    </div>
+
+    <div class="slds-grid slds-size_1-of-1 slds-grid_align-center slds-grid_vertical-align-center" style="width: 100%; position:absolute; justify-content: center;">
+        <button onclick={previousPage} class="slds-button slds-button_icon" aria-label="Previous">
+            <lightning-icon icon-name="utility:left" alternative-text="Previous"></lightning-icon>
+        </button>
+    
+        <span style="margin: 0 10px;">Página {currentPage} de {totalPages}</span>
+    
+        <button onclick={nextPage} class="slds-button slds-button_icon" aria-label="Next">
+            <lightning-icon icon-name="utility:right" alternative-text="Next"></lightning-icon>
+        </button>
+    </div>
+</template>

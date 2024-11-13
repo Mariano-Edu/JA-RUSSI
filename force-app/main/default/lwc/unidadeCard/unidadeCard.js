@@ -1,8 +1,18 @@
-import { api, LightningElement } from 'lwc';
+import { api, LightningElement, track } from 'lwc';
 
 export default class UnidadeCard extends LightningElement {
     @api unidade;
+    @api isInCotacao;
+    @track cardSelecionado = false;
 
+    get getCardClasses() {
+        return `slds-clearfix slds-p-around_small slds-grid slds-grid_vertical unidadeCard ${this.cardSelecionado ? 'cardSelecionado' : ''}`;
+    }
+
+    @api
+    setCardSelecionado(value) {
+        this.cardSelecionado = value;
+    }
     
     get getUnidadePreco(){
         return this.unidade && this.unidade.preco ? this.formatCurrency(this.unidade.preco) : this.formatCurrency(0.00);
@@ -17,9 +27,12 @@ export default class UnidadeCard extends LightningElement {
         return this.unidade.status
     }
 
+    @api
     get getUnidadeName(){
         return this.unidade && this.unidade.name ? this.unidade.name : null;
     }
+
+    
 
     get getUnidadeNumeroQuartos() {
         // TODO Refatorar
@@ -32,7 +45,7 @@ export default class UnidadeCard extends LightningElement {
 
 
     get getUnidadeMetrosQuadrados(){
-        return this.unidade && this.unidade.metrosQuadrados ?  `${this.unidade.metrosQuadrados} m²`  : `0 m²` ;
+        return this.unidade && this.unidade.metrosQuadrados ?  `${this.unidade.metrosQuadrados.toFixed(2)} m²`  : `0 m²` ;
     }
 
     get getUnidadeSelected(){

@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>ValorVenda__c</fullName>
+    <externalId>false</externalId>
     <formula>(
     (PrecoLista__c  * CoeficienteTabela__c) -
-    IF(ISBLANK(TabelaVenda__r.DescontoNominalMoeda__c), 0.0, TabelaVenda__r.DescontoNominalMoeda__c) + 
     IF(ISBLANK(TabelaVenda__r.ValorDeAcrescimo__c), 0.0, TabelaVenda__r.ValorDeAcrescimo__c)
 ) * 
-IF(ISBLANK(TabelaVenda__r.DescontoNominalPorcentagem__c), 1.0, 1 - TabelaVenda__r.DescontoNominalPorcentagem__c) *
 IF(ISBLANK(TabelaVenda__r.PercentualDeAcrescimo__c), 1.0, 1 + TabelaVenda__r.PercentualDeAcrescimo__c)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Valor de venda</label>

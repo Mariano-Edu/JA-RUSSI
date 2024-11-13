@@ -1,26 +1,26 @@
 <template>
-    <div class="slds-clearfix slds-p-around_small slds-grid slds-grid_vertical unidadeCard" data-id={unidade.id}  onclick={handleSelecionarUnidade} style={unidade.color}>
+    <div class={getCardClasses} data-id={unidade.id} onclick={handleSelecionarUnidade} style={unidade.color}>
         
         <div class="slds-grid slds-grid_vertical slds-text-align_center status-header">
-            <span class="slds-text-heading_small" title={getUnidadeTipoUnidade}>{getUnidadeTipoUnidade}</span>
-            <span class="slds-text-body_regular"><b style="width: 100%; max-width: 100%; overflow-x: hidden; white-space: nowrap; text-overflow: ellipsis;" title={getUnidadeName}>{getUnidadeName}</b></span>
+            <span class="slds-text-heading_small slds-m-bottom_xx-small" title={getUnidadeName}>{getUnidadeTipoUnidade} {getUnidadeName}</span>
+            <!-- <span class="slds-text-body_regular"><b style="width: 100%; max-width: 100%; overflow-x: hidden; white-space: nowrap; text-overflow: ellipsis;" title={getUnidadeName}>{}</b></span> -->
             <span class="slds-text-body_regular"><b style="width: 100%; max-width: 100%; overflow-x: hidden; white-space: nowrap; text-overflow: ellipsis;" title={getUnidadeStatus}>{getUnidadeStatus}</b></span>
         </div>
-
-        <div class="slds-grid slds-text-align_center" style="display: grid; grid-template-columns: repeat(3, 1fr); grid-column-gap: 10px;">
-            <span class="slds-text-body_small" style="width: 100%; max-width: 100%; overflow-x: hidden; white-space: nowrap; text-overflow: ellipsis;"><b title={getUnidadePreco}>{getUnidadePreco}</b></span>
-            <span class="slds-text-body_small" style="width: 100%; max-width: 100%; overflow-x: hidden; white-space: nowrap; text-overflow: ellipsis;"><b title={getUnidadeMetrosQuadrados}>{getUnidadeMetrosQuadrados}</b></span>
-
-            <span class="slds-text-body_small" style="width: 100%; max-width: 100%; overflow-x: hidden; white-space: nowrap; text-overflow: ellipsis;"><b title={getUnidadeNumeroQuartos}>{getUnidadeNumeroQuartos}</b></span>
+        <template if:true={isInCotacao}>
+            <div class="slds-align_absolute-center">    
+                <span class="slds-text-body_small" style="width: 100%; max-width: 100%; overflow-x: hidden; white-space: nowrap; text-overflow: ellipsis;"><b title={getUnidadePreco}>{getUnidadePreco}</b></span>
+            </div>
+        </template>
+        <div class="slds-align_absolute-center" style="gap: 10px">
+            <span class="slds-text-body_small" style="overflow-x: hidden; white-space: nowrap; text-overflow: ellipsis;"><b title={getUnidadeMetrosQuadrados}>{getUnidadeMetrosQuadrados}</b></span>
+            <span class="slds-text-body_small" style="overflow-x: hidden; white-space: nowrap; text-overflow: ellipsis;"><b title={getUnidadeNumeroQuartos}>{getUnidadeNumeroQuartos}</b></span>
         </div>
 
         <div class="div-bt slds-m-top_small">
-            <button onclick={handleDetalhes} class="slds-button slds-button_outline-brand bt-unidade">
-                Detalhes
-            </button>
-            <button onclick={handleSimulador} class="slds-button slds-button_outline-brand bt-unidade">
-                Simulador
-            </button>
+            <lightning-button-group class="slds-align_absolute-center">
+                <lightning-button-icon variant="border-filled" icon-name="utility:preview" title="Detalhes do produto" onclick={handleDetalhes}></lightning-button-icon>
+                <!-- <lightning-button-icon variant="border-filled" icon-name="utility:currency" title="Simular venda" onclick={handleSimulador}></lightning-button-icon> -->
+            </lightning-button-group>
         </div>
     </div>
 </template>

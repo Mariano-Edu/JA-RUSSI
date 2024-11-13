@@ -51,6 +51,7 @@ public class TestDataFactory {
         serie.ValorTotal__c= 1;
         serie.TabelaVenda__c = idTabela;
         serie.TipoCondicao__c = 'Ato';
+        serie.ValorTotalNominal__c = 8000.0;
         return serie;
     }
 
@@ -70,6 +71,9 @@ public class TestDataFactory {
         unidadeVenda.Name = 'UnidadeVendaTeste';
         unidadeVenda.TabelaVenda__c = idTabela;
         unidadeVenda.PrecoLista__c = 300000;
+        unidadeVenda.MetragemUnidade__c = 80.0;
+        unidadeVenda.PrecoLista__c = 800000.0;
+        unidadeVenda.CoeficienteTabela__c = 100;
         return unidadeVenda;
     }
 

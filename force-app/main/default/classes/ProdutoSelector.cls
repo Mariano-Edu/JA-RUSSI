@@ -33,7 +33,10 @@ public class ProdutoSelector {
         return produtoMap;
     }
 
-    public static Map<Id,Product2> obterUnidadesRelacionadas(Set<Id> empreendimento){
+    // MetragemDaUnidadeM__c
+    // ValorDaUnidade__c
+
+    public static Map<Id, Product2> obterUnidadesRelacionadas(Set<Id> empreendimento){
         Map<Id, Product2> unidadesMap = new Map<Id, Product2>([
             SELECT
                 Id,
@@ -100,6 +103,30 @@ public class ProdutoSelector {
             WHERE 
                 Status__c != '' AND
                 Empreendimento__r.DisponivelNoEspelho__c = true
+        ];
+    }
+
+
+    public static List<Product2> getVagasGaragem(Id idEmpreendimento){
+        System.debug('idEmpreendimento: ' + idEmpreendimento);
+
+        return[
+
+        SELECT 
+        id,
+        Name,
+        Tipo__c,
+        Status__c,
+        VagasUnidade__c,
+        AreaTotal__c,
+        TipoVaga__c,
+        Empreendimento__c, 
+        Empreendimento__r.VagasUnidade__c,
+        RecordType.Name 
+        FROM Product2 
+        WHERE
+            Empreendimento__c = :idEmpreendimento
+        AND RecordType.Name = 'Vaga'
         ];
     }
 }
