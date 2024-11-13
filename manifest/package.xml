@@ -14,8 +14,8 @@
         <name>ApexTrigger</name>
     </types>
 
-      <types>
-        <members>MesVigencia__c</members>
+    <types>
+        <members>TabelaVendas__c.MesVigencia__c</members>
         <name>CustomField</name>
     </types>
   
