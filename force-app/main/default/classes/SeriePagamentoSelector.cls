@@ -6,7 +6,7 @@ public class SeriePagamentoSelector {
                 InicioPagamento__c,
                 ValorTotal__c,
                 QuantidadeParcelas__c,
-                Periodicidade__c,
+                //Periodicidade__c,
                 AposHabiteSe__c,
                 Restante__c
             FROM SeriePagamentos__c
@@ -23,7 +23,7 @@ public class SeriePagamentoSelector {
                 ValorTotal__c,
                 QuantidadeParcelas__c, 
                 InicioPagamento__c,
-                Periodicidade__c,
+                //Periodicidade__c,
                 Restante__c,
                 AposHabiteSe__c,
                 TabelaVenda__c
@@ -40,8 +40,7 @@ public class SeriePagamentoSelector {
                 TipoCondicao__c,
                 InicioPagamento__c,
                 QuantidadeParcelas__c,
-                ValorTotal__c,
-                AposHabiteSe__c 
+                ValorTotal__c
             FROM SeriePagamentos__c
             WHERE TabelaVenda__c = :tabelaPagamentoId
         ];
@@ -53,11 +52,9 @@ public class SeriePagamentoSelector {
                 Id,
                 ValorTotal__c,
                 QuantidadeParcelas__c,
-                Periodicidade__c,
+                //Periodicidade__c,
                 InicioPagamento__c,
                 TabelaVenda__c,
-                AposHabiteSe__c,
-                Restante__c,
                 TipoCondicao__c
             FROM SeriePagamentos__c
             WHERE TabelaVenda__c = :idTabelaVendas

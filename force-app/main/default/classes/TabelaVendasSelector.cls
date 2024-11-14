@@ -15,6 +15,9 @@ public with sharing class TabelaVendasSelector {
             SELECT 
             Id, 
             Name,
+            PeriodicidadeParcela__c,
+            PercentualParcela__c,
+            MesVigencia__c,
             VigenciaInicio__c, 
             TipoVenda__c,
             Empreendimento__c,
@@ -59,7 +62,9 @@ public with sharing class TabelaVendasSelector {
             SELECT
                 Id,
                 Empreendimento__r.ValorMetroQuadrado__c	,
-                Empreendimento__r.MetragemPrivativaTotal__c
+                Empreendimento__r.MetragemPrivativaTotal__c,
+                DescontoNominalMoeda__c,
+                DescontoNominalPorcentagem__c
             FROM TabelaVendas__c
             WHERE Id = :tabelaRelacionada LIMIT 1
         ];
@@ -74,7 +79,8 @@ public with sharing class TabelaVendasSelector {
                    VigenciaInicio__c,
                    VigenciaFim__c,
                    TaxaDescontoVPL__c,
-                   TaxaTP__c
+                   TaxaTP__c,
+                   MesVigencia__c
             FROM   TabelaVendas__c
             WHERE  Empreendimento__c  = :idEmpreendimento
         ];
@@ -89,7 +95,8 @@ public with sharing class TabelaVendasSelector {
                    VigenciaInicio__c,
                    VigenciaFim__c,
                    TaxaDescontoVPL__c,
-                   TaxaTP__c
+                   TaxaTP__c,
+                   MesVigencia__c
             FROM   TabelaVendas__c
             WHERE  
                 Empreendimento__c  = :idEmpreendimento
