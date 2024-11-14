@@ -205,6 +205,9 @@ public with sharing class TabelaVendasHelper {
         }
     }
 
+
+
+
     public static void handleBeforeUpdate(List<TabelaVendas__c> tabelas, Map<Id,TabelaVendas__c> oldMap) {
         Map<Id,TabelaVendas__c> tabelasOrigemMap = getTabelaMap(tabelas, oldMap); 
         List<TabelaVendas__c> tabelasParaAtualizar = new List<TabelaVendas__c>();
@@ -273,5 +276,58 @@ public with sharing class TabelaVendasHelper {
     
         return new Map<Id, TabelaVendas__c>(tabelasDaQuery);
     }
-   
-}
+
+    public static void ativarTabelaVendas(List<TabelaVendas__c> tabelas) {        
+        Set<String> setNome = new Set<String>();
+        Set<Id> setEmpreendimento = new Set<Id>();
+    
+        for (TabelaVendas__c iTab : tabelas) {
+            if (iTab.Name != null) {
+                setNome.add(iTab.Name);
+            }
+            if (iTab.Empreendimento__c != null) {
+                setEmpreendimento.add(iTab.Empreendimento__c);
+            }
+        }
+    
+        List<TabelaVendas__c> existingTabelas = [
+            SELECT 
+                Id, 
+                Name, 
+                Ativo__c, 
+                tipoVenda__c,
+                VigenciaInicio__c, 
+                VigenciaFim__c, 
+                Empreendimento__c
+            FROM TabelaVendas__c
+            WHERE 
+                (Name IN :setNome OR Empreendimento__c IN :setEmpreendimento)
+                AND Id NOT IN :tabelas
+        ];
+    
+        if (existingTabelas.isEmpty()) {
+            return;
+        }
+    
+        List<TabelaVendas__c> tabelasParaDesativar = new List<TabelaVendas__c>();
+    
+        for (TabelaVendas__c iTab : tabelas) {
+            if (iTab.Name == null || !iTab.Ativo__c) {
+                continue;
+            }
+    
+            for (TabelaVendas__c existingTab : existingTabelas) {
+                if (existingTab.Empreendimento__c == iTab.Empreendimento__c
+                    && existingTab.tipoVenda__c == iTab.tipoVenda__c) {
+                    existingTab.Ativo__c = false;
+                    tabelasParaDesativar.add(existingTab);
+                }
+            }
+        }
+    
+        if (!tabelasParaDesativar.isEmpty()) {
+            update tabelasParaDesativar;
+        }
+    }
+    
+    }
