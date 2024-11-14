@@ -17,7 +17,7 @@ public class ComparativoService {
         UnidadeTabelaVendas__c unidadeTabela = UnidadeTabelaSelector.obterEntradaPrecoPorId(unidadeId);
         Decimal valorProposta = 0.0;
         for (SeriePagamentos__c serie : proposta) {
-            valorProposta += serie.ValorTotal__c;
+            valorProposta += serie.ValorTotalNominal__c;
         }   
         
         List<UnidadeTabelaVendas__c> tabelaVendaUnidades = TabelaVendasSelector.obterUnidadeTabelasPorId(tabelaId);

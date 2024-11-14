@@ -29,7 +29,7 @@ public with sharing class ComparativoServiceTest {
     public static void testCalcularComparacao() {
         TabelaVendas__c tabela = [SELECT Id, Name FROM TabelaVendas__c LIMIT 1];
         UnidadeTabelaVendas__c unidade = [SELECT Id, Name FROM UnidadeTabelaVendas__c WHERE Name = 'UnidadeVendaTeste' LIMIT 1];
-        List<SeriePagamentos__c> series = [SELECT Id, Name,InicioPagamento__c, QuantidadeParcelas__c, ValorTotal__c, TabelaVenda__c, TipoCondicao__c, ValorTotal__c FROM SeriePagamentos__c];
+        List<SeriePagamentos__c> series = [SELECT Id, Name,InicioPagamento__c, QuantidadeParcelas__c, ValorTotal__c, TabelaVenda__c, TipoCondicao__c, AposHabiteSe__c, ValorTotalNominal__c FROM SeriePagamentos__c];
     
         Test.startTest();
         List<Object> comparativo = ComparativoService.calcularComparacao(unidade.Id, tabela.Id, series);
