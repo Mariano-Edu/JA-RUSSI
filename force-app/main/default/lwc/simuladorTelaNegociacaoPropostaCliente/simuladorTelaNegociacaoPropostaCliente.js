@@ -1,4 +1,4 @@
-import { LightningElement, api } from 'lwc';
+import { LightningElement, api, track } from 'lwc';
 import simuladorTelaNegociacaoModalDesconto from 'c/simuladorTelaNegociacaoModalDesconto';
 
 export default class SimuladorTelaNegociacaoPropostaCliente extends LightningElement {
@@ -41,31 +41,47 @@ export default class SimuladorTelaNegociacaoPropostaCliente extends LightningEle
             label: '% Total', 
         },
         {
-            fieldApiName: 'AposHabiteSe__c',
-            label: 'Após habite-se?'   
-        },
-        {
          fieldApiName: 'actions',
          label: ''   
         }
     ]
 
     @api propostasClienteData = [];
+
+    get getPropostasClienteData() {
+        return this.propostasClienteData;
+    }
+    get isIgualarTabelaDesabilitado() {
+        // return (this.propostasClienteData?.length === 0);
+        return false;
+    }
     
     @api valorNominalPropostaData;
     @api valorVplPropostaData;
 
     @api unidadeSelecionada;
+    @api entradaPrecosMap;
+    
+    @api descontoNominal;
+    @api descontoPercentual;
 
+    get getBtnDescontoDisabled() {
+        return this.propostasClienteData?.length === 0;
+    }
 
+    get getDescontoNominal() {
+        return this.descontoNominal < 0 ? '-' : this.formatCurrency(this.descontoNominal);
+    }
+
+    get getDescontoPercentual() {
+        return this.descontoPercentual < 0 ? '-' : this.formatPercentage(this.descontoPercentual);
+    }
 
     addNewObjectWithUid() {
         this.dispatchEvent(new CustomEvent('adicionarcondicaodata'));
     }
 
-
     handleChangeCondicao(event){
-        
         this.dispatchEvent(new CustomEvent('changecondicaodata', {
             detail: event.detail
         }));
@@ -89,13 +105,12 @@ export default class SimuladorTelaNegociacaoPropostaCliente extends LightningEle
         }));
     }
 
-    
     handleIgualarTabelas(){
         this.dispatchEvent(new CustomEvent('handleigualartabelas'));  
     }
 
     handlePagarAvista(){
-        this.dispatchEvent(new CustomEvent('handlepagaravista')); 
+        this.dispatchEvent(new CustomEvent('handlepagaravista', {detail: this.entradaPrecosMap})); 
     }
 
     gerarPropostasModeloDesconto(){
@@ -104,7 +119,6 @@ export default class SimuladorTelaNegociacaoPropostaCliente extends LightningEle
         let propostasModeloDesconto = [];
 
         this.propostasClienteData.forEach(proposta =>{
-
 
             propostasModeloDesconto.push({
                 uid: proposta.uid,
@@ -121,7 +135,7 @@ export default class SimuladorTelaNegociacaoPropostaCliente extends LightningEle
     }
 
     gerarTiposCondicoesOptions(){
-        if(!this.propostasClienteData){return}
+        if (!this.propostasClienteData) return;
 
         let tiposCondicoesOptions = [];
 
@@ -129,7 +143,7 @@ export default class SimuladorTelaNegociacaoPropostaCliente extends LightningEle
             label: "Todos", value: "todos"
         })
 
-        this.propostasClienteData.forEach(proposta=>{
+        this.propostasClienteData.forEach(proposta => {
             tiposCondicoesOptions.push({
                 label: proposta.TipoCondicao__c, value: proposta.uid
             })
@@ -158,7 +172,6 @@ export default class SimuladorTelaNegociacaoPropostaCliente extends LightningEle
                 this.handleAplicarDesconto(e);
               }
         });
-        console.log(result);
     }
 
     
@@ -166,8 +179,12 @@ export default class SimuladorTelaNegociacaoPropostaCliente extends LightningEle
         return this.formatCurrency(this.valorNominalPropostaData);
     }
 
-    get formattedValorVPL() {
-        return this.formatCurrency(this.valorVplPropostaData);
+    get formattedValorDescontoP() {
+        return this.formatPercentage(7);
+    }
+
+    get formattedValorDescontoN() {
+        return this.formatCurrency(3000);
     }
 
     formatCurrency(value) {
@@ -179,4 +196,15 @@ export default class SimuladorTelaNegociacaoPropostaCliente extends LightningEle
             maximumFractionDigits: 2
         }).format(value);
     }
+
+    formatPercentage(value) {
+        if (value == null || isNaN(value)) {
+            return 0;
+        }
+        return new Intl.NumberFormat('pt-BR', { 
+            style: 'percent', 
+            minimumFractionDigits: 2, 
+            maximumFractionDigits: 2 
+        }).format(value / 100);
     }
+}

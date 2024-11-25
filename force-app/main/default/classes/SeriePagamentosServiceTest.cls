@@ -63,4 +63,9 @@ public with sharing class SeriePagamentosServiceTest {
         
         Test.stopTest();
     }
+
+    @isTest
+    private static void setValorRealVPLTabelaVendasTest() {
+        Id idTabela =  [SELECT Id FROM TabelaVendas__c LIMIT 1].Id;
+    }
 }

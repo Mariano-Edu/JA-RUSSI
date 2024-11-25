@@ -9,9 +9,9 @@
             <div class="slds-box slds-grid slds-wrap slds-col slds-p-vertical_medium" style="padding: 1rem 2rem;">
                 <div class="slds-grid slds-col slds-size_1-of-1 slds-grid_align-end slds-p-bottom_small">
                     <lightning-button-group>
-                        <lightning-button onclick={handleIgualarTabelas} label="Igualar a tabela" icon-name="utility:contract_payment"></lightning-button>
-                        <lightning-button onclick={handleAbrirModalDesconto} aria-haspopup="dialog" label="Desconto" icon-name="utility:discounts"></lightning-button>
+                        <lightning-button onclick={handleIgualarTabelas} label="Igualar a tabela" disabled={isIgualarTabelaDesabilitado} icon-name="utility:contract_payment"></lightning-button>
                         <lightning-button onclick={handlePagarAvista} label="Pagar à vista" icon-name="utility:currency"></lightning-button>
+                        <lightning-button onclick={handleAbrirModalDesconto} aria-haspopup="dialog" label="Desconto" disabled={getBtnDescontoDisabled} icon-name="utility:discounts"></lightning-button>
                     </lightning-button-group>
                 </div>
 
@@ -19,7 +19,8 @@
                     <c-simulador-data-table class="slds-size_1-of-1" 
                     style="background-color: #f3f3f3;"
                     header={colunas}
-                    series={propostasClienteData}
+                    series={getPropostasClienteData}
+                    valor-nominal={formattedValorNominal}
                     onmudancacondicao={handleChangeCondicao}
                     ondeletecondicao={handleDeleteCondicao}
                     ondividircondicao={handleDividirCondicao}
@@ -34,13 +35,17 @@
 
                 <div class="slds-col slds-grid">
                     <div class="slds-col slds-size_1-of-1 slds-grid slds-grid_align-end slds-p-vertical_medium" >
-                        <div class="slds-grid slds-wrap" style="width: 8rem;">
-                            <span class="slds-col slds-size_1-of-1 slds-text-body_small" style="font-weight: lighter;">valor Nominal</span>
+                        <div class="slds-grid slds-wrap" style="width: 10rem;">
+                            <span class="slds-col slds-size_1-of-1 slds-text-body_small" style="font-weight: lighter;">Valor Nominal</span>
                             <span class="slds-col slds-size_1-of-1 slds-text-heading_small" style="font-weight: normal;">{formattedValorNominal}</span>
                         </div>
-                        <div class="slds-grid slds-wrap" style="width: 8rem;">
-                            <span class="slds-col slds-size_1-of-1 slds-text-body_small" style="font-weight: lighter;">VPL</span>
-                            <span class="slds-col slds-size_1-of-1 slds-text-heading_small" style="font-weight: normal;">{formattedValorVPL}</span>
+                        <div class="slds-grid slds-wrap" style="width: 10rem;">
+                            <span class="slds-col slds-size_1-of-1 slds-text-body_small" style="font-weight: lighter;">Desconto Percentual</span>
+                            <span class="slds-col slds-size_1-of-1 slds-text-heading_small" style="font-weight: normal;">{getDescontoPercentual}</span>
+                        </div>
+                        <div class="slds-grid slds-wrap" style="width: 10rem;">
+                            <span class="slds-col slds-size_1-of-1 slds-text-body_small" style="font-weight: lighter;">Desconto Nominal</span>
+                            <span class="slds-col slds-size_1-of-1 slds-text-heading_small" style="font-weight: normal;">{getDescontoNominal}</span>
                         </div>
                     </div>
                 </div>

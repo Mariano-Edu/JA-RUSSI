@@ -75,16 +75,19 @@ export default class TabelaVenda extends LightningElement {
         }
     }
 
-    handleClonarTabela() {
-        if(this.tabelaInvalida()) return;
-
+ handleClonarTabela() {
         clonarTabela({ tabelaVendas: this.tabelaVendas, idTabela: this.recordId })
-            .then(id => {
-                this.showToast('Sucesso', 'Tabela Clonada com sucesso', 'sucess');
-                //window.location('/'+id);
-                this.handleCancelar();
+            .then(result => {
+                this.showToast('Tabela Clonada com sucesso');
+                window.location.href = `/lightning/r/TabelaVendas__c/${result}/view`;
             })
-            .catch(error => this.showToast('Erro', 'Ocorreu um erro ao clonar a tabela', 'error'));
+            .catch(error => {   
+                let errorMessage = 'Ocorreu um erro ao clonar a tabela';
+                if (error.body && error.body.message) {
+                    errorMessage = error.body.message;
+                }
+                this.showToast('Erro', errorMessage, 'error');
+            });
     }
 
     handleInputChange(event) {
@@ -98,7 +101,7 @@ export default class TabelaVenda extends LightningElement {
             this.showToast('Atenção', 'O nome da tabela clonada não pode ser o mesmo da original', 'warning');
             tabelaInvalida = true;
         }
-
+        
         return tabelaInvalida;
     }
 
@@ -121,6 +124,11 @@ export default class TabelaVenda extends LightningElement {
     }
 
     showToast(title, message, variant) {
-        this.dispatchEvent(new ShowToastEvent({ title, message, variant, mode: 'dismissable' }));
+        const event = new ShowToastEvent({
+            title: title,
+            message: message,
+            variant: variant,
+        });
+        this.dispatchEvent(event);
     }
 }

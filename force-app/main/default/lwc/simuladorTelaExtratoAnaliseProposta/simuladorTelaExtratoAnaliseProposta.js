@@ -1,8 +1,8 @@
-import analisarProposta from '@salesforce/apex/comissaoController.analisarProposta';
+import analisarProposta from '@salesforce/apex/CotacaoController.analisarProposta';
 import { LightningElement, api, track } from 'lwc';
 
 const analiseColunasOptions = [
-    { cellAttributes: { iconName: { fieldName: 'aprovado' } }},
+    { label: 'Aprovado', cellAttributes: { iconName: { fieldName: 'aprovado' } }},
     { label: 'Critério', fieldName: 'criterio' },
     { label: 'Tabela', fieldName: 'formattedValorTabela', type: 'text' }, 
     { label: 'Proposta', fieldName: 'formattedValorProposta', type: 'text' }, 
@@ -29,6 +29,10 @@ export default class SimuladorTelaExtratoAnaliseProposta extends LightningElemen
         return parseFloat(this.valoresMatriz.nominalTabela)
     }
 
+    get getNominalTabelaMin(){
+        return parseFloat(this.valoresMatriz.entradaPrecoSelecionada.ValorMinimoVenda__c)
+    }
+
     get getValorVplTabela(){
         return parseFloat(this.valoresMatriz.valorVplTabela)
     }
@@ -36,29 +40,36 @@ export default class SimuladorTelaExtratoAnaliseProposta extends LightningElemen
     get getValoresMatriz(){
         return {nominalProposta: this.getNominalProposta,
                 nominalTabela: this.getNominalTabela,
+                nominalTabelaMin: this.getNominalTabelaMin,
                 valorVplProposta: this.getValorVplProposta,
                 valorVplTabela: this.getValorVplTabela}
     }
 
     connectedCallback() {
-        console.log("propostas cliente", JSON.stringify(this.propostasCliente))
-        console.log("valroes matriz", JSON.stringify(this.valoresMatriz))
-
         this.analisarPropostaCliente();
     }
 
     analisarPropostaCliente() {
 
-        
         analisarProposta({ tabelaId: this.idTabelaVenda, proposta: this.propostasCliente, valoresMatriz: this.getValoresMatriz})
             .then(result => {
+                let isParaAprovacao = false;
+                
                 this.analisePropostasCliente = result.map(item => {
+                    
+                    if (!item.dentroDoLimite) {
+                        isParaAprovacao = true;
+                    }
+
                     return {
                         ...item,
                         formattedValorTabela: this.formatValue(item.valorTabela, item.criterio),  
-                        formattedValorProposta: this.formatValue(item.valorProposta, item.criterio)  
+                        formattedValorProposta: this.formatValue(item.valorProposta, item.criterio),
+                        // iconClass: item.aprovado === 'utility:success' ? 'action:approval' : 'action:close'
                     };
                 });
+                
+                this.dispatchEvent(new CustomEvent('enviaraprovacao', { detail: isParaAprovacao }));
             })
             .catch(error => {
                 console.error('Erro ao analisar proposta:', error);
@@ -69,7 +80,6 @@ export default class SimuladorTelaExtratoAnaliseProposta extends LightningElemen
         
         const percentageCriteria = [
             '% de Captação à vista',
-            '% de Captação até habita-se',
             '% de Captação mensal'
             
         ];

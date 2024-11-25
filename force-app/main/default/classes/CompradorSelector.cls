@@ -1,6 +1,6 @@
 public class CompradorSelector {
     public static List<Comprador__c> obterCompradoresPorOportunidade(Id idOportunidade) {
-        return [SELECT Conta__r.Name FROM Comprador__c WHERE Oportunidade__c = :idOportunidade];
+        return [Select Id, Name, Oportunidade__c, CompradorPrincipal__c, Conta__c,Conta__r.Name, Conta__r.PersonEmail, PorcentagemDeParticipacao__c,Oportunidade__r.ContractId, TipoParticipante__c from Comprador__c  WHERE Oportunidade__c = :idOportunidade];
     }
     
     public static List<Comprador__c> obterCompradoresPrincipaisPorOportunidades(Set<Id> setIdOportunidades) {

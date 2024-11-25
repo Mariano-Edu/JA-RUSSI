@@ -2,7 +2,6 @@ import { LightningElement, track, api } from 'lwc';
 
 
 export default class SimuladorTelaNegociacao extends LightningElement {
-    
     @api produtoSelecionado;
     @api propostasCliente;
     @api valorNominalProposta;
@@ -13,26 +12,81 @@ export default class SimuladorTelaNegociacao extends LightningElement {
     @api tabelasDeVendasData;
     @api tabelaVendaVingenteValue;
 
+    @api tabelasVendas;
+    @api tabelaOptions;
+    @api tabelaSelecionada;
+    @api unidadeSelecionada;
+
+    @api entradaPrecosMap;
+    @api tabelaMesVigencia;
     
-    get getTabelasDeVendasData(){
+    @api descontoNominal;
+    @api descontoPercentual;
+
+    @api equipeOpp;
+    @api equipeVendas;
+    @api tabelasComissao;
+
+    @api precoSemPermuta;
+
+    get getTabelasDeVendasData() {
         return this.tabelasDeVendasData;
     }
 
+    get getTabelaMesVigencia() {
+        return this.tabelaMesVigencia;
+    }
+    
+    get getProdutoSelecionado(){
+        return this.produtoSelecionado;
+    }
+    
+    get getTabelasVendas(){
+        return this.tabelasVendas;
+    }
 
+    get getTabelaOptions(){
+        return this.tabelaOptions;
+    }
 
+    get getTabelaSelecionada(){
+        return this.tabelaSelecionada;
+    }
 
-    setTabelaSelecionada(event){
+    get getUnidadeSelecionada(){
+        return this.unidadeSelecionada;
+    }
+
+    get getEntradaPrecosMap(){
+        return this.entradaPrecosMap;
+    }
+
+    get getDescontoNominal() {
+        return this.descontoNominal;
+    }
+
+    get getDescontoPercentual() {
+        return this.descontoPercentual;
+    }
+
+    handleSetTabelaSelecionada(event){
         this.dispatchEvent(new CustomEvent('settabelaselecionada', {
             detail: event.detail
         }));
+    }
+
+    handleSelectComissao(event) {
+        this.dispatchEvent(new CustomEvent('selectcomissao', event));
     }
 
     handleIgualarTabelas(){
         this.dispatchEvent(new CustomEvent('handleigualartabelas'));
     }
 
-    handlePagarAVista(){
-        this.dispatchEvent(new CustomEvent('handlepagaravista'));
+    handlePagarAVista(event){
+        this.dispatchEvent(new CustomEvent('handlepagaravista', {
+            detail: event.detail
+        }));
     }
 
     changeSeriesPagamentoProposta(event){
@@ -58,6 +112,12 @@ export default class SimuladorTelaNegociacao extends LightningElement {
         }));
     }
 
+    handleSelecionarSerie(event) {
+        this.dispatchEvent(new CustomEvent('selecionarserie', {
+            detail: event.detail
+        }));
+    }
+
 
 
     handleChangeCondicaoData(event){
@@ -78,6 +138,11 @@ export default class SimuladorTelaNegociacao extends LightningElement {
 
     activeSections = ['Selecione uma tabela de vendas', 'Proposta do cliente'];
     
+    handleAdicionarMembro() {
+        this.dispatchEvent(new CustomEvent('adicionarmembro'));
+    }
 
-
+    handleAtualizarEquipe(event) {
+        this.dispatchEvent(new CustomEvent('atualizarequipe', event));
+    }
 }

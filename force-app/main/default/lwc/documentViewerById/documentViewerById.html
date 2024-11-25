@@ -1,0 +1,41 @@
+<template>
+    <lightning-card icon-name="standard:code_set" variant="base">
+      <div slot="title">
+          Visualizador de arquivo
+      </div>
+      <div slot="actions">
+          <lightning-button-icon 
+            icon-class=""
+            icon-name="utility:refresh"
+            alternative-text="atualizar"
+            class=""
+            name=""
+            size="medium"
+            title=""
+            tooltip=""
+            type="button"
+            value=""
+            variant="border"
+            onclick={handleRefreshButton}
+          ></lightning-button-icon>
+      </div>
+      <div style="padding: 0.5rem;height: 41rem;">
+        <lightning-combobox
+            name="progress"
+            label="Documentos"
+            placeholder="Selecione uma arquivo"
+            options={getOptions}
+            onchange={handleChange} >
+        </lightning-combobox>
+        <br>
+        
+        <template if:true={fileId}>
+            <iframe src={url}></iframe>
+        </template>
+        <template if:false={fileId}>
+            Selecione um documento para visualização
+        </template>
+        
+      </div>
+    </lightning-card>
+</template>

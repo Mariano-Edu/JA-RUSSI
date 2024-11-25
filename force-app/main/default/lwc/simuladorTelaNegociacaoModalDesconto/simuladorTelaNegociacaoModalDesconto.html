@@ -24,19 +24,15 @@
                 <div class="slds-col slds-grid slds-size_1-of-1" style="height: 15rem;">
                     <div class="slds-col slds-size_1-of-1 slds-p-vertical_medium" style="height: fit-content; ">
                         <lightning-datatable
-                                
                                 key-field="uid"
-                                data={propostasVisiveisGet}
+                                data={getValoresModal}
                                 columns={tipoCondicoesColunas}
                                 draft-values={draftValues}
                                 onsave={handleSave}
-                                
                                 default-sort-direction={defaultSortDirection}
                                 sorted-direction={sortDirection}
                                 sorted-by={sortedBy}
                                 onsort={onHandleSort}>
-                                
-                                
                         </lightning-datatable>
                     </div>
                </div>
@@ -45,17 +41,17 @@
                     <div class="slds-col slds-size_1-of-1 slds-grid slds-grid_align-end slds-p-vertical_medium" >
                         <div class="slds-grid slds-wrap slds-col slds-size_1-of-8" >
                             <span class="slds-col slds-size_1-of-1 slds-text-body_small" style="font-weight: lighter;">Valor nominal</span>
-                            <span class="slds-col slds-size_1-of-1 slds-text-heading_small" style="font-weight: normal;">R${getValorNominal}</span>
+                            <span class="slds-col slds-size_1-of-1 slds-text-heading_small" style="font-weight: normal;">{getValorNominal}</span>
                         </div>
 
                         <div class="slds-grid slds-wrap slds-col slds-size_1-of-8" >
                             <span class="slds-col slds-size_1-of-1 slds-text-body_small" style="font-weight: lighter;">Total de desconto</span>
-                            <span class="slds-col slds-size_1-of-1 slds-text-heading_small" style="font-weight: normal;">R${getValorDescontoTotal}</span>
+                            <span class="slds-col slds-size_1-of-1 slds-text-heading_small" style="font-weight: normal;">{getValorDescontoTotal}</span>
                         </div>
 
                         <div class="slds-grid slds-wrap slds-col slds-size_1-of-8" >
                             <span class="slds-col slds-size_1-of-1 slds-text-body_small" style="font-weight: lighter;">Valor Nominal com desconto</span>
-                            <span class="slds-col slds-size_1-of-1 slds-text-heading_small" style="font-weight: normal;">R${getValorNominalComDesconto}</span>
+                            <span class="slds-col slds-size_1-of-1 slds-text-heading_small" style="font-weight: normal;">{getValorNominalComDesconto}</span>
                         </div>
 
                     </div>

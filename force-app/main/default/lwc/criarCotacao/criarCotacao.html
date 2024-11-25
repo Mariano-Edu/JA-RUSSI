@@ -1,0 +1,10 @@
+<template>
+    <lightning-modal-header label="Nova Proposta"></lightning-modal-header>
+    <lightning-modal-body><div class="modal-body">Deseja criar uma nova proposta?</div></lightning-modal-body>
+    <lightning-modal-footer>
+        <div class="button-container">
+            <lightning-button disabled={isLoading} label="Cancelar" variant="neutral" onclick={handleCancelar}></lightning-button>
+            <lightning-button disabled={isLoading} label="Criar" variant="brand" onclick={handleConfirmar}></lightning-button>
+        </div>
+    </lightning-modal-footer>
+</template>

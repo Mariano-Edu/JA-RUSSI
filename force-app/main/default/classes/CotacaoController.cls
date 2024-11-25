@@ -1,28 +1,70 @@
 public class CotacaoController {
-    @AuraEnabled
-    public static Map<String, Decimal> calcularTotalVPLTabela(Id idTabelaVendas){
-        return SeriePagamentosService.setValorRealVPLTabelaVendas(idTabelaVendas);
+    @AuraEnabled(cacheable = true)
+    public static Map<Id, UnidadeTabelaVendas__c> obterEntradaPrecoPorUnidade(Id idTabela){
+        try {
+            return SeriePagamentosService.obterEntradaPrecoPorTabela(idTabela);
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
     }
 
     @AuraEnabled
-    public static Map<String, Decimal>  calcularTotalVPLProposta(Id idTabelaVendas, List<SeriePagamentosService.ObjetoSerie> objetosSeries, Decimal valorTotalProposta){
-        Decimal valorPropostaValido = valorTotalProposta != null ? valorTotalProposta : 0.0;
-        return SeriePagamentosService.setValorRealPropostaCliente(idTabelaVendas, objetosSeries, valorPropostaValido);   
+    public static Quote criarCotacaoPorOportunidade(Id opportunityId) {
+        
+        try {
+            Opportunity opp = OpportunitySelector.obterOportunidadePorId(opportunityId);
+            
+            Quote newQuote = new Quote(
+                OpportunityId = opp.Id,
+                Name = 'Cotação'
+            );  
+            
+            insert newQuote;
+            return newQuote;
+            
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
     }
 
     @AuraEnabled
-    public static List<SeriePagamentosService.ValorLinha> limparListasGlobais(){
-       return SeriePagamentosService.limparListas();
-    }
- 
-    @AuraEnabled
-    public static List<SeriePagamentos__c> obterSeriesProposta(Id idCotacao){
-        system.debug(idCotacao);
-        return SeriePagamentosService.seriesProposta(idCotacao);
+    public static List<QuoteLineItem> criarQuoteLineItems(List<QuoteLineItem> qlis){
+        try {
+            return QuoteService.criarQuoteLineItems(qlis);
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
     }
 
     @AuraEnabled
-    public static Id criarTabelaDaSimulacao(List<SeriePagamentos__c> seriesDeProposta, Id idCotacao, String nomeCotacao, TabelaVendas__c tabelaSelecionada){
-        return TabelaVendasService.criarTabelaDaSimulacao(seriesDeProposta, idCotacao, nomeCotacao, tabelaSelecionada);
+    public static void concluirSimulacao(
+        List<SeriePagamentos__c> series,
+        List<QuoteLineItem> qlis,
+        Id idCotacao, 
+        Boolean isParaAprovacao,
+        Double valorUnidadeTabela,
+        List<OpportunityTeamMember> equipeVendasDefault,
+        List<OpportunityTeamMember> equipeVendas
+    ){
+        try {
+            QuoteService.handleConcluirSimulacao(series, qlis, idCotacao, isParaAprovacao, valorUnidadeTabela, equipeVendasDefault, equipeVendas);
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
+
+    @AuraEnabled(cacheable = true)
+    public static List<SeriePagamentos__c> buscarSeriesPorCotacao(Id idCotacao){
+        try {
+            return QuoteService.buscarSeriesPorCotacao(idCotacao);
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
+
+    @AuraEnabled
+    public static List<Object> analisarProposta(Id tabelaId, List<SeriePagamentos__c> proposta, Map<String, Object> valoresMatriz){
+        List<Object> resultado = ExtratoTabelaService.analisarProposta(tabelaId, proposta, valoresMatriz);
+        return resultado;
     }
 }

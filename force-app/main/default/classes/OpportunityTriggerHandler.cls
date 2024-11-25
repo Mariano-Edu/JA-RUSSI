@@ -16,4 +16,7 @@ public with sharing class OpportunityTriggerHandler extends TriggerHandler {
         OpportunityTeamMemberHelper.buildOppTeam(Trigger.new);
         CriacaoDocumentosService.criarDocumentosEmCriacaoDeOportunidade((List<Opportunity>) Trigger.new);
     }
+    public override void afterUpdate() {
+        OpportunityHelper.checkSignatarios(Trigger.new, (Map<Id,Opportunity>) Trigger.oldMap);
+    }
 }

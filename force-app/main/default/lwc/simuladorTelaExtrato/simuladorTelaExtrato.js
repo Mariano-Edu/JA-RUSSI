@@ -4,6 +4,8 @@ export default class SimuladorTelaExtrato extends LightningElement {
     @api propostasClienteData;
     @api idTabelaVendas;
     @api valoresMatriz;
+    @api valorDestinadoComissao;
+    @api equipeVendas;
 
     valoresMatrizProposta;
 
@@ -11,13 +13,16 @@ export default class SimuladorTelaExtrato extends LightningElement {
         return this.valoresMatrizProposta;
     }
 
-    connectedCallback(){
-        if(!this.valoresMatriz) {return;}
+    get getIdUnidade() {
+        return this.valoresMatriz?.entradaPrecoSelecionada?.Id;
+    }
 
-        this.valoresMatrizProposta = {
-                                      nominalProposta: this.valoresMatriz.nominalProposta,
-                                      vplProposta: this.valoresMatriz.valorVplProposta
-                                     }
+    connectedCallback(){
+        if(!this.valoresMatriz) return;
+    }
+    
+    handleEnviarAprovacao(event) {
+        this.dispatchEvent(new CustomEvent('enviaraprovacao', { detail: event.detail }));
     }
 
 }

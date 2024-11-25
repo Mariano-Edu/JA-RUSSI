@@ -1,13 +1,24 @@
 <template>
     <div class="slds-box slds-theme_default slds-grid slds-wrap" style="gap: 1rem">
-        <lightning-button 
-            variant="brand-outline"
-            label="Limpar Filtros"
-            icon-name="utility:filter"
-            class=""
-            onclick={limparFiltros}
-        >
-        </lightning-button>
+        <div class="slds-grid slds-grid_align-spread slds-size_1-of-1">
+
+            <lightning-button 
+                variant="brand-outline"
+                label="Limpar Filtros"
+                icon-name="utility:filter"
+                onclick={limparFiltros}
+                class="slds-col"
+                disabled={getLimparFiltroDesabilitado}
+            >
+            </lightning-button>
+            <lightning-button-icon 
+                variant="border-filled" 
+                icon-name="utility:refresh" 
+                title="Recarregar espelho"
+                onclick={recarregarEspelho}
+                >
+            </lightning-button-icon>
+        </div>
 
         <div class="slds-grid slds-wrap slds-size_1-of-1" style="gap: 1rem;">
                  <div class="slds-col" >
@@ -15,18 +26,33 @@
                         label="Empreendimento"
                         placeholder="Escolha um empreendimento"
                         object-api-name="Empreendimento__c"
-                        value={empreendimento}
+                        value={getEmpreendimento}
                         onchange={handleEmpreendimento}
                     >
                     </lightning-record-picker>
                 </div>
+                <!-- disabled={isInCotacao} -->
+
+                <template if:true={isInCotacao}>
+                    <div class="slds-col" >
+                       <lightning-combobox
+                           name="tabela"
+                           label="Tabela de vendas"
+                           value={getTabelaSelecionada}
+                           placeholder={getTabelaPlaceholder}
+                           options={getTabelaOptions}
+                           onchange={handleChangeTabela}>
+                       </lightning-combobox>
+                   </div>
+
+                </template>
             
                 <div class="slds-col">
-                    <template lwc:if={getEmpreendimento}>
+                    <template lwc:if={getBlocoHabilitado}>
                         <lightning-combobox
                             name="bloco"
                             label="Bloco"
-                            value={blocoSelecionado}
+                            value={getBlocoSelecionado}
                             placeholder="Selecione um bloco"
                             options={blocoOptions}
                             onchange={handleChangeBloco}>
@@ -69,6 +95,7 @@
                             label="Final de Unidade" 
                             onkeyup={handleKeyup} 
                             data-field="finalUnidade" 
+                            value={getFinalUnidade}
                             type="search"
                             disabled={isBlocoNotSelecionado}
                         >
@@ -98,24 +125,27 @@
         </div>
         
         <lightning-layout horizontal-align="center" style="gap: 1rem" class="slds-size_1-of-1" multiple-rows>
+                <template if:false={isBlocoNotSelecionado}>
             <div>Filtros Extras</div>
             <lightning-layout-item size="12" class="slds-align_absolute-center slds-float_right">
-                <template lwc:if={filtroState}>
-                    <div class="lgc-bg">
-                        <c-lwc-tooltip content="Filtros">
-                            <lightning-button-icon-stateful icon-name="utility:chevronup" selected={filtroState} onclick={abrirFiltrosExtras} alternative-text="Esconder filtros"></lightning-button-icon-stateful>
-                        </c-lwc-tooltip>
-                    </div>
-                </template>
-                
-                <template lwc:else>
-                    <div class="lgc-bg">
-                        <c-lwc-tooltip content="Filtros">
-                            <lightning-button-icon-stateful icon-name="utility:chevrondown" selected={filtroState} onclick={abrirFiltrosExtras} alternative-text="Exibir filtros"></lightning-button-icon-stateful>
-                        </c-lwc-tooltip>
-                    </div>
-                </template>
+                    <template lwc:if={filtroState}>
+                        <div class="lgc-bg">
+                            <c-lwc-tooltip content="Filtros">
+                                <lightning-button-icon-stateful icon-name="utility:chevronup" selected={filtroState} onclick={abrirFiltrosExtras} alternative-text="Esconder filtros"></lightning-button-icon-stateful>
+                            </c-lwc-tooltip>
+                        </div>
+                    </template>
+                    
+                    <template lwc:else>
+                        <div class="lgc-bg">
+                            <c-lwc-tooltip content="Filtros">
+                                <lightning-button-icon-stateful icon-name="utility:chevrondown" selected={filtroState} onclick={abrirFiltrosExtras} alternative-text="Exibir filtros"></lightning-button-icon-stateful>
+                            </c-lwc-tooltip>
+                        </div>
+                    </template>
+
             </lightning-layout-item>
+        </template>
         
             <template if:true={mostrarFiltrosExtras}>
                 <lightning-layout-item class="slds-size_1-of-1 slds-box">
@@ -127,7 +157,7 @@
                                     label="Quantidade de Quartos" 
                                     onkeyup={handleKeyup} 
                                     data-field="quantidadeQuartos" 
-                                    value={quantidadeQuartos}
+                                    value={getQuantidadeQuartos}
                                     type="search"
                                     disabled={isBlocoNotSelecionado}
                                 ></lightning-input>
@@ -156,14 +186,14 @@
                         </div>
                         
                         <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-5 slds-grid slds-gutters_x-small">
-                            <lightning-input disabled={isBlocoNotSelecionado} formatter="currency" step="0.01" class="slds-col slds-size_1-of-2" data-field="valorMinimo" onchange={handleInputValor} type="number" name="valorMinimo" label="Valor mínimo" ></lightning-input>
-                            <lightning-input disabled={isBlocoNotSelecionado} formatter="currency" step="0.01" class="slds-col slds-size_1-of-2" data-field="valorMaximo" onchange={handleInputValor} type="number" name="valorMaximo" label="Valor máximo" ></lightning-input>
+                            <lightning-input disabled={isBlocoNotSelecionado} formatter="currency" step="0.01" class="slds-col slds-size_1-of-2" value={getValorMinimo} data-field="valorMinimo" onchange={handleInputValor} type="number" name="valorMinimo" label="Valor mínimo" ></lightning-input>
+                            <lightning-input disabled={isBlocoNotSelecionado} formatter="currency" step="0.01" class="slds-col slds-size_1-of-2" value={getValorMaximo} data-field="valorMaximo" onchange={handleInputValor} type="number" name="valorMaximo" label="Valor máximo" ></lightning-input>
                             
                         </div>
                         
                         <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-5 slds-grid slds-gutters_x-small">
-                            <lightning-input disabled={isBlocoNotSelecionado} formatter="number" class="slds-col slds-size_1-of-2" data-field="metragemMinima" onchange={handleInputMetragem} type="number" name="metragemMinimo" label="Metragem mínima"></lightning-input>
-                            <lightning-input disabled={isBlocoNotSelecionado} formatter="number" class="slds-col slds-size_1-of-2" data-field="metragemMaxima" onchange={handleInputMetragem} type="number" name="metragemMaximo" label="Metragem máxima" ></lightning-input>
+                            <lightning-input disabled={isBlocoNotSelecionado} formatter="number" class="slds-col slds-size_1-of-2" data-field="metragemMinima" value={getMetragemMinima} onchange={handleInputMetragem} type="number" name="metragemMinimo" label="Metragem mínima"></lightning-input>
+                            <lightning-input disabled={isBlocoNotSelecionado} formatter="number" class="slds-col slds-size_1-of-2" data-field="metragemMaxima" value={getMetragemMaxima} onchange={handleInputMetragem} type="number" name="metragemMaximo" label="Metragem máxima" ></lightning-input>
                         </div>
             
                         
@@ -173,7 +203,7 @@
                                     label="Quantidade de Suítes"  
                                     onkeyup={handleKeyup} 
                                     data-field="quantidadeSuites" 
-                                    value={quantidadeSuites}
+                                    value={getQuantidadeSuites}
                                     type="search"
                                     disabled={isBlocoNotSelecionado}
                                 ></lightning-input>

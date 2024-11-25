@@ -1,42 +1,40 @@
 import { api, LightningElement, track, wire } from 'lwc';
 import { getRecord } from 'lightning/uiRecordApi';
-
-import buscarProdutoPorId from '@salesforce/apex/SimuladorVendasController.buscarProdutoPorId';
-import buscarEntradaTabelaPrecoPorIdDeProduto from '@salesforce/apex/SimuladorVendasController.buscarEntradaTabelaPrecoPorIdDeProduto';
+import { refreshApex } from '@salesforce/apex';
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
-import obterSeriesPorIdTabela from '@salesforce/apex/SimuladorTelaNegociacaoController.obterSeriesPorIdTabela';
 
-import calcularTotalVPLTabela from '@salesforce/apex/CotacaoController.calcularTotalVPLTabela'
-import calcularTotalVPLProposta from '@salesforce/apex/CotacaoController.calcularTotalVPLProposta'
-import criarTabelaDaSimulacao from '@salesforce/apex/CotacaoController.criarTabelaDaSimulacao'
+import obterOportunidadePorIdCotacao from '@salesforce/apex/OpportunityController.obterOportunidadePorIdCotacao';
+import concluirSimulacao from '@salesforce/apex/CotacaoController.concluirSimulacao';
+import buscarSeriesPorCotacao from '@salesforce/apex/CotacaoController.buscarSeriesPorCotacao';
+import obterEntradaPrecoPorUnidade from '@salesforce/apex/CotacaoController.obterEntradaPrecoPorUnidade';
+import obterTabelasComissao from '@salesforce/apex/TabelaComissaoController.getTabelasComissao';
+import obterEquipeVendas from '@salesforce/apex/OpportunityTeamMemberController.getOpportunityTeamMemberByOpportunity';
 
-import obterTabelasPorIdEmpreendimento from '@salesforce/apex/SimuladorTelaNegociacaoController.obterTabelasPorIdEmpreendimento';
-import {calcularInicioPagamentoSeriePagamentos, calcularPorcParcelaSeriePagamento, calcularValorParcelaSeriePagamento, calcularValorTotalSeriePagamento, calcularDiferencaMeses} from 'c/utils';
 import { NavigationMixin } from 'lightning/navigation';
+import obterTabelasVigentesPorIdEmpreendimentoETipoVenda from '@salesforce/apex/SimuladorTelaNegociacaoController.obterTabelasVigentesPorIdEmpreendimentoETipoVenda';
 
 const tabelaVendasColunas = [
     { label: 'Tipo de condição', fieldName: 'TipoCondicao__c' },
     { label: 'Início de pagamento', fieldName: 'InicioPagamento__c', type: 'number' },
     { label: 'Quantidade de Parcelas', fieldName: 'QuantidadeParcelas__c', type: 'number' },
-    { label: 'Valor Parcela ', fieldName: 'valorParcela', type: 'currency' }, //não achei
-    { label: 'Valor Total', fieldName: 'ValorTotal', type: 'currency' },//não achei
-    { label: '% parcela', fieldName: 'porcentagemParcela', type: 'number' }, // não achei
-    { label: '% total', fieldName: 'ValorTotal__c', type: 'number' },
-    { label: 'Após habite-se?', fieldName: 'AposHabiteSe__c', type: 'boolean' }
+    { label: 'Valor Parcela ', fieldName: 'valorParcela', type: 'currency' },
+    { label: 'Valor Total', fieldName: 'ValorTotal', type: 'currency' },
+    { label: '% Parcela', fieldName: 'porcentagemParcela', type: 'number' },
+    { label: '% Total', fieldName: 'ValorTotal__c', type: 'number' }
 ];
 
 const periodicidades = [
-        {tipoCondicao: 'Ato', periodicidade: 1}, 
-        {tipoCondicao: 'Mensais', periodicidade: 1}, 
-        {tipoCondicao: 'Sinal', periodicidade: 1}, 
-        {tipoCondicao: 'Única', periodicidade: 1}, 
-        {tipoCondicao: 'Financiamento', periodicidade: 1}, 
-        {tipoCondicao: 'Periódica', periodicidade: 1}, 
-        {tipoCondicao: 'Bimestral', periodicidade: 2}, 
-        {tipoCondicao: 'Trimestral', periodicidade: 3}, 
-        {tipoCondicao: 'Semestrais', periodicidade: 6}, 
-        {tipoCondicao: 'Anuais', periodicidade: 12}
-    ];
+    { tipoCondicao: 'Ato', periodicidade: 1 }, 
+    {tipoCondicao: 'Mensais', periodicidade: 1}, 
+    {tipoCondicao: 'Sinal', periodicidade: 1}, 
+    {tipoCondicao: 'Única', periodicidade: 1}, 
+    {tipoCondicao: 'Financiamento', periodicidade: 1}, 
+    {tipoCondicao: 'Periódica', periodicidade: 1}, 
+    {tipoCondicao: 'Bimestral', periodicidade: 2}, 
+    {tipoCondicao: 'Trimestral', periodicidade: 3}, 
+    {tipoCondicao: 'Semestrais', periodicidade: 6}, 
+    {tipoCondicao: 'Anuais', periodicidade: 12}
+];
 
 export default class SimuladorDeVendas extends NavigationMixin(LightningElement) {
     
@@ -48,7 +46,6 @@ export default class SimuladorDeVendas extends NavigationMixin(LightningElement)
     @track produtoSelecionado;
     @track idProdutoSelecionado;
 
-    @track tabelasVendas;
     @track tabelaVendasVingenteValue;
 
     @track ultimaTabelaSelecionada;
@@ -63,14 +60,111 @@ export default class SimuladorDeVendas extends NavigationMixin(LightningElement)
     @track valorNominalProposta = 0;
     @track valorVplProposta = 0;
 
-    @api recordId;
     
     @track cotacaoRecord;
     propostaTravada = false;
 
-    stepValues = [
-        'espelho', 'unidade','vaga', 'negociacao', 'extrato'
-    ];
+    @track opportunity;
+
+    @track empreendimentoSelecionado;
+
+    @track qtdVagasSelecionadas;
+    @track vagasExtras;
+    @track vagasSelecionadasInfo = [];
+    @track valorVaga;
+
+    @track simulacaoFinalizada;
+    @track propostasCotacao;
+
+    @track descontoNominal;
+    @track descontoPercentual;
+    @track isParaAprovacao;
+    @track isModalOpen = false;
+
+    @track vagaExtra = false; 
+
+    @track equipeVendas;
+    equipeVendasDefault;
+
+    @api tabelaSelecionada;
+
+    @api tabelaOptions;
+    @api tabelasVendas;
+    @api entradaPrecosMap;
+    @api recordId;
+
+    @api tabelasVendaSelecionada;
+
+    @api unidadeSelecionada;
+    @api entradaPrecoSelecionada;
+    @api tabelaMesVigencia;
+
+    tabelasComissao;
+    tabelaComissaoSelecionada;
+    hierarquias;
+
+    get getDescontoNominal() {
+        return this.descontoNominal;
+    }
+
+    get qtdVagas() {
+        return this.produtoSelecionado?.qtdVagas || 0;
+    }
+
+    enviarQtdVagas() {
+        const event = new CustomEvent('qtdvagaschange', {
+            detail: { qtdVagas: this.qtdVagas }
+        });
+        this.dispatchEvent(event);
+    }
+
+    get getDescontoPercentual() {
+        return this.descontoPercentual;
+    }
+
+    get getTabelaOptions() {
+        return this.tabelaOptions;
+    }
+
+    get getTabelasVendas() {
+        return this.tabelasVendas;
+    }
+
+    get getTabelaMesVigencia() {
+        return this.tabelasVendas;
+    }
+
+    get getEntradaPrecosMap() {
+        return this.entradaPrecosMap;
+    }
+
+    get getEntradaPrecoSelecionada() {
+        return this.entradaPrecoSelecionada;
+    }
+
+    get getEmpreendimentoSelecionado() {
+        return this.empreendimentoSelecionado;
+    }
+
+    get getUrlConta() {
+        return `/lightning/r/Account/${this.opportunity.Account.Id}/view`;
+    }
+
+    get getUrlProprietario() {
+        return `/lightning/r/User/${this.opportunity.Owner.Id}/view`;
+    }
+
+    get isSimulacaoFinalizada() {
+        return this.cotacaoRecord?.fields.Status.value !== 'Negociação';
+    }
+
+    get getPropostasCotacao() {
+        return this.propostasCotacao;
+    }
+
+    get getUnidadeSelecionada() {
+        return this.unidadeSelecionada;
+    }
 
     get currentStepValue() {
         return this.stepValues[this.currentStep];
@@ -80,13 +174,14 @@ export default class SimuladorDeVendas extends NavigationMixin(LightningElement)
         return this.currentStepValue === 'espelho';
     }
 
-    get etapaUnidade() {
-        return this.currentStepValue === 'unidade';
-    }
-    get etapaVaga() {
-        return this.currentStepValue === 'vaga';
+    get etapaVagas() {
+        return this.currentStepValue === 'vagas';
     }
 
+    get etapaRevisao() {
+        return this.currentStepValue === 'revisao';
+    }
+    
     get etapaNegociacao() {
         return this.currentStepValue === 'negociacao';
     }
@@ -99,30 +194,25 @@ export default class SimuladorDeVendas extends NavigationMixin(LightningElement)
         return this.currentStep === 4;
     }
 
-
-    get isIsProdutoSelecionado(){
-        return this.produtoSelecionado ? true : false;
-    }
-
     get getProdutoSelecionado(){
         return {
-                'idUnidade': this.produtoSelecionado.Id,
-                'idEmpreendimento': this.produtoSelecionado.Empreendimento__c,
-                'DiasDeVencimentoDaParcela': this.produtoSelecionado.diasVencimento ? this.produtoSelecionado.diasVencimento : ""
-                };
+            'idUnidade': this.produtoSelecionado.Id,
+            'VagaUnidade': this.produtoSelecionado.QuantidadeVagas__c,
+            'idEmpreendimento': this.produtoSelecionado.Empreendimento__c,
+            'DiasDeVencimentoDaParcela': this.produtoSelecionado.diasVencimento ? this.produtoSelecionado.diasVencimento : ""
+        };
     }
-
     
     get getIdEmpreendimento(){
         return this.produtoSelecionado.empreendimentoId;
     }
 
-    get getTabelasVendas(){
-        return this.tabelasVendas;
+    get getTabelaSelecionada(){
+        return this.tabelaSelecionada;
     }
 
-    get getTabelaVendasSelecionadaId(){
-        return this.tabelaVendaSelecionada.Id
+    get getTabelaMesVigencia(){
+        return this.tabelaMesVigencia;
     }
 
     get getValorNominalProposta(){
@@ -133,17 +223,17 @@ export default class SimuladorDeVendas extends NavigationMixin(LightningElement)
         return this.valorVplProposta;
     }
 
-    
     get getValoresMatriz(){
         return {
-                nominalProposta: this.valorNominalProposta,
-                valorVplProposta: this.valorVplProposta, 
-                nominalTabela: this.valorNominalTabelaSelecionada,
-                valorVplTabela: this.valorVplTabelaSelecionada
-               }
+            nominalProposta: this.valorNominalProposta,
+            valorVplProposta: this.valorVplProposta, 
+            nominalTabela: this.entradaPrecoSelecionada?.ValorVenda__c,
+            valorVplTabela: this.valorVplTabelaSelecionada,
+            entradaPrecoSelecionada: this.entradaPrecoSelecionada
+        }
     }
 
-    get getCotacaoName(){
+    get getCotacaoName() {
         return this.cotacaoRecord.fields.Name.value
     }
 
@@ -151,30 +241,200 @@ export default class SimuladorDeVendas extends NavigationMixin(LightningElement)
         return this.recordId;
     }
 
-    @wire(getRecord, { recordId: '$recordId', fields: ['Quote.Name'] })
-    wiredAccount({ error, data }) {
+    get getVagasUnidade() {
+        return this.produtoSelecionado.QuantidadeVagas__c;
+    }
+
+    get isAnalisarBloqueado() {
+        
+        for (let i = 0; i < this.propostasCliente?.length; i++) {
+            let campos = Object.keys(this.propostasCliente[i]);
+            for (let j = 0; j < campos?.length; j++) {
+                if (this.propostasCliente[i][campos[j]] === null) return true;
+            }
+        }
+
+        return !(this.propostasCliente?.length > 0);
+    }
+
+    get getValorVendaSemPermuta() {
+        if(!this.opportunity) return 0;
+        return this.getValoresMatriz.nominalProposta - this.opportunity.ValorPermuta__c;
+    }
+
+    @wire(obterOportunidadePorIdCotacao, { idCotacao: '$recordId' })
+    wiredOpportunity({ error, data }) {
         if (data) {
-            this.cotacaoRecord = data;
-            
+            this.opportunity = data;
+            this.buscarTabelas();
         } else if (error) {
-            console.log(error)
-            this.record = undefined;
+            console.error('Erro ao carregar oportunidade:', error);
         }
     }
 
+    getMembrosEquipe() {
+        obterEquipeVendas({ idOpp: this.opportunity.Id, idTabelaComissao: this.tabelaComissaoSelecionada })
+            .then(data => {
+                const equipeVendas = data.map(membro => {
+                    return {
+                        ...membro,
+                        ValorPremio__c: membro.ValorPremio__c || null,
+                        uid: this.generateUniqueId(),
+                        possuiValorPremio: !!membro.ValorPremio__c
+                    }
+                });
 
+                this.equipeVendasDefault = equipeVendas;
+                this.equipeVendas = equipeVendas;
+            })
+            .catch(e => {
+                console.log('errou')
+                console.error(e)
+            });
+    }
 
+    stepValues = [
+        'espelho', 'vagas', 'revisao', 'negociacao', 'extrato'
+    ];
 
-    doPrevStep(){
-        if(this.isFirstStep) {return};
+    handleVagasChange(event) {
+        this.qtdVagasSelecionadas = event.detail.qtdVagasSelecionadas;
+        this.vagasExtras = event.detail.vagasExtras;
+        const vagas = event.detail.vaga;
+        
+        vagas.forEach(vaga => {
+            const exists = this.vagasSelecionadasInfo.some(existingVaga => existingVaga.id === vaga.id);
+    
+            if (!exists) {
+                this.vagasSelecionadasInfo.push(vaga);
+            } else {
+                this.vagasSelecionadasInfo = this.vagasSelecionadasInfo.map(existingVaga => 
+                    existingVaga.id === vaga.id ? { ...existingVaga, ...vaga } : existingVaga
+                );
+            }
+        });
+        
+        this.vagasSelecionadasInfo = this.vagasSelecionadasInfo.filter(existingVaga => 
+            vagas.some(vaga => vaga.id === existingVaga.id)
+        );
+    }
+
+    wiredQuoteResult;
+    @wire(getRecord, { recordId: '$recordId', fields: ['Quote.Name', 'Quote.Status'] })
+    wiredQuote(result) {
+        this.wiredQuoteResult = result;
+        const { error, data } = result;
+
+        if (data) {
+            this.cotacaoRecord = data;
+        } else if (error) {
+            console.error(error);
+            this.cotacaoRecord = undefined;
+        }
+    }
+
+    wiredQuoteSeriesResult;
+    @wire(buscarSeriesPorCotacao, { idCotacao: '$recordId' })
+    wiredQuoteSeries(result) {
+        this.wiredQuoteSeriesResult = result;
+        const { error, data } = result;
+
+        if (data) {
+            
+            let valorNominalProposta = 0;
+
+            this.propostasCotacao = data.map(serie => {
+                valorNominalProposta += parseFloat(serie.ValorTotalNominal__c || 0);
+
+                return {
+                    ...serie,
+                    vencimentoParcela: `Dia ${serie.DiaVencimentoParcela__c || 'não definido'}`,
+                    valorTotal: serie.ValorTotalNominal__c,
+                    valorParcela: serie.QuantidadeParcelas__c ? 
+                        serie.ValorTotalNominal__c / serie.QuantidadeParcelas__c : 0
+                };
+            });
+
+            this.valorNominalProposta = parseFloat(valorNominalProposta);
+
+            this.propostasCotacao = this.propostasCotacao.map(serie => {
+                const porcValorTotal = this.valorNominalProposta ? 
+                    (serie.ValorTotalNominal__c / this.valorNominalProposta) * 100 : 0;
+                
+                const porcParcela = serie.QuantidadeParcelas__c ? 
+                    porcValorTotal / serie.QuantidadeParcelas__c : 0;
+
+                return {
+                    ...serie,
+                    ValorTotal__c: `${porcValorTotal.toFixed(2)}%`,
+                    porcentagemParcela: `${porcParcela.toFixed(2)}%`
+                };
+            });
+            
+
+        } else if (error) {
+            console.error(error);
+            this.propostasCotacao = undefined;
+        }
+    }
+
+    refreshQuoteData() {
+        refreshApex(this.wiredQuoteResult);
+        refreshApex(this.wiredQuoteSeriesResult);
+    }
+
+    buscarTabelas() {
+        if (!this.opportunity) {
+            this.tabelaOptions = [];
+            this.tabelaVendas = [];
+            return;
+        }
+        this.opportunityTipoVenda = this.opportunity.TipoVenda__c;
+        this.empreendimentoSelecionado = this.opportunity.EmpreendimentodeInteresse__c;
+        
+        obterTabelasVigentesPorIdEmpreendimentoETipoVenda({ idEmpreendimento: this.empreendimentoSelecionado, tipoVenda: this.opportunityTipoVenda })
+            .then(data => {
+                console.log(JSON.stringify(data))
+                this.tabelasVendas = data;
+                this.tabelaMesVigencia = data[0].MesVigencia__c;
+
+                this.tabelaOptions = data.map(tabela => ({
+                    label: tabela.Name,
+                    value: tabela.Id
+                }));
+            })
+            .catch(error => {
+                console.error('Erro ao obter tabelas vigentes:', error)
+                this.tabelaOptions = [];
+                this.tabelaVendas = [];
+            });
+    }
+
+    @wire(obterEntradaPrecoPorUnidade, {
+        idTabela: '$tabelaSelecionada',
+    })
+    wiredEntradaPrecos({ error, data }) {
+        if (data) {
+            this.entradaPrecosMap = data;
+        } else if (error) {
+            console.error('Erro ao buscar produtos:', error);
+        }
+    }
+
+    doPrevStep() {
+
+        if(this.isFirstStep) return;
+
         switch (this.currentStep){
             case 0:
                 this.currentStep--;
             case 1:
                 this.limparDadosSimulacao();
+
                 this.currentStep--;
             break;
             case 2:
+                this.vagasSelecionadasInfo = [];
                 this.currentStep--;
             break;
             case 3:
@@ -195,33 +455,55 @@ export default class SimuladorDeVendas extends NavigationMixin(LightningElement)
           variant: variante,
         });
         this.dispatchEvent(evt);
-      }
+    }
 
     
-    doNextstep(){
-        if(this.isLastStep) {return};
+    doNextstep() {
+        
+        if(this.isLastStep) return;
+
         switch (this.currentStep){
             case 0:
-            if(!this.isIsProdutoSelecionado){
+
+
+            if (!this.produtoSelecionado) {
                 this.showNotification("Unidade não selecionada", "Selecione uma unidade para prosseguir", "error")
                 return;
             }
 
-            this.obterTabelasPorIdEmpreendimento();
-            break;
-            case 1:
-                this.currentStep++
-            break;
-            case 2:
-                if(!this.tabelaVendaSelecionada){
-                    this.showNotification("Tabela de vendas não selecionada", "Selecione uma tabela de vendas para prosseguir", "error")
-                    return;
-                }
+            if (this.produtoSelecionado.status !== 'Disponível') {
+                this.showNotification("Unidade deve estar disponível", "Selecione uma unidade disponível para prosseguir", "error")
+
+            }
+            
                 this.currentStep++;
             break;
+
+            case 1:
+
+            if (this.qtdVagas > this.vagasSelecionadasInfo.reduce((acc, vaga) => {
+                if (vaga.tipoVaga === 'Dupla') {
+                    return acc + 2;
+                } else if (vaga.tipoVaga === 'Tripla') {
+                    return acc + 3;
+                } else {
+                    return acc + 1;
+                }
+            }, 0)) {
+                this.isModalOpen = true;
+                return;
+            }
+            this.currentStep++;
+            break;
+
+            case 2:
+                this.currentStep++;
+            break;
+
             case 3:                
                 this.currentStep++;
             break;
+            
             case 4:
                 this.currentStep++;
             break;
@@ -230,114 +512,73 @@ export default class SimuladorDeVendas extends NavigationMixin(LightningElement)
         
     }
 
-    handleChooseUnidade (event){
+    nextStep(){
+
+        if (this.qtdVagas >= this.vagasSelecionadasInfo.length) {
+           this.isModalOpen = false;
+            this.currentStep++;
+
+            console.log(this.qtdVagas);
+        } else {
+        }
+    }
+
+    closeModal() {
+        this.isModalOpen = false;
+    }
+
+    cancel() {
+        this.closeModal();
+    }
+
+
+    handleChooseUnidade(event) {
         let produtoSelecionado = event.detail.produtoSelecionado;
         this.produtoSelecionado = {...produtoSelecionado}
-    }
-    
-    obterTabelasPorIdEmpreendimento(){
-        obterTabelasPorIdEmpreendimento({idEmpreendimento: this.getIdEmpreendimento})
-            .then(result => {
-                let tabelaVendas =[]
-
-
-                result.forEach(element => {
-                    tabelaVendas.push(element);
-                });
-                
-                this.tabelasVendas = tabelaVendas;
-
-                let tabelaVendaVingenteObject = this.buscarTabelaVingente();
-
-                if(!tabelaVendaVingenteObject){this.currentStep++; return;};
-                
-                this.calcularTotalVPLTabela(tabelaVendaVingenteObject)
-
-                
-                
-                this.currentStep++;
-            })
-            .catch(error => {
-                console.log(error);
-            })
+        this.entradaPrecoSelecionada = this.entradaPrecosMap[this.produtoSelecionado.id];
     }
 
+    handleSelecionarTabela(event) {
+        this.tabelaSelecionada = event.detail.idTabela;
+        this.tabelaOptions = event.detail.tabelaOptions;
+        this.obterComissoes();
+    }
 
-     buscarTabelaVingente(){
+    obterComissoes() {
+        obterTabelasComissao(
+            {
+                idTabela: this.tabelaSelecionada,
+                idEmpreendimento: this.empreendimentoSelecionado,
+                empresaVenda: this.opportunity.Account.EmpresaVenda__c
+            }
+        ).then(data => {
+            this.tabelasComissao = data;
+            this.tabelaComissaoSelecionada = data[0].Id;
+            this.getMembrosEquipe();
+        })
+        .catch(e => this.showNotification('Erro', e.body.message, 'error'));
+    }
+
+    handleSelecionarTabelaComissao(event) {
+        this.tabelaComissaoSelecionada = event.detail;
+    }
+
+    handleSelecionarSerie(event) {
+        this.seriesPagamentos = event.detail;
+    }
+
+    buscarTabelaVingente(){
         let idTabelaVendasVingente;
 
-        this.tabelasVendas.forEach(tabela=>{
+        this.tabelasVendas.forEach(tabela => {
             if(tabela.Situacao__c == 'Em vigor' && tabela.Ativa__c){
                 idTabelaVendasVingente = tabela.Id;
             }
         })
 
-        if (!idTabelaVendasVingente){return;}
+        if (!idTabelaVendasVingente){ return; }
         return this.tabelasVendas.find(tabela => tabela.Id === idTabelaVendasVingente);
     }
-
-    calcularTotalVPLTabela(tabelaSelecionadaObject){
-        calcularTotalVPLTabela({idTabelaVendas: tabelaSelecionadaObject.Id})
-        .then(result =>{
-
-             this.valorNominalTabelaSelecionada = result.valorNominal;
-             this.valorVplTabelaSelecionada = result.valorVPL;
-
-             this.obterSeriesTabelaVingente(this.valorNominalTabelaSelecionada, this.valorVplTabelaSelecionada, tabelaSelecionadaObject);
-        })
-    }
-
-
-    obterSeriesTabelaVingente(valorNominal, valorVpl, tabelaVendaVigente){
-            obterSeriesPorIdTabela({idTabela: tabelaVendaVigente.Id})
-            .then(result => {
-
-                let seriesPagamentos = [];
-                result.forEach(element => {
-                    let porcParcela = calcularPorcParcelaSeriePagamento(element.ValorTotal__c, element.QuantidadeParcelas__c);
-                    let valorParcela = calcularValorParcelaSeriePagamento(porcParcela, valorNominal)
-                    let valorTotal = calcularValorTotalSeriePagamento(element.ValorTotal__c, valorNominal)
-                    seriesPagamentos.push(
-                        {   
-                            uid: this.generateUniqueId(),
-                            TipoCondicao__c: element.TipoCondicao__c, 
-                            InicioPagamento__c: calcularInicioPagamentoSeriePagamentos(element), 
-                            vencimentoParcela: null,
-                            QuantidadeParcelas__c: element.QuantidadeParcelas__c, 
-                            ValorTotal__c: (element.ValorTotal__c).toFixed(2)+'%', 
-                            AposHabiteSe__c: element.AposHabiteSe__c,
-                            porcentagemParcela: (porcParcela).toFixed(2)+'%',
-                            valorParcela: parseFloat(valorParcela).toFixed(2),
-                            valorTotal: parseFloat(valorTotal).toFixed(2)
-                        }
-                    );
-                });
-
-                this.tabelaVendasVingenteValue = {idTabelaVingente: tabelaVendaVigente.Id, seriesPagamento: seriesPagamentos, valorNominal: valorNominal, valorVPL: valorVpl};
-                
-                this.tabelaVendasInfoComplementares = this.obterTabelaVendaInfoComplementares(tabelaVendaVigente)
-                
-                this.tabelaVendaSelecionada = JSON.parse(JSON.stringify(tabelaVendaVigente));
-
-
-                this.propostasCliente = seriesPagamentos;
-
-                this.calcularValorNominalProposta();
-                this.calcularVplProposta();
-            })
-        }
-    
-        obterTabelaVendaInfoComplementares(tabelaVendas){
-            if(!tabelaVendas){return;}
-
-            let taxaDescontoVpl = tabelaVendas.TaxaDescontoVPL__c ? tabelaVendas.TaxaDescontoVPL__c : 0;
-            let taxaTp = tabelaVendas.TaxaTP__c ? tabelaVendas.TaxaTP__c : 0;
-            let antecipacaoAteHabitase = tabelaVendas.AntecipacaoAteHabiteSe__c ? tabelaVendas.AntecipacaoAteHabiteSe__c : 0;
-            let antecipacaoAposHabitase = tabelaVendas.AntecipacaoAposHabiteSe__c ? tabelaVendas.AntecipacaoAposHabiteSe__c : 0;
-
-            return  {taxaDescontoVpl: taxaDescontoVpl, taxaTp:  taxaTp, antecipacaoAteHabitase: antecipacaoAteHabitase, antecipacaoAposHabitase: antecipacaoAposHabitase}
-        }
-
 
     adicionarNovaCondicao(){
         const novaCondicao = {
@@ -350,12 +591,36 @@ export default class SimuladorDeVendas extends NavigationMixin(LightningElement)
             valorTotal: null,
             porcentagemParcela: null,
             ValorTotal__c: null,
-            AposHabiteSe__c: false
         };
         let propostasClienteClone = [...this.propostasCliente];
         propostasClienteClone.push(novaCondicao);
         this.propostasCliente = propostasClienteClone;
 
+    }
+
+    adicionarMembroEquipeVendas() {
+        const equipeClone = [...this.equipeVendas];
+
+        equipeClone.push({
+            Id: null,
+            OpportunityId: this.opportunity.Id,
+            uid: this.generateUniqueId(),
+            User: {
+                Id: null,
+                Name: null
+            },
+            TeamMemberRole: null,
+            PercentualComissao__c: null,
+            ValorComissao__c: null,
+            ValorPremio__c: null,
+            possuiValorPremio: false
+        });
+
+        this.equipeVendas = equipeClone;
+    }
+
+    atualizarEquipe(event) {
+        this.equipeVendas = event.detail;
     }
     
     changeSeriesProposta(event){
@@ -364,7 +629,6 @@ export default class SimuladorDeVendas extends NavigationMixin(LightningElement)
         
         this.calcularFinanceiroProposta();
     }
-
 
     deletarCondicao(event){
         let serieProposta = this.propostasCliente.find(serie => serie.uid === event.detail.uid);
@@ -379,37 +643,27 @@ export default class SimuladorDeVendas extends NavigationMixin(LightningElement)
     }
 
     handleZerarCondicao(event){
-        let diferencaNominalTabelaProposta = Math.abs(this.valorNominalProposta - this.valorNominalTabelaSelecionada);
-
-        let serieProposta = this.propostasCliente.find(serie => serie.uid === event.detail.uid);
-        let valorSubtrairDoValorTotalProposta;
-        let valorTotalPropostaRecalculado;
-        let diferencaValorTotalValorTotalRecalculado;
-        let valorSubtrairDoValorParcela;
-
+        let diferencaNominalTabelaProposta = Math.abs(this.valorNominalProposta - this.entradaPrecosMap[this.produtoSelecionado.id]?.ValorVenda__c);
+        
         if(diferencaNominalTabelaProposta === 0){
             this.showNotification("Não há diferença para ser subtraida!", "", "info");
             return;
         }
 
+        let serieProposta = this.propostasCliente.find(serie => serie.uid === event.detail.uid);
         
+        let valorSubtrairDoValorTotalProposta;
+        let valorTotalPropostaRecalculado;
+        let diferencaValorTotalValorTotalRecalculado;
+        let valorSubtrairDoValorParcela;
 
         valorSubtrairDoValorParcela = diferencaNominalTabelaProposta / serieProposta.QuantidadeParcelas__c;
-        
         valorTotalPropostaRecalculado = Math.abs((serieProposta.valorParcela - valorSubtrairDoValorParcela) * serieProposta.QuantidadeParcelas__c);
-
-        diferencaValorTotalValorTotalRecalculado = serieProposta.valorTotal - valorTotalPropostaRecalculado
-
-        valorSubtrairDoValorTotalProposta = Math.abs(diferencaValorTotalValorTotalRecalculado - diferencaNominalTabelaProposta)
-   
+        diferencaValorTotalValorTotalRecalculado = serieProposta.valorTotal - valorTotalPropostaRecalculado;
+        valorSubtrairDoValorTotalProposta = Math.abs(diferencaValorTotalValorTotalRecalculado - diferencaNominalTabelaProposta);
         serieProposta.valorTotal = Math.abs(serieProposta.valorTotal - valorSubtrairDoValorTotalProposta);
-       
-        // let novaProposta = JSON.parse(JSON.stringify(serieProposta));
-        // novaProposta.valorTotal -= valorSubtrairDoValorTotalProposta;
-        // novaProposta.QuantidadeParcelas__c = 1;        
-        // this.propostasCliente.push(novaProposta);
 
-        this.showNotification("Valor total da parcela descontado!", "Valor descontado:  " + this.formatCurrency(valorSubtrairDoValorTotalProposta), "success");
+        this.showNotification("Valor total da parcela descontado", "Valor descontado:  " + this.formatCurrency(valorSubtrairDoValorTotalProposta), "success");
 
         this.calcularFinanceiroProposta();
     }
@@ -421,10 +675,7 @@ export default class SimuladorDeVendas extends NavigationMixin(LightningElement)
         const fieldName = event.detail.name;
         const fieldType = event.detail.type
 
- 
-        
         let newValue;
-        
         let serieProposta = this.propostasCliente.find(serie => serie.uid === uid);
     
         if (fieldType === 'toggle') { 
@@ -433,14 +684,9 @@ export default class SimuladorDeVendas extends NavigationMixin(LightningElement)
             newValue = event.detail.value;
         }
 
-
         serieProposta[fieldName] = newValue;
         
-
-
-        
         if(fieldName != 'QuantidadeParcelas__c' && fieldName != 'valorParcela' && fieldName != 'valorTotal'){return;}
-
 
         switch(fieldName){
             case 'valorParcela':
@@ -464,39 +710,12 @@ export default class SimuladorDeVendas extends NavigationMixin(LightningElement)
             break;
         }
 
-
-
-        this.calcularFinanceiroProposta()
-        
+        this.calcularFinanceiroProposta();
     }
 
-    setTabelaSelecionada(event){
-        
-        const {tabelaSelecionada, seriesPagamento, valorNominalTabela, valorVplTabela} = event.detail;
-
-        
-        this.tabelaVendaSelecionada = tabelaSelecionada;
-
-        this.seriesVendaTabelaSelecionada = seriesPagamento;
-        this.valorNominalTabelaSelecionada = valorNominalTabela;
-        this.valorVplTabelaSelecionada = valorVplTabela;
-
-        const propostasClienteString = JSON.stringify(this.propostasCliente.sort());
-        const seriesPagamentoString = JSON.stringify(seriesPagamento.sort());
-
-        if(!this.propostaTravada){
-            this.propostasCliente = seriesPagamento;
-            this.valorNominalProposta = valorNominalTabela
-            this.valorVplProposta = valorVplTabela
-        }
-
-  
-
-        this.ultimaTabelaSelecionada = {'tabelaVendaSelecionada': tabelaSelecionada, 'seriesTabela': seriesPagamento, 'valorNominal': valorNominalTabela, 'valorVpl': valorVplTabela}
-
-        this.tabelaVendasInfoComplementares = this.obterTabelaVendaInfoComplementares(this.tabelaVendaSelecionada);
-        
-        this.propostaTravada = false;
+    calcularDesconto() {
+        this.descontoNominal = parseFloat(this.entradaPrecoSelecionada.ValorVenda__c) - parseFloat(this.valorNominalProposta);
+        this.descontoPercentual = 100 * this.descontoNominal / this.entradaPrecoSelecionada.ValorVenda__c;
     }
 
     calcularValorTotalPropostaSerie(propostaSerie){
@@ -510,41 +729,13 @@ export default class SimuladorDeVendas extends NavigationMixin(LightningElement)
 
     calcularValorParcelaPropostaSerie(propostaSerie){
 
-        const {QuantidadeParcelas__c, valorTotal } = propostaSerie;
+        const { QuantidadeParcelas__c, valorTotal } = propostaSerie;
 
         if(QuantidadeParcelas__c == null || QuantidadeParcelas__c == 0 || valorTotal == null){            
             return;
         }
 
         propostaSerie.valorParcela = parseFloat(valorTotal) / QuantidadeParcelas__c ;
-    }
-
-    calcularVplProposta() {
-
-        let objetoSeriePagamentos=[];
-
-
-        this.propostasCliente.forEach(serie=>{ 
-
-            let periodicidadeSerie = serie.TipoCondicao__c ? periodicidades.find(tipoCondicao => tipoCondicao.tipoCondicao === serie.TipoCondicao__c) : null;
-            
-
-            objetoSeriePagamentos.push({
-                id: serie.uid,
-                nome: serie.TipoCondicao__c ? serie.TipoCondicao__c : null,
-                valorTotal: serie.ValorTotal__c ? parseFloat(serie.ValorTotal__c.replace("%", "")) : 0.0,
-                quantidadeParcelas: serie.QuantidadeParcelas__c ? parseInt(serie.QuantidadeParcelas__c) : 0,
-                periodicidade: periodicidadeSerie ? parseInt(periodicidadeSerie.periodicidade) : 0,
-                inicioPagamento: serie.InicioPagamento__c ? parseInt(calcularDiferencaMeses(serie.InicioPagamento__c)) : 0,
-                tabelaVenda: this.tabelaVendaSelecionada.Id ? this.tabelaVendaSelecionada.Id : null,
-                aposHabiteSe: serie.AposHabiteSe__c ? serie.AposHabiteSe__c : false,
-                restante: false,
-                valorNominalProposta: this.valorNominalProposta
-            })
-            
-        })
-
-        this.calcularTotalVplProposta(this.tabelaVendaSelecionada.Id, objetoSeriePagamentos);         
     }
 
     calcularValorNominalProposta(){
@@ -554,24 +745,7 @@ export default class SimuladorDeVendas extends NavigationMixin(LightningElement)
             valorNominalProposta += parseFloat(serie.valorTotal)
         })
         
-
         this.valorNominalProposta = parseFloat(valorNominalProposta);            
-    }
-
-    
-
-    calcularTotalVplProposta(idTabela, seriesPagamentoProposta){
-        calcularTotalVPLProposta({idTabelaVendas: idTabela, objetosSeries: seriesPagamentoProposta, valorTotalProposta: this.valorNominalProposta})
-        .then(result=>{
-            this.valorVplProposta = 0;
-
-            let valorVPL = parseFloat(result.valorVPL)
-            
-            this.valorVplProposta = valorVPL ? valorVPL.toFixed(2) : 0;
-
-        }).catch(error=>{
-            console.log(error)
-        })
     }
 
     calcularPorcentagensProposta(){
@@ -585,20 +759,16 @@ export default class SimuladorDeVendas extends NavigationMixin(LightningElement)
 
             serie.ValorTotal__c = porcValorTotal ? `${(porcValorTotal).toFixed(2)}%` : '0.00%';
             serie.porcentagemParcela = porcParcela ? `${(porcParcela).toFixed(2)}%` : '0.00%';
-         })
-
-
-                
+         })    
     }
 
     igualarTabelas(){
-        this.propostasCliente =  JSON.parse(JSON.stringify(this.seriesVendaTabelaSelecionada));
-        this.valorNominalProposta = this.valorNominalTabelaSelecionada;
-        this.valorVplProposta = this.valorVplTabelaSelecionada;
-        
+        this.propostasCliente = this.seriesPagamentos;
+        this.calcularFinanceiroProposta();
     }
 
-    pagarAVista(){
+    pagarAVista(event){
+        const entradaPreco = event.detail;
         let propostasClienteClone = [];
 
         let dataAtual = new Date();
@@ -607,14 +777,13 @@ export default class SimuladorDeVendas extends NavigationMixin(LightningElement)
         propostasClienteClone.push ({
             uid: this.generateUniqueId(),
             TipoCondicao__c: 'Ato',
-            InicioPagamento__c: dataAtualFormatada,
+            InicioPagamento__c: 0,
             vencimentoParcela: null,
             QuantidadeParcelas__c: 1,
-            valorParcela: this.valorNominalTabelaSelecionada,
-            valorTotal: this.valorNominalTabelaSelecionada,
+            valorParcela: entradaPreco?.ValorVenda__c,
+            valorTotal: entradaPreco?.ValorVenda__c,
             porcentagemParcela: null,
             ValorTotal__c: null,
-            AposHabiteSe__c: false
         })
 
         this.propostasCliente = propostasClienteClone;
@@ -645,16 +814,10 @@ export default class SimuladorDeVendas extends NavigationMixin(LightningElement)
     }
 
     calcularFinanceiroProposta(){
-        //calcula valor nominal com base no valorTotal (currency) das series de pagamento
         this.calcularValorNominalProposta();
-
         this.calcularPorcentagensProposta();
-
-        this.calcularVplProposta()
-
-
+        this.calcularDesconto();
     }
-    
 
     generateUniqueId() {
         return 'id-' + Math.random().toString(36).substr(2, 9);
@@ -685,38 +848,79 @@ export default class SimuladorDeVendas extends NavigationMixin(LightningElement)
     }
 
     concluirSimulacao(){
-        let SeriesPagamento__c = []
+        let quoteLineItems = []
+        let series = []
+        let valorTotalPropostaUnidade = 0.0;
+        let valorTotalVagas = 0.0;
+
+        this.vagasSelecionadasInfo.forEach(vaga => {
+            quoteLineItems.push({
+                Quantity: 1,
+                Product2Id: vaga.id,
+                UnitPrice: vaga.valorVaga || 0.0,
+                QuoteId: this.recordId
+            })
+
+            valorTotalVagas += vaga.valorVaga;
+        })
 
         this.propostasCliente.forEach(serie=>{
-            let periodicidadeSerie = serie.TipoCondicao__c ? periodicidades.find(tipoCondicao => tipoCondicao.tipoCondicao === serie.TipoCondicao__c) : null;
-            
-            SeriesPagamento__c.push({
+            series.push({
                 TipoCondicao__c: serie.TipoCondicao__c,
                 InicioPagamento__c: serie.InicioPagamento__c,
                 QuantidadeParcelas__c: serie.QuantidadeParcelas__c,
-                ValorTotal__c: serie.ValorTotal__c,
-                AposHabiteSe__c: serie.AposHabiteSe__c,
-                TabelaVenda__c: null,
-                
+                Cotacao__c: this.recordId,
+                ValorTotalNominal__c: serie.valorTotal,
+                DiaVencimentoParcela__c: serie.vencimentoParcela
             })
+
+            valorTotalPropostaUnidade += serie.valorTotal;
         })
 
-        criarTabelaDaSimulacao({seriesDeProposta: SeriesPagamento__c, idCotacao: this.getCotacaoId, nomeCotacao: this.getCotacaoName, tabelaSelecionada: this.tabelaVendaSelecionada})
-        .then(result=>{
-            this[NavigationMixin.Navigate]({
-                    type: 'standard__recordPage',
-                    attributes: {
-                        recordId: result,
-                        objectApiName: 'TabelaVendas__c',
-                        actionName: 'view'
-                    }
-            });
+        valorTotalPropostaUnidade -= valorTotalVagas;
+
+        quoteLineItems.push({
+            Quantity: 1,
+            Product2Id: this.produtoSelecionado.id,
+            UnitPrice: valorTotalPropostaUnidade,
+            QuoteId: this.recordId
         })
-        .catch(error=>{
-            console.error(error)
-            this.showNotification("Erro ao concluir simulacao", "Verifique os campos de entrada", "error")
+
+        concluirSimulacao(
+            { 
+                idCotacao: this.recordId,
+                isParaAprovacao: this.isParaAprovacao,
+                series: series,
+                qlis: quoteLineItems,
+                valorUnidadeTabela: this.entradaPrecoSelecionada.ValorVenda__c,
+                equipeVendasDefault: this.equipeVendasDefault,
+                equipeVendas: this.equipeVendas
+            }
+        )
+        .then(() => {
+            this.refreshQuoteData();
+            this.showNotification("Sucesso", "Simulação concluída com sucesso", "success");
+            this.simulacaoFinalizada = true;
+        })
+        .catch(error => {
+            console.error(error);
+            this.showNotification("Erro ao concluir simulacao", "Verifique os campos de entrada", "error");
         })
     }
 
-
+    handleValorChange(event) {
+        const { valorVaga, idVaga } = event.detail;
+    
+        const vagaIndex = this.vagasSelecionadasInfo.findIndex(vaga => vaga.id === idVaga);
+        if (vagaIndex !== -1) {
+            this.vagasSelecionadasInfo[vagaIndex].valorVaga = valorVaga;
+        } else {
+            this.vagasSelecionadasInfo.push({ id: idVaga, valorVaga });
+        }
+        
+    }
+    
+    handleEnviarAprovacao(event) {
+        this.isParaAprovacao = event.detail;
+    }
 }

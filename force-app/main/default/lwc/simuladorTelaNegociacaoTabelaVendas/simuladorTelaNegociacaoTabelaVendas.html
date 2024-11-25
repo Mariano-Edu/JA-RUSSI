@@ -11,15 +11,15 @@
                         name="tabelaVendas"
                         label="Tabela de vendas"
                         placeholder="Selecione uma tabela de vendas"
-                        options={getTabelaVendasOptions}
-                        value={tabelaVendaValue}
+                        options={getTabelaOptions}
+                        value={getTabelaVendaValue}
                         class="slds-col" style="width: 1/4;"
+                        disabled
                         onchange={handleChangeTabela}>
                     </lightning-combobox>
                 
-                    <lightning-input disabled class="slds-col" value={inicioVigenciaTabela} style="width: 1/4;" type="text" name="inicioVigencia" label="Início de vigência" ></lightning-input>
+                    <lightning-input disabled class="slds-col" value={tabelaMesVigencia} style="width: 1/2;" type="text" name="tabelaMesVigencia" label="Mês de Vigência" ></lightning-input>
                     
-                    <lightning-input disabled class="slds-col" value={fimVigenciaTabela} style="width: 1/4;" type="text" name="fimVigencia" label="Fim de vigência" ></lightning-input>
                 </div>
 
                 <div class="slds-col slds-grid slds-size_1-of-1">
@@ -34,13 +34,17 @@
                </div>
 
                <div class="slds-col slds-grid slds-size_1-of-1 slds-grid_align-end slds-p-vertical_medium">
-                    <div class="slds-grid slds-wrap" style="width: auto;">
-                        <span class="slds-col slds-size_1-of-1 slds-text-body_small" style="font-weight: lighter;">valor Nominal</span>
+                    <div class="slds-grid slds-wrap" style="width: 10rem;">
+                        <span class="slds-col slds-size_1-of-1 slds-text-body_small" style="font-weight: lighter;">Valor Nominal</span>
                         <span class="slds-col slds-size_1-of-1 slds-text-heading_small" style="font-weight: normal;">{formattedValorNominal}</span>
                     </div>
-                    <div class="slds-grid slds-wrap" style="width: auto; margin-left: 2rem;">
-                        <span class="slds-col slds-size_1-of-1 slds-text-body_small" style="font-weight: lighter;">VPL</span>
-                        <span class="slds-col slds-size_1-of-1 slds-text-heading_small" style="font-weight: normal;">{formattedValorVPL}</span>
+                    <div class="slds-grid slds-wrap" style="width: 10rem;">
+                        <span class="slds-col slds-size_1-of-1 slds-text-body_small" style="font-weight: lighter;">Desconto Percentual</span>
+                        <span class="slds-col slds-size_1-of-1 slds-text-heading_small" style="font-weight: normal;">{formattedValorDescontoP}</span>
+                    </div>
+                    <div class="slds-grid slds-wrap" style="width: 10rem;">
+                        <span class="slds-col slds-size_1-of-1 slds-text-body_small" style="font-weight: lighter;">Desconto Nominal</span>
+                        <span class="slds-col slds-size_1-of-1 slds-text-heading_small" style="font-weight: normal;">{formattedValorDescontoN}</span>
                     </div>
                </div>
             </div>

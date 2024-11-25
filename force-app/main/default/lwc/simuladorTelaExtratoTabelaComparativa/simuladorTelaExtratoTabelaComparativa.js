@@ -5,44 +5,54 @@ const colunas = [
     { label: 'Item', fieldName: 'item' }, 
     { label: 'Tabela', fieldName: 'valorTabela', type: 'text' }, 
     { label: 'Proposta', fieldName: 'valorProposta', type: 'text' },
-    { label: 'Diferença', fieldName: 'diferenca', type: 'text' } 
+    { 
+        label: 'Diferença', 
+        fieldName: 'diferenca', 
+        cellAttributes: {
+            class: { 
+                fieldName: 'diferencaClass'
+            } 
+        } 
+    }
 ];
 
 export default class SimuladorTelaExtratoTabelaComparativa extends LightningElement {
     @api propostasCliente = [];
     @api idTabelaVenda;
+    @api idUnidade;
 
     @track comparacaoResultados = [];
     @track colunas = colunas;
 
     connectedCallback() {
-        console.log('connectedCallback executed');
-        console.log('PropostasCliente:', this.propostasCliente); 
-        console.log('IdTabelaVenda:', this.idTabelaVenda); 
         this.carregarComparacao();
     }
 
     carregarComparacao() {
         if (this.propostasCliente && this.idTabelaVenda) {
-            calcularComparacao({ tabelaId: this.idTabelaVenda, proposta: this.propostasCliente })
+            this.propostasCliente = this.propostasCliente.map(proposta => ({...proposta, ValorTotalNominal__c: proposta.valorTotal}));
+            calcularComparacao({ unidadeId: this.idUnidade, tabelaId: this.idTabelaVenda, proposta: this.propostasCliente })
                 .then(result => {
-                    console.log('Apex Result:', result); 
-                    
-                    this.comparacaoResultados = result.map(item => {
-                        console.log('Mapping Item:', item); 
 
+                    this.comparacaoResultados = result.map(item => {
                         const mappedItem = {
                             item: item.item,
                             valorTabela: this.formatValue(item.valorTabela, item.item),
                             valorProposta: this.formatValue(item.valorProposta, item.item),
-                            diferenca: this.formatValue(item.diferenca, item.item)
+                            diferenca: this.formatValue(item.diferenca, item.item),
+                            diferencaClass: (() => {
+                                if (item.diferenca > 0) { 
+                                    return 'slds-text-color_success' 
+                                }
+                                else if (item.diferenca < 0) { 
+                                    return 'slds-text-color_error' 
+                                }
+                            })()
                         };
-
-                        console.log('Mapped Item:', mappedItem); 
+                        
                         return mappedItem;
                     });
 
-                    console.log('Mapped Results:', this.comparacaoResultados); 
                 })
                 .catch(error => {
                     console.error('Hata: ', error);
@@ -55,7 +65,7 @@ export default class SimuladorTelaExtratoTabelaComparativa extends LightningElem
     formatValue(value, item) {
         
         const percentageItems = [
-            '% de Captação até habite-se', 
+            'Desconto Percentual', 
             
         ];
 

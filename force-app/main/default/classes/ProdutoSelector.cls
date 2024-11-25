@@ -3,6 +3,9 @@ public class ProdutoSelector {
     .get('Vaga')
     .getRecordTypeId();
 
+
+
+
     public static Product2 getProdutosById(Id id){
         return [
             SELECT
@@ -12,6 +15,7 @@ public class ProdutoSelector {
                 MetragemTotal__c,
                 NumeroDaUnidade__c,
                 NumeroQuartos__c,
+                QuantidadeVagas__c,
                 Bloco__r.Name,
                 PrecoLista__c,
                 Family
@@ -30,14 +34,17 @@ public class ProdutoSelector {
         return produtoMap;
     }
 
+    // MetragemDaUnidadeM__c
+    // ValorDaUnidade__c
+
     public static Map<Id, Product2> obterUnidadesRelacionadas(Set<Id> empreendimento){
         Map<Id, Product2> unidadesMap = new Map<Id, Product2>([
             SELECT
                 Id,
                 Name,
-                PrecoLista__c,
+                ValorDaUnidade__c,
                 Coeficiente__c,
-                MetragemTotal__c,
+                MetragemDaUnidadeM__c,
                 Empreendimento__c
             FROM Product2 
             WHERE Empreendimento__c IN :empreendimento
@@ -51,6 +58,7 @@ public class ProdutoSelector {
                 Id,
                 Name,
                 ProductCode,
+                QuantidadeVagas__c,
                 ValorDaUnidade__c,
                 Status__c,
                 Andar__c,
@@ -79,6 +87,7 @@ public class ProdutoSelector {
                 Id,
                 Name,
                 ProductCode,
+                QuantidadeVagas__c,
                 ValorDaUnidade__c,
                 Status__c,
                 Andar__c,
@@ -97,6 +106,43 @@ public class ProdutoSelector {
             WHERE 
                 Status__c != '' AND
                 Empreendimento__r.DisponivelNoEspelho__c = true
+        ];
+    }
+
+
+    public static List<Product2> getVagasGaragem(Id idEmpreendimento){
+        System.debug('idEmpreendimento: ' + idEmpreendimento);
+
+        return[
+
+        SELECT 
+        id,
+        Name,
+        Tipo__c,
+        Status__c,
+        VagasUnidade__c,
+        AreaTotal__c,
+        TipoVaga__c,
+        Empreendimento__c, 
+        Empreendimento__r.VagasUnidade__c,
+        RecordType.Name 
+        FROM Product2 
+        WHERE
+            Empreendimento__c = :idEmpreendimento
+        AND RecordType.Name = 'Vaga'
+        ];
+    }
+
+    public static List<Product2> getQtdVagas(Id idUnidade) {
+        return 
+        [
+            SELECT 
+            id,
+            Name,
+            QuantidadeVagas__c
+            FROM Product2 
+            WHERE 
+            id = :idUnidade        
         ];
     }
 }

@@ -17,10 +17,10 @@ public class ExtratoTabelaService {
     private static ComparacaoResultado criarComparacao(String criterio, Decimal valorTabela, Decimal valorProposta) {
         ComparacaoResultado resultado = new ComparacaoResultado();
         resultado.criterio = criterio;
-        resultado.valorTabela = valorTabela.setScale(2);  // Formatação com 2 casas decimais
-        resultado.valorProposta = valorProposta.setScale(2);  // Formatação com 2 casas decimais
-        resultado.dentroDoLimite = valorProposta <= valorTabela;
-        resultado.aprovado = resultado.dentroDoLimite ? 'utility:success' : 'utility:error';
+        resultado.valorTabela = valorTabela.setScale(2);
+        resultado.valorProposta = valorProposta.setScale(2);
+        resultado.dentroDoLimite = criterio != 'Valor nominal mínimo' ? valorProposta <= valorTabela : valorProposta >= valorTabela;
+        resultado.aprovado = resultado.dentroDoLimite ? 'action:approval' : 'action:close';
         return resultado;
     }
 
@@ -67,19 +67,19 @@ public class ExtratoTabelaService {
             }
         }
 
-        TabelaVendas__c tabela = TabelaVendaSelector.obterTabelasRelacionadas(tabelaId);
+        TabelaVendas__c tabela = TabelaVendasSelector.obterTabelasRelacionadas(tabelaId);
 
         if (valoresMatriz != null) {
-            resultados.add(criarComparacao('Valor nominal', (Decimal) valoresMatriz.get('nominalTabela'), (Decimal) valoresMatriz.get('nominalProposta')));
-            resultados.add(criarComparacao('Valor VPL', (Decimal) valoresMatriz.get('valorVplTabela'), (Decimal) valoresMatriz.get('valorVplProposta')));
+            resultados.add(criarComparacao('Valor nominal mínimo', (Decimal) valoresMatriz.get('nominalTabelaMin'), (Decimal) valoresMatriz.get('nominalProposta')));
+            // resultados.add(criarComparacao('Valor VPL', (Decimal) valoresMatriz.get('valorVplTabela'), (Decimal) valoresMatriz.get('valorVplProposta')));
         } else {
             System.debug('valoresMatriz é null');
         }
 
         resultados.add(criarComparacao('Prazo de financiamento', quantidadeParcelas, quantidadeParcelasProp));
-        resultados.add(criarComparacao('% de Captação à vista', captacaoVistaTabela, captacaoVistaProposta));
-        resultados.add(criarComparacao('% de Captação até habita-se', captacaoAteHabTabela, captacaoAteHabProposta));
-        resultados.add(criarComparacao('% de Captação mensal', captacaoMensalTabela, captacaoMensalProposta));
+        // resultados.add(criarComparacao('% de Captação à vista', captacaoVistaTabela, captacaoVistaProposta));
+        // resultados.add(criarComparacao('% de Captação até habita-se', captacaoAteHabTabela, captacaoAteHabProposta));
+        // resultados.add(criarComparacao('% de Captação mensal', captacaoMensalTabela, captacaoMensalProposta));
         
         return resultados;
     }

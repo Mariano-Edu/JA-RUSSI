@@ -10,11 +10,9 @@ public class OpportunityTeamMemberHelper {
             if(!gerente.isEmpty()) {
                 newTeamMembers.add(
                     new OpportunityTeamMember(
-                        TeamMemberRole = 'Sales Manager',
+                        TeamMemberRole = 'Gerente de vendas',
                         UserId = gerente[0].Id,
                         OpportunityId = iOpp.Id
-                        //ComissionPercentage__c = definir porcentagem de comissão
-                        //ValorDaComissao__c = definir valor
                     )
                 );
             }
@@ -22,11 +20,9 @@ public class OpportunityTeamMemberHelper {
             if(!diretor.isEmpty()) {
                 newTeamMembers.add(
                     new OpportunityTeamMember(
-                        TeamMemberRole = 'CEO',
+                        TeamMemberRole = 'Diretor Comercial',
                         UserId = diretor[0].Id,
                         OpportunityId = iOpp.Id
-                        //ComissionPercentage__c = definir porcentagem de comissão
-                        //ValorDaComissao__c = definir valor
                     )
                 );
             }
@@ -34,11 +30,9 @@ public class OpportunityTeamMemberHelper {
             if(iOpp.ResponsavelPeloLead__c != null) {
                 newTeamMembers.add(
                     new OpportunityTeamMember(
-                        TeamMemberRole = 'Lead Qualifier',
+                        TeamMemberRole = 'SDR',
                         UserId = iOpp.ResponsavelPeloLead__c,
                         OpportunityId = iOpp.Id
-                        //ComissionPercentage__c = definir porcentagem de comissão
-                        //ValorDaComissao__c = definir valor
                     )
                 );
             }

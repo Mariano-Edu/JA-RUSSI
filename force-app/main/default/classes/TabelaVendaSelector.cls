@@ -12,7 +12,7 @@ public class TabelaVendaSelector {
         return [
             SELECT
                 Id,
-                Empreendimento__r.ValorM__c,
+                // Empreendimento__r.ValorM__c,
                 Empreendimento__r.MetragemPrivativaTotal__c
             FROM TabelaVendas__c
             WHERE Id = :tabelaRelacionada LIMIT 1
@@ -28,6 +28,7 @@ public class TabelaVendaSelector {
                    VigenciaInicio__c,
                    VigenciaFim__c,
                    TaxaDescontoVPL__c,
+                   Empreendimento__r.VagasUnidade__c,
                    TaxaTP__c
             FROM   TabelaVendas__c
             WHERE  Empreendimento__c  = :idEmpreendimento
@@ -71,6 +72,6 @@ public class TabelaVendaSelector {
         WHERE Id = :idTabelaVenda 
         LIMIT 1
         ];
-
     }
+    
 }

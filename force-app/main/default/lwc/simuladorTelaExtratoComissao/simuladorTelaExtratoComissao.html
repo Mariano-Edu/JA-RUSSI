@@ -1,0 +1,32 @@
+<template>
+    <lightning-card class="slds-col slds-p-horizontal_large" icon-name="standard:team_member" title="Distribuição da Comissão" variant="narrow">                
+        <div class="slds-grid slds-wrap">
+            <div class="slds-text-title slds-col slds-size_1-of-1">
+                <span>Revise a distribuição da comissão</span>
+            </div>
+
+            <div class="slds-box slds-grid slds-wrap slds-col slds-p-vertical_medium" style="padding: 1rem 2rem; overflow-x: auto;">
+
+                <div class="slds-col slds-grid slds-size_1-of-1">
+                    <div class="slds-col slds-size_1-of-1 slds-p-vertical_medium">
+                        <lightning-datatable
+                            key-field="id"
+                            data={equipe}
+                            columns={comissaoColunas}
+                            hide-checkbox-column>
+                        </lightning-datatable>
+                    </div>
+               </div>
+            </div>
+        </div>
+        <div class="slds-col slds-grid">
+            <div class="slds-col slds-size_1-of-1 slds-grid slds-grid_align-end slds-p-vertical_medium" >
+                <div class="slds-grid slds-wrap" style="width: 8rem;">
+                    <span class="slds-col slds-size_1-of-1 slds-text-body_small" style="font-weight: lighter;">Total Comissão</span>
+                    <span class="slds-col slds-size_1-of-1 slds-text-heading_small" style="font-weight: normal;">{totalComissao}</span>
+                </div>
+            </div>
+        </div>
+    </lightning-card>
+
+</template>

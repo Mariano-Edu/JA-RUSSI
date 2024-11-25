@@ -105,6 +105,15 @@ public with sharing class OpportunityHelper {
             insert novasAnalises;
         }
     }
+
+    public static void checkSignatarios(List<Opportunity> newOpps, Map<Id, Opportunity> oldOpps){
+        for (Opportunity opp : newOpps) {
+            Opportunity oldOpp = oldOpps.get(opp.Id);     
+            if (opp.ContractId <> null && oldOpp.ContractId != opp.ContractId) {
+                SignatariosService.createSignatariosByOppId(opp.Id);
+            }
+        }
+    }
     
     
 }

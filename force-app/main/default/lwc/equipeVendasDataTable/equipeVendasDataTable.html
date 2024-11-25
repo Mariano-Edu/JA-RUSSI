@@ -1,0 +1,107 @@
+<template>
+    <table class="slds-table slds-table_cell-buffer slds-no-row-hover slds-table_bordered" >
+        <thead>
+            <tr class="slds-line-height_reset">
+                <template for:each={getColunasHeader} for:item="header">
+                    <th key={header.fieldApiName} class="" scope="col" style="width: max-content">
+                        <div class="slds-truncate" title={header.label}>{header.label}</div>
+                    </th>
+                </template>
+            </tr>
+        </thead>
+        <tbody>
+            <template for:each={getEquipe} for:item="membro" for:index="index">
+                <tr 
+                    key={membro.uid} 
+                    data-uid={membro.uid} 
+                    class="slds-hint-parent" 
+                    style="height: fit-content; width: fit-content">
+
+                    <td data-label="Nome" scope="row">
+                        <div title="Nome" >
+                            <lightning-record-picker
+                                label="Nome"
+                                placeholder="Nome"
+                                object-api-name="User"
+                                data-uid={membro.uid}
+                                value={membro.UserId}
+                                onchange={validarUsuario}>
+                            </lightning-record-picker>
+                        </div>
+                    </td>
+
+                    <td data-label="Cargo" scope="row">
+                        <div title="Cargo" >
+                            <lightning-combobox
+                                label="Cargo"
+                                onchange={handleMembroChange} 
+                                data-uid={membro.uid} 
+                                data-name="TeamMemberRole"
+                                options={cargosOpt}
+                                dropdown-alignment="auto"
+                                value={membro.TeamMemberRole}>
+                            </lightning-combobox>
+                        </div>
+                    </td>
+
+                    <td data-label="Valor Comissão ($)">
+                        <div title="Valor Comissão ($)">
+                            <lightning-input 
+                                type="number" 
+                                formatter="currency"
+                                onchange={validarValorComissao} 
+                                data-uid={membro.uid} 
+                                value={membro.ValorComissao__c}
+                                disabled={membro.edicaoValorBloqueada}
+                                data-name="ValorComissao__c" 
+                                label="Valor Comissão ($)">
+                            </lightning-input>
+                        </div>
+                    </td>
+
+                    <td data-label="Percentual Comissão (%)">
+                        <div title="Percentual Comissão (%)">
+                            <lightning-input 
+                                type="number"
+                                formatter="percent-fixed"
+                                onchange={validarPercentualComissao} 
+                                data-uid={membro.uid}
+                                disabled={membro.edicaoPercentualBloqueada}
+                                value={membro.PercentualComissao__c}
+                                data-name="PercentualComissao__c" 
+                                label="Percentual Comissão (%)">
+                            </lightning-input>
+                        </div>
+                    </td>
+
+                    <td data-label="Valor Prêmio ($)">
+                        <div title="Valor Prêmio ($)">
+                            <lightning-input 
+                                type="number" 
+                                formatter="currency"
+                                onchange={validarValorPremio} 
+                                data-uid={membro.uid}
+                                disabled={membro.naoPodeEditarPremio}
+                                value={membro.ValorPremio__c}
+                                data-name="ValorPremio__c" 
+                                label="Valor Prêmio ($)">
+                            </lightning-input>
+                        </div>
+                    </td>
+
+                    <td role="gridcell" >
+                        <c-lwc-tooltip content="Deletar">
+                            <lightning-button-icon 
+                                value="deletar" 
+                                data-uid={membro.uid}  
+                                icon-name="utility:delete" 
+                                class="slds-m-left_x-small" 
+                                onclick={handleDeleteMembroEquipe}>
+                            </lightning-button-icon>
+                        </c-lwc-tooltip>                            
+                    </td>
+                </tr>
+            </template>
+        </tbody>
+    </table>
+</template>

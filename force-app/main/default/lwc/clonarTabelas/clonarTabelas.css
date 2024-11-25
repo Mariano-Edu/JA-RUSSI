@@ -4,7 +4,7 @@
     margin: 0;
     padding: 1rem;
     box-sizing: border-box;
-    background-color: #000000;
+    background-color: #fcfcfc;
 }
 
 .slds-modal__container {
@@ -44,7 +44,7 @@
 
 .custom-button {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     margin-top: 1rem;
 }
 

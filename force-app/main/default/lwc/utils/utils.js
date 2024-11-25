@@ -1,14 +1,27 @@
 export function formatData(data){
     const partes = data.split('-');
-    if (partes.length !== 3) {return null;}
+    if (partes.length !== 3) return null;
 
     const ano = parseInt(partes[0], 10);
     const mes = parseInt(partes[1], 10);
     const dia = parseInt(partes[2], 10);
 
-    if (isNaN(ano) || isNaN(mes) || isNaN(dia)) {return null;}
+    if (isNaN(ano) || isNaN(mes) || isNaN(dia)) return null;
 
     return `${dia}/${mes}/${ano}`;
+}
+
+export function formatDataISO(data) {
+    const partes = data.split('/');
+    if (partes.length !== 3) return null;
+    
+    const dia = partes[0];
+    const mes = partes[1];
+    const ano = partes[2];
+    
+    if (isNaN(dia) || isNaN(mes) || isNaN(ano)) return null;
+    
+    return `${ano}-${mes}-${dia}`;
 }
 
 export function calcularInicioPagamentoSeriePagamentos(serieDePagamentos){
@@ -60,4 +73,8 @@ export function calcularDiferencaMeses(data) {
     
 
     return diferencaMeses;
+}
+
+export function showNotification(title, message, variant) {
+    this.dispatchEvent(new ShowToastEvent({ title, message, variant }));
 }

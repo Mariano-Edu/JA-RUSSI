@@ -1,0 +1,6 @@
+<aura:component implements="lightning:actionOverride,force:hasRecordId,force:hasSObjectName,force:lightningQuickAction" controller="GeracaoMinutaService">
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+    <div class="exampleHolder">
+        <lightning:spinner alternativeText="Loading" size="medium" />
+    </div>
+</aura:component>

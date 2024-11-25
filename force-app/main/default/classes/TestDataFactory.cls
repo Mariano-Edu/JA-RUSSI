@@ -4,10 +4,11 @@ public class TestDataFactory {
     public static Account gerarConta(){
         Account conta = new Account();
         conta.Name = 'Conta de Teste';
+        conta.CNPJ__c = '66077848000127';
         return conta;
     }
 
-    public static Product2 gerarProduto(){
+    public static Product2 gerarProduto() {
         Product2 produto = new Product2();
         produto.Name = 'Produto de Teste';
         produto.ProductCode = 'Teste-1';
@@ -24,10 +25,10 @@ public class TestDataFactory {
         pricebookEntry.UnitPrice = 100;
         pricebookEntry.IsActive = true;
         return pricebookEntry;
-    }
+}
 
     //Registros simulador de vendas
-    public static Empreendimento__c gerarEmpreendimento(){
+    public static Empreendimento__c gerarEmpreendimento() {
         Empreendimento__c empreendimento = new Empreendimento__c();
         empreendimento.Name = 'Empreendimento de Teste';
         empreendimento.CNPJ__c = '22151181000190';
@@ -38,7 +39,7 @@ public class TestDataFactory {
         TabelaVendas__c tabelaVendas = new TabelaVendas__c();
         tabelaVendas.Name = 'Teste'; 
         tabelaVendas.PeriodicidadeParcelaPos__c = 1;
-        //tabelaVendas.PeriodicidadeParcela__c = 1;
+        tabelaVendas.PeriodicidadeParcela__c = '1';
         return tabelaVendas;
     }
 
@@ -50,6 +51,7 @@ public class TestDataFactory {
         serie.ValorTotal__c= 1;
         serie.TabelaVenda__c = idTabela;
         serie.TipoCondicao__c = 'Ato';
+        serie.ValorTotalNominal__c = 8000.0;
         return serie;
     }
 
@@ -69,6 +71,59 @@ public class TestDataFactory {
         unidadeVenda.Name = 'UnidadeVendaTeste';
         unidadeVenda.TabelaVenda__c = idTabela;
         unidadeVenda.PrecoLista__c = 300000;
+        unidadeVenda.MetragemUnidade__c = 80.0;
+        unidadeVenda.PrecoLista__c = 800000.0;
+        unidadeVenda.CoeficienteTabela__c = 100;
         return unidadeVenda;
+    }
+
+    public static Quote gerarCotacao(Id idTabela, Id idOpp) {
+        Quote cotacao = new Quote();
+        cotacao.Name = 'Cotação Teste';
+        cotacao.TabelaDeVenda__c = idTabela;
+        cotacao.OpportunityId = idOpp;
+        return cotacao;
+    }
+
+    public static Opportunity gerarOportunidade(Id idConta) {
+        Opportunity opp = new Opportunity();
+        opp.Name = 'Oportunidade 1';
+        opp.StageName = 'Proposta';
+        opp.CloseDate = System.today().addMonths(1);
+        opp.AccountId = idConta;
+        //opp.ResponsavelPeloLead__c = user.Id;
+        return opp;
+    }
+
+    public static TabelaComissao__c gerarTabelaComissaoAtivada(Id idTabelaVendas, Id idEmpreendimento) {
+        TabelaComissao__c tabela = new TabelaComissao__c();
+        tabela.Name = 'Tabela comissão';
+        tabela.EmpresaVenda__c = 'House';
+        tabela.PercentualComissao__c = 10;
+        tabela.Empreendimento__c = idEmpreendimento;
+        tabela.TabelaVenda__c = idTabelaVendas;
+
+        Date dataAtual = Date.today();
+
+        tabela.InicioVigencia__c = dataAtual.addDays(-1);
+        tabela.FimVigencia__c = dataAtual.addDays(1);
+
+        return tabela;
+    }
+
+    public static TabelaComissao__c gerarTabelaComissaoDesativada(Id idTabelaVendas, Id idEmpreendimento) {
+        TabelaComissao__c tabela = new TabelaComissao__c();
+        tabela.Name = 'Tabela comissão';
+        tabela.EmpresaVenda__c = 'House';
+        tabela.PercentualComissao__c = 10;
+        tabela.Empreendimento__c = idEmpreendimento;
+        tabela.TabelaVenda__c = idTabelaVendas;
+
+        Date dataAtual = Date.today();
+
+        tabela.InicioVigencia__c = dataAtual.addDays(10);
+        tabela.FimVigencia__c = dataAtual.addDays(11);
+
+        return tabela;
     } 
 }

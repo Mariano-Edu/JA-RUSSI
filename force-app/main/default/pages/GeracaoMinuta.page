@@ -1,0 +1,72 @@
+<apex:page renderAs="pdf" applyBodyTag="false" controller="GeracaoMinutaPdfController" >
+        <head>
+                <style type="text/css" media="print">
+                       @page {
+                                 @top-center {
+                                       content: element(header);
+                               }
+                               @bottom-left {
+                                     content: element(footer);
+                               }
+                            }
+                                     div.header {
+                                      padding: 10px;
+                                      position: running(header);
+                           }
+                       div.footer {
+                                display: block;
+                             padding: 5px;
+                               position: running(footer);
+                               
+                      }
+                                     .pagenumber:before {
+                                        content: counter(page);
+                       }
+                                   .pagecount:before {
+                             content: counter(pages);
+                        }
+                        div.content {
+                           padding-bottom: 50px; 
+                           font-family: serif;
+                           font-size: 15px;
+                           text-align: left;
+
+                        }
+
+                        .tagAssinatura{
+                              font-size: 10px;
+                              color: #fff;
+                        }
+
+                        div.content * {
+                              margin-top: 0;
+                              margin-bottom: 0;
+                              padding-top: 0;
+                              padding-bottom: 0; 
+                        }
+
+                        .signature-block {
+                              page-break-inside: avoid;  
+                        }
+
+                        .page-break{
+                              page-break-before: always;
+                        }
+                    </style>
+              </head>
+           <div class="header">
+
+           </div>
+           <div class="footer">
+               <div><br/> 
+                   <span style="float:right" class="pagenumber"/>
+                   <spam style="font-size: 10px; color: #fff;"> &lt;&lt;ProponenteRubrica1&gt;&gt;  &lt;&lt;ProponenteRubrica2&gt;&gt; &lt;&lt;ProponenteRubrica3&gt;&gt; &lt;&lt;ProponenteRubrica4&gt;&gt; 
+                   &lt;&lt;ProponenteRubrica5&gt;&gt; &lt;&lt;Juridico_Rubrica&gt;&gt;   </spam></div>
+                <div></div>
+          </div>
+          <div class="content">
+               
+                  <apex:outputText value="{!Conteudo}" escape="false" ></apex:outputText>
+
+          </div>
+</apex:page>

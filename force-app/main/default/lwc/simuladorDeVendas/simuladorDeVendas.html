@@ -1,48 +1,172 @@
 <template>
-    <div class="slds-box">
+   
+        <!-- <template lwc:if={opportunity}>
+        <div class="slds-page-header slds-page-header_record-home">
+            <div class="slds-page-header__row">
+            <div class="slds-page-header__col-title">
+                <div class="slds-media">
+                    <div class="slds-media__figure">
+                        <lightning-icon 
+                            icon-name="standard:opportunity" 
+                            alternative-text="Oportunidade">
+                        </lightning-icon>
+                    </div>
+                <div class="slds-media__body">
+                    <div class="slds-page-header__name">
+                    <div class="slds-page-header__name-title">
+                        <h1>
+                        <span>Oportunidade</span>
+                        <span class="slds-page-header__title slds-truncate" title={opportunity.Name}>{opportunity.Name}</span>
+                        </h1>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            </div>
+            <div class="slds-page-header__row slds-page-header__row_gutters">
+            <div class="slds-page-header__col-details">
+                <ul class="slds-page-header__detail-row">
+
+                <li class="slds-page-header__detail-block">
+                    <div class="slds-text-title slds-truncate" title="Nome da Conta">Nome da Conta</div>
+                    <div class="slds-truncate" title={opportunity.Account.Name}>
+                        <a href={getUrlConta}>{opportunity.Account.Name}</a>
+                    </div>
+                </li>
+                <li class="slds-page-header__detail-block">
+                    <div class="slds-text-title slds-truncate" title="Data de Fechamento">Data de Fechamento</div>
+                    <div class="slds-truncate" title={opportunity.CloseDate}>
+                        <lightning-formatted-date-time value={opportunity.CloseDate} year="numeric" month="2-digit" day="2-digit">
+                        </lightning-formatted-date-time>
+                    </div>
+                </li>
+
+                <li class="slds-page-header__detail-block">
+                    <div class="slds-text-title slds-truncate" title="Proprietário">Proprietário</div>
+                    <div class="slds-truncate" title={opportunity.Owner.Name}>
+                        <a href={getUrlProprietario}>{opportunity.Owner.Name}</a>
+                    </div>
+                </li>
+
+                <li class="slds-page-header__detail-block">
+                    <div class="slds-text-title slds-truncate" title="Tipo de Venda">Tipo de Venda</div>
+                    <div class="slds-truncate" title={opportunity.TipoVenda__c}>{opportunity.TipoVenda__c}</div>
+                </li>
+                </ul>
+            </div>
+            </div>
+        </div>
+    </template> -->
+    <template if:true={isModalOpen}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close" alternative-text="close" size="small"></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 class="slds-text-heading_medium">Adicionar vagas restantes</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium">
+                    
+                 <div style="height: 15%; width:100%; display:flex;justify-content:flex-end;">
+                        <lightning-button
+                        variant="brand" 
+                        label="Sim"
+                        title="Retornar seleção de vagas"
+                        onclick={cancel}
+                        class="slds-m-left_x-small"
+                        >
+                    </lightning-button>
+                    <lightning-button
+                    variant="brand" 
+                    label="Não"
+                    title="Avançar para etapa seguinte"
+                    onclick={nextStep}
+                    class="slds-m-left_x-small"
+                    >
+                </lightning-button>
+            </div>
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+
+
+    <div class="slds-box slds-p-around_none slds-m-top_small">
         <lightning-card icon-name="standard:quotes" title='Simulador de vendas' variant="narrow">
-            <div class="slds-grid slds-wrap"> 
-                <div class="slds-text-heading_small slds-col slds-size_1-of-1">
-                    <span>Agora é o momento de apresentar para o cliente as unidades disponíveis para compra e escolher a ideal! Para isso, utilize os filtros disponíveis para otimizar o processo de venda.</span>
-                </div>
-
-
-                <div class="slds-col slds-p-vertical_medium slds-size_1-of-1">
-                    <lightning-progress-indicator current-step={currentStepValue} type="path"  variant="base">
-                        <lightning-progress-step label="Espelho de vendas" value="espelho">
-                        </lightning-progress-step>
-
-                        <lightning-progress-step label="Informações da unidade" value="unidade">
-                        </lightning-progress-step>
-
-                        <lightning-progress-step label="Vagas da unidade" value="vaga">
-                        </lightning-progress-step>
-
-                        <lightning-progress-step label="Negociação" value="negociacao">
-                        </lightning-progress-step>
-
-                        <lightning-progress-step label="Extrato" value="extrato">
-                        </lightning-progress-step>
-                    </lightning-progress-indicator>
-                </div>
+            <div class="slds-grid slds-wrap slds-p-around_small"> 
+            <template if:false={isSimulacaoFinalizada}>
+                
+                    <div class="slds-text-heading_small slds-col slds-size_1-of-1">
+                        <span>Agora é o momento de apresentar para o cliente as unidades disponíveis para compra e escolher a ideal! Para isso, utilize os filtros disponíveis para otimizar o processo de venda.</span>
+                    </div>
+    
+                    <div class="slds-col slds-p-vertical_medium slds-size_1-of-1">
+                        <lightning-progress-indicator current-step={currentStepValue} type="path" variant="base">
+                            <lightning-progress-step label="Seleção das Unidades" value="espelho">
+                            </lightning-progress-step>
+    
+                            <lightning-progress-step label="Seleção das Vagas" value="vagas">
+                            </lightning-progress-step>
+    
+                            <lightning-progress-step label="Revisão dos Produtos" value="revisao">
+                            </lightning-progress-step>
+    
+                            <lightning-progress-step label="Negociação" value="negociacao">
+                            </lightning-progress-step>
+    
+                            <lightning-progress-step label="Extrato" value="extrato">
+                            </lightning-progress-step>
+                        </lightning-progress-indicator>
+                    </div>
 
                 <div class="slds-col slds-grid slds-p-vertical_medium slds-size_1-of-1 ">
                     <template lwc:if={etapaEspelho}>
                         <div class="slds-grid slds-wrap slds-size_1-of-1">
-                            <c-espelho-de-vendas class="slds-grid slds-size_1-of-1" style="padding-inline:  2rem" onselecionarunidade={handleChooseUnidade}>
+
+                            <c-espelho-de-vendas 
+                                lwc:ref="espelhoVendas" 
+                                class="slds-grid slds-size_1-of-1" 
+                                style="padding-inline:  2rem" 
+                                tabela-options={getTabelaOptions}
+                                entrada-precos-map={getEntradaPrecosMap}
+                                onselecionarunidade={handleChooseUnidade} 
+                                empreendimento-selecionado={empreendimentoSelecionado}
+                                onselecionartabela={handleSelecionarTabela}
+                                cotacao-id={recordId}
+                                opportunity-selecionada={opportunity}>
                             </c-espelho-de-vendas>
 
+                            
                             <div class="slds-col slds-grid slds-p-vertical_medium slds-grid_align-end slds-size_1-of-1">
-                                <lightning-button variant="brand" label="Avançar" title="Avançar para etapa seguinte" onclick={doNextstep} class="slds-m-left_x-small"></lightning-button>
+                                <lightning-button
+                                    variant="brand" 
+                                    label="Avançar"
+                                    title="Avançar para etapa seguinte"
+                                    onclick={doNextstep}
+                                    class="slds-m-left_x-small">
+                                </lightning-button>
                             </div>
                         </div>
                     </template>
 
-                    <template lwc:elseif={etapaUnidade}>
+                    <template lwc:elseif={etapaRevisao}>
                     <div class="slds-grid slds-wrap slds-size_1-of-1">
                         <c-unidade-info-display class="slds-col slds-size_1-of-1"
-                         produto-selecionado={produtoSelecionado}>
-                        </c-unidade-info-display>
+                        produto-selecionado={produtoSelecionado}
+                        qtd-vagas-selecionadas={qtdVagasSelecionadas}
+                        vagas-extras={vagasExtras}
+                        vagas-selecionadas-info={vagasSelecionadasInfo}
+                    > 
+
+                          
+                                              
+                       </c-unidade-info-display>
+
+                 
 
                         <div class="slds-col slds-grid slds-p-vertical_medium slds-grid_align-end slds-size_1-of-1">
                             <lightning-button variant="brand-outline" label="Voltar" title="Voltar para etapa anterior" onclick={doPrevStep} class="slds-m-left_x-small"></lightning-button>
@@ -52,29 +176,54 @@
                     </div>
                     </template>
 
-                    <template lwc:elseif={etapaVaga}>
+                    <template lwc:elseif={etapaVagas}>
+                        <div class="slds-grid slds-wrap slds-size_1-of-1">
+
+                            
+                            <c-simulador-tela-vagas
+                                unidade={unidade} 
+                                empreendimento-id={empreendimentoSelecionado}
+                                onvagaschange={handleVagasChange}
+                                onvalorchange={handleValorChange}
+                                produto-selecionado={produtoSelecionado}
+                            >  
+                            </c-simulador-tela-vagas>
+                            
+                            <div class="slds-col slds-grid slds-p-vertical_medium slds-grid_align-end slds-size_1-of-1">
+                                <lightning-button variant="brand-outline" label="Voltar" title="Voltar para etapa anterior" onclick={doPrevStep} class="slds-m-left_x-small"></lightning-button>
+                                <lightning-button variant="brand" label="Avançar" title="Avançar para etapa seguinte" onclick={doNextstep} class="slds-m-left_x-small"></lightning-button>
+                            </div>
+                        </div>
+                    </template>
+                    <!-- <template lwc:elseif={etapaNegociacao}>
                     <div class="slds-grid slds-wrap slds-size_1-of-1">
-            
-                                
+
+                        <c-simulador-tela-negociacao-tabela-vendas tabelas-vendas={tabelasVendas}></c-simulador-tela-negociacao-tabela-vendas>
+        
                         <div class="slds-col slds-grid slds-p-vertical_medium slds-grid_align-end slds-size_1-of-1">
                             <lightning-button variant="brand-outline" label="Voltar" title="Voltar para etapa anterior" onclick={doPrevStep} class="slds-m-left_x-small"></lightning-button>
                             <lightning-button variant="brand" label="Avançar" title="Avançar para etapa seguinte" onclick={doNextstep} class="slds-m-left_x-small"></lightning-button>
                         </div>
 
                     </div>
-                    </template>
+                    </template> -->
 
                     <template lwc:elseif={etapaNegociacao}>
                         <div class="slds-grid slds-wrap slds-size_1-of-1">
-                            <c-simulador-tela-negociacao 
+                            <c-simulador-tela-negociacao
+                                preco-sem-permuta={getValorVendaSemPermuta}
+                                tabela-mes-vigencia={getTabelaMesVigencia}
+                                entrada-precos-map={getEntradaPrecoSelecionada}
+                                tabela-selecionada={getTabelaSelecionada}
+                                tabelas-vendas={getTabelasVendas}
+                                tabela-options={getTabelaOptions}
                                 ultima-tabela-selecionada={ultimaTabelaSelecionada} 
                                 onaplicardesconto={aplicarDescontoProposta} 
                                 onhandlepagaravista={pagarAVista} 
                                 onhandleigualartabelas={igualarTabelas} 
                                 onsettabelaselecionada={setTabelaSelecionada} 
                                 info-complementares={tabelaVendasInfoComplementares} 
-                                tabela-venda-vingente-value={tabelaVendasVingenteValue} 
-                                tabelas-de-vendas-data={getTabelasVendas} 
+                                tabela-venda-vingente-value={tabelaVendasVingenteValue}
                                 onchangepropostaserie={changeSeriesProposta} 
                                 valor-vpl-proposta={valorVplProposta} 
                                 valor-nominal-proposta={getValorNominalProposta} 
@@ -84,13 +233,22 @@
                                 ondeletarcondicao={deletarCondicao} 
                                 onzerarcondicao={handleZerarCondicao} 
                                 ondividircondicao={handleDividirCondicao} 
-                                class="slds-col slds-size_1-of-1" 
-                                produto-selecionado={getProdutoSelecionado} >
+                                class="slds-col slds-size_1-of-1"
+                                onselecionarserie={handleSelecionarSerie}
+                                desconto-nominal={getDescontoNominal}
+                                desconto-percentual={getDescontoPercentual}
+                                produto-selecionado={produtoSelecionado}
+                                tabelas-comissao={tabelasComissao}
+                                equipe-opp={equipeOpp}
+                                equipe-vendas={equipeVendas}
+                                onselectcomissao={handleSelecionarTabelaComissao}
+                                onadicionarmembro={adicionarMembroEquipeVendas}
+                                onatualizarequipe={atualizarEquipe}>
                             </c-simulador-tela-negociacao>
 
                             <div class="slds-col slds-grid slds-p-vertical_medium slds-grid_align-end slds-size_1-of-1">
                                 <lightning-button variant="brand-outline" label="Voltar" title="Voltar para etapa anterior" onclick={doPrevStep} class="slds-m-left_x-small"></lightning-button>
-                                <lightning-button variant="brand" label="Analisar" title="Analisar proposta do cliente" onclick={doNextstep} class="slds-m-left_x-small"></lightning-button>
+                                <lightning-button disabled={isAnalisarBloqueado} variant="brand" label="Analisar" title="Avançar simulação de venda" onclick={doNextstep} class="slds-m-left_x-small"></lightning-button>
                             </div>
     
                         </div>
@@ -99,10 +257,14 @@
                     <template lwc:else>
                         <div class="slds-grid slds-wrap slds-size_1-of-1">
                             <c-simulador-tela-extrato class="slds-col slds-size_1-of-1" 
-                            propostas-cliente-data={propostasCliente} 
-                            id-tabela-vendas={getTabelaVendasSelecionadaId} 
-                            valores-matriz={getValoresMatriz}>
-
+                                propostas-cliente-data={propostasCliente} 
+                                id-tabela-vendas={getTabelaSelecionada} 
+                                onenviaraprovacao={handleEnviarAprovacao}
+                                valores-matriz={getValoresMatriz}
+                                desconto-nominal={getDescontoNominal}
+                                desconto-percentual={getDescontoPercentual}
+                                valor-destinado-comissao={getValorVendaSemPermuta}
+                                equipe-vendas={equipeVendas}>
                             </c-simulador-tela-extrato>
 
                             <div class="slds-col slds-grid slds-p-vertical_medium slds-grid_align-end slds-size_1-of-1">
@@ -114,7 +276,29 @@
                 </div>
 
 
+            </template>
+            <template if:true={isSimulacaoFinalizada}>
+                <!-- <c-simulador-tela-extrato class="slds-col slds-size_1-of-1" 
+                propostas-cliente-data={getPropostasCotacao} 
+                id-tabela-vendas={getTabelaSelecionada} 
+                valores-matriz={getValoresMatriz}>
+                </c-simulador-tela-extrato> -->
+
+                <c-simulador-tela-extrato-proposta-cliente
+                    valores-matriz={getValoresMatriz}
+                    condicoes-proposta-cliente={getPropostasCotacao} 
+                    class="slds-col slds-size_1-of-1">
+                </c-simulador-tela-extrato-proposta-cliente>
+
+                <c-simulador-tela-extrato-comissao
+                    equipe-vendas={equipeVendas}
+                    valor-destinado-comissao={getValorVendaSemPermuta}
+                >
+                </c-simulador-tela-extrato-comissao>
+            </template>
+
             </div>
+
         </lightning-card> 
     </div>
 </template>

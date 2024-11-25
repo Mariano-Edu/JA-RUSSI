@@ -120,13 +120,11 @@ public with sharing class ObjectHelper {
         return pickListValues;
     }
 
-    public static List<SObject> filterObjectsByRecordType(List<SObject> objects, String recordTypeApiName) {
-        Id recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = :recordTypeApiName LIMIT 1].Id;
-
+    public static List<SObject> filterObjectsByFieldValue(List<SObject> objects, String field, Object value) {
         List<SObject> filteredObjects = new List<SObject>();
 
         for(SObject iObject : objects) {
-            if(iObject.get('RecordTypeId') == recordTypeId) { filteredObjects.add(iObject); }
+            if(iObject.get(field) != null && iObject.get(field).equals(value)) { filteredObjects.add(iObject); }
         }
 
         return filteredObjects;

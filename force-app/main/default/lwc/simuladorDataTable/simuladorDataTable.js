@@ -10,12 +10,17 @@ export default class CustomDataTable extends LightningElement {
     @api header =[];
     @api series = [];
     @api unidadeSelecionada;
+    @api valorNominal;
 
     @track vencimentoParcelaOptions = [];
     tipoCondicoesPickList;
     
     connectedCallback(){
         this.generateDiasVencimentoOptions();
+    }
+
+    get getValorNominal() {
+        return this.valorNominal;
     }
 
     @wire(getPicklistValues, { recordTypeId: "012000000000000AAA", fieldApiName: TIPO_CONDICAO_FIELD })
@@ -38,10 +43,9 @@ export default class CustomDataTable extends LightningElement {
     }
 
     generateDiasVencimentoOptions(){
-        console.log(JSON.stringify(this.unidadeSelecionada))
-
-        if(!this.unidadeSelecionada.DiasDeVencimentoDaParcela){return}
-        let diasVencimento = this.unidadeSelecionada.DiasDeVencimentoDaParcela;
+        
+        if(!this.unidadeSelecionada.diasVencimento){return}
+        let diasVencimento = this.unidadeSelecionada.diasVencimento;
         let diasVencimentoArray = diasVencimento.split(';');
 
 
@@ -55,8 +59,7 @@ export default class CustomDataTable extends LightningElement {
     }
 
     handleChange(event){
-        const target = event.currentTarget;
- 
+        const target = event.currentTarget; 
 
         this.dispatchEvent(new CustomEvent('mudancacondicao', {
             detail: {uid: target.dataset.uid, name: target.dataset.name, type: target.type, value: target.value ? target.value : null, checked: target.checked ? target.checked : null}
@@ -65,6 +68,7 @@ export default class CustomDataTable extends LightningElement {
 
     handleDelete(event){
         const target = event.currentTarget; 
+        
         this.dispatchEvent(new CustomEvent('deletecondicao', {
             detail: {uid: target.dataset.uid}
         }));

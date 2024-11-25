@@ -5,8 +5,7 @@ public with sharing class TabelaVendasService {
         System.debug(nomeCotacao);
 
         Integer periocidadeParcelaPos = Integer.valueOf(tabelaSelecionada.PeriodicidadeParcelaPos__c);
-        // Integer periodicidadeParcela = Integer.valueOf(tabelaSelecionada.PeriodicidadeParcela__c);
-        Integer periodicidadeParcela = 0;
+        Integer periodicidadeParcela = Integer.valueOf(tabelaSelecionada.PeriodicidadeParcela__c);
         System.debug('tabela'+tabelaSelecionada);
         system.debug('PeriocidaPP = '+periocidadeParcelaPos);
         system.debug('PeriocidaP = '+periodicidadeParcela);

@@ -34,7 +34,7 @@
 
                         <td  data-label="Início de pagamento" >
                             <div  title="Início de pagamento" >
-                                <lightning-input  value={seriePagamento.InicioPagamento__c} type="date" date-style="short" onchange={handleChange} data-uid={seriePagamento.uid} data-name="InicioPagamento__c" label="Início de pagamento" ></lightning-input>
+                                <lightning-input value={seriePagamento.InicioPagamento__c} type="number" onchange={handleChange} data-uid={seriePagamento.uid} data-name="InicioPagamento__c" label="Início de pagamento" ></lightning-input>
                             </div>
                         </td>
 
@@ -69,7 +69,7 @@
 
                         <td  data-label="Valor total" >
                             <div  title="Valor total" >
-                                <lightning-input  type="number" step=".01" formatter="currency" value={seriePagamento.valorTotal} onchange={handleChange} data-uid={seriePagamento.uid} data-name="valorTotal" label="Valor total" ></lightning-input>
+                                <lightning-input  type="number" step=".01" formatter="currency" value={seriePagamento.valorTotal} onchange={handleChange} data-uid={seriePagamento.uid} data-name="valorTotal" label="Valor total" disabled></lightning-input>
                             </div>
                         </td>
                         
@@ -85,21 +85,15 @@
                             </div>
                         </td>
 
-                        <td  data-label="Após habite-se?" >
-                            <div  title="Após habite-se?" >
-                                <lightning-input  type="toggle"  message-toggle-active="" message-toggle-inactive="" onchange={handleChange} checked={seriePagamento.AposHabiteSe__c} data-uid={seriePagamento.uid} data-name="AposHabiteSe__c" ></lightning-input>
-                            </div>
-                        </td>
-
                         <td role="gridcell" >
 
                             <c-lwc-tooltip content="Deletar">
                                 <lightning-button-icon value="deletar" data-uid={seriePagamento.uid}  icon-name="utility:delete" class="slds-m-left_x-small" onclick={handleDelete}></lightning-button-icon>
                             </c-lwc-tooltip>                            
                             
-                            <c-lwc-tooltip content="Zerar">
+                            <!-- <c-lwc-tooltip content="Zerar">
                                 <lightning-button-icon value="zerar" data-uid={seriePagamento.uid} icon-name="utility:discounts" class="slds-m-left_x-small" onclick={handleZerar}></lightning-button-icon>
-                            </c-lwc-tooltip>
+                            </c-lwc-tooltip> -->
 
                             <!-- <c-lwc-tooltip content="Dividir">
                                 <lightning-button-icon value="dividir" data-uid={seriePagamento.uid} icon-name="utility:inner_join" class="slds-m-left_x-small" onclick={handleDividir}></lightning-button-icon>

@@ -1,0 +1,24 @@
+<template>
+    <lightning-card icon-name="standard:code_set" variant="base">
+      <div slot="title">
+          Visualizador de arquivo
+      </div>
+      <div style="padding: 10px;">
+        <lightning-combobox
+            name="progress"
+            label="Documentos"
+            placeholder="Selecione uma arquivo"
+            options={getOptions}
+            onchange={handleChange} >
+        </lightning-combobox>
+        
+        <template if:true={fileId}>
+            <iframe src={url}></iframe>
+        </template>
+        <template if:false={fileId}>
+            Please enter a valid PDF File ID.
+        </template>
+        
+      </div>
+    </lightning-card>
+</template>

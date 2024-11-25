@@ -4,6 +4,7 @@ import buscarStatusUnidades from '@salesforce/apex/EspelhoVendasController.busca
 import buscarTiposUnidades from '@salesforce/apex/EspelhoVendasController.buscarTiposUnidades';
 
 export default class EspelhoDeVendasFiltro extends LightningElement {
+    @api opportunity;
     @api empreendimento;
     @track bloco = '';
     @track andar = '';
@@ -19,6 +20,7 @@ export default class EspelhoDeVendasFiltro extends LightningElement {
     @track showSuggestions = false;
     @track empreendimentoOptions = [];
     @track selectedEmpreendimento = '';
+    @api tabelaOptions;
     @api blocoOptions;
     @track andarOptions = [];
     @track selectedBloco = '';
@@ -37,12 +39,14 @@ export default class EspelhoDeVendasFiltro extends LightningElement {
     @track mostrarFiltrosExtras = false;    
     @track typeOptions = [];
     @track selectedType = [];
+    @api cotacaoId;
 
     @track statusOptions = [];
 
     @track filtroState = false;
     
     @track blocoSelecionado;
+    @track tabelaSelecionada;
     @track andaresSelecionados = [];
     @track apartamentosBloco = [];
     @track statusSelecionados = [];
@@ -77,8 +81,29 @@ export default class EspelhoDeVendasFiltro extends LightningElement {
 
     @track FilteredApartments;
 
+    get getTabelaDisabled() {
+        return !(this.getTabelaOptions && this.getTabelaOptions.length > 0);
+    }
+
     get filteredApartments() {
         return this.filteredApartments;
+    }
+
+    @api
+    get getTabelaOptions() {
+        return this.tabelaOptions;
+    }
+
+    get getTabelaPlaceholder() {
+        return this.getTabelaDisabled ? 'Nenhuma tabela encontrada' : 'Selecione uma tabela';
+    }
+    
+    get getOpportunity() {
+        return this.opportunity;
+    }
+
+    get getTabelaSelecionada() {
+        return this.tabelaSelecionada;
     }
 
     get getBlocoOptions() {
@@ -101,16 +126,54 @@ export default class EspelhoDeVendasFiltro extends LightningElement {
         return this.tipoUnidadeSelecionados;
     }
 
-    get getEmpreendimento(){
+    get getEmpreendimento() {
         return this.empreendimento;
     }
 
-    get isBlocoNotSelecionado(){
-        return this.getBlocoSelecionado ? false : true
+    get isBlocoNotSelecionado() {
+        return (this.getBlocoSelecionado === '' || this.getBlocoSelecionado ? false : true)
     }
 
-    get getFinalUnidade(){
+    get getFinalUnidade() {
         return this.finalUnidade
+    }
+
+    get getBlocoHabilitado() {
+        return (this.getTabelaSelecionada && this.empreendimento) || (!this.isInCotacao && this.empreendimento);
+    }
+
+    get getMetragemMinima() {
+        return this.metragemMinima !== 0 ? this.metragemMinima : null;
+    }
+    get getMetragemMaxima() {
+        return this.metragemMaxima !== 0 ? this.metragemMaxima : null;
+    }
+
+    get getValorMinimo() {
+        return this.valorMinimo !== 0 ? this.valorMinimo : null;
+    }
+    get getValorMaximo() {
+        return this.valorMaximo !== 0 ? this.valorMaximo : null;
+    }   
+
+    get isInCotacao() { 
+        return this.cotacaoId !== undefined;
+    }
+
+    get getLimparFiltroDesabilitado() {
+
+        return !(
+            this.andaresSelecionados.length > 0 || 
+            this.statusSelecionados.length > 0 || 
+            this.finalUnidadePills.length > 0 ||
+            this.quantidadeQuartosPills.length > 0 ||
+            this.quantidadeSuitesPills.length > 0 ||
+            this.tipoUnidadePills.length > 0 ||
+            this.valorMinimo ||
+            this.valorMaximo ||
+            this.metragemMinima ||
+            this.metragemMaxima
+        );
     }
 
     renderedCallback() {
@@ -129,6 +192,7 @@ export default class EspelhoDeVendasFiltro extends LightningElement {
                 picklistTipo.setSelectedList(null);
             }
         }
+
     }
 
     handleEmpreendimento(event) {
@@ -146,6 +210,16 @@ export default class EspelhoDeVendasFiltro extends LightningElement {
         }
         
         this.dispatchEvent(new CustomEvent('selectempreendimento', { detail: { idEmpreendimento: this.empreendimento } }));
+   
+        handleChangeTabela();
+        handleChangeBloco();
+    }
+
+    recarregarEspelho() {
+        this.blocoSelecionado = null;
+        this.tabelaSelecionada = null;
+        this.limparFiltros();
+        this.dispatchEvent(new CustomEvent('recarregarespelho'));
     }
 
     limparFiltros() {
@@ -153,14 +227,24 @@ export default class EspelhoDeVendasFiltro extends LightningElement {
 
         campos.forEach(campo => {
             if(campo.getAttribute('role')) {
+
                 campo.clearSelectedList();
-                if(campo.getAttribute('role' === 'cm-picklist-andar')) campo.setOptions([]);
+
+                if(campo.getAttribute('role' === 'cm-picklist-andar')) {
+                    campo.setOptions([]);
+                }
+
             } else if(campo.getAttribute('data-field')) {
                 campo.value = null;
             }
         });
 
         this.finalUnidadePills = [];
+        this.quantidadeSuites = null;
+
+        this.finalUnidade = null;
+
+
         this.quantidadeQuartosPills = [];
         this.quantidadeSuitesPills = [];
         this.andaresSelecionados = [];
@@ -176,7 +260,7 @@ export default class EspelhoDeVendasFiltro extends LightningElement {
 
         let andarValues = [];
         this.apartamentosBloco.forEach(apartamento => {
-            if(!andarValues.includes(apartamento.Andar__c)){
+            if(!andarValues.includes(apartamento.Andar__c)) {
                 andarValues.push(apartamento.Andar__c);
             }
         })
@@ -197,6 +281,12 @@ export default class EspelhoDeVendasFiltro extends LightningElement {
 
         this.buscarAndares();
         this.filterSuggestions();
+    }
+
+    handleChangeTabela(event) {
+        this.tabelaSelecionada = event.detail.value;
+
+        this.dispatchEvent(new CustomEvent('selecionartabela', { detail: { idTabela: this.tabelaSelecionada, tabelaOptions: this.tabelaOptions } }));
     }
 
     handleAndarChange(event) {
@@ -226,13 +316,18 @@ export default class EspelhoDeVendasFiltro extends LightningElement {
         this.filterSuggestions();
     }
 
-    handleTipoUnidadeChange(event){
+    handleTipoUnidadeChange(event) {
         const selectedValues = event.detail.selectedValues;
         
-        if (!selectedValues || selectedValues.trim() === '') this.tipoUnidadeSelecionados = []
-        else this.tipoUnidadeSelecionados = selectedValues.split(';');
+        if (!selectedValues || selectedValues.trim() === '') {
+            this.tipoUnidadeSelecionados = []
+            this.filterSuggestions();
+        }
+        else {
+            this.tipoUnidadeSelecionados = selectedValues.split(';');
+            this.filterSuggestions();
+        }
 
-        this.filterSuggestions();
     }
 
 
@@ -395,6 +490,7 @@ export default class EspelhoDeVendasFiltro extends LightningElement {
 
         const quantidadeSuitesSelecionados = this.quantidadeSuitesPills.map(item => Number(item.label));
 
+
         const apartamentosFiltrados = this.apartments
             .filter(apartamento =>
                 finalUnidadeSelecionados.length === 0 ||
@@ -427,8 +523,8 @@ export default class EspelhoDeVendasFiltro extends LightningElement {
 
             )
             .filter(apartamento => 
-                this.getTipoUnidadeSelecionados.length === 0 ||
-                    this.getTipoUnidadeSelecionados.includes(apartamento.RecordTypeId)
+                this.tipoUnidadeSelecionados.length === 0 ||
+                    this.tipoUnidadeSelecionados.includes(apartamento.RecordTypeId)
             );
         
         this.dispatchEvent(new CustomEvent('filterupdate', { detail: apartamentosFiltrados }));
@@ -465,7 +561,7 @@ export default class EspelhoDeVendasFiltro extends LightningElement {
         this.filterSuggestions();
     }
 
-    removerFinalUnidade(event){
+    removerFinalUnidade(event) {
         const pillLabel = event.currentTarget.dataset.label; 
         const fieldName = 'finalUnidade';  
 

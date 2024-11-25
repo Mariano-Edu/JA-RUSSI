@@ -1,0 +1,68 @@
+<template>
+    <lightning-card class="slds-col slds-p-horizontal_large" icon-name="standard:team_member" title="Distribuição da Comissão" variant="narrow">
+                            
+        <div class="slds-grid slds-wrap">
+            <!-- <div class="slds-text-title slds-col slds-size_1-of-1">
+                <span>Distribuição da Comissão</span>
+            </div> -->
+            
+            <div class="slds-box slds-grid slds-wrap slds-col slds-p-vertical_medium" style="padding: 1rem 2rem;">
+                <div class="slds-grid slds-col slds-size_1-of-1 slds-grid_align-start slds-p-bottom_small">
+                    <lightning-record-picker
+                        label="Tabela de Comissão"
+                        placeholder="Tabela de Comissão"
+                        object-api-name="TabelaComissao__c"
+                        value={tabelaComissaoSelecionada}
+                        onchange={handleChangeComissao}>
+                    </lightning-record-picker>
+                </div>
+
+                <div class="slds-grid slds-col slds-size_1-of-1 slds-p-vertical_medium" style="height: fit-content;">
+                    <div class="slds-grid slds-col slds-size_1-of-1 slds-p-vertical_medium" style="height: fit-content;">
+                        <c-equipe-vendas-data-table
+                            preco-sem-permuta={precoSemPermuta}
+                            valor-destinado-comissao={valorDestinadoComissao}
+                            percentual-total={percentualComissao}
+                            total-comissao={totalComissao}
+                            valor-total-premio={valorPremio}
+                            onchangecomissao={handleChangeComissao}
+                            equipe-vendas={equipeVendas}
+                            onchangemembro={handleMembroChange}
+                            ondeletemembro={handleDeleteMembroEquipe}
+                            onatualizarequipe={handleAtualizarEquipe}
+                            onatualizarvalorrestante={handleAtualizarRestante}
+                            class="slds-size_1-of-1">
+                        </c-equipe-vendas-data-table>
+                    </div>
+                </div>
+
+                <div class="slds-grid slds-col slds-size_1-of-1 slds-grid_align-center slds-p-vertical_medium">
+                    <lightning-button-icon 
+                        icon-name="utility:add"  
+                        aria-haspopup="dialog"  
+                        alternative-text="Adicionar novo membro da equipe" 
+                        title="Adicionar novo membro da equipe" 
+                        onclick={adicionarMembro}>
+                    </lightning-button-icon>
+                </div>
+                
+                <div class="slds-col slds-grid">
+                    <div class="slds-col slds-size_1-of-1 slds-grid slds-grid_align-end slds-p-vertical_medium" >
+                        <div class="slds-grid slds-wrap" style="width: 10rem;">
+                            <span class="slds-col slds-size_1-of-1 slds-text-body_small" style="font-weight: lighter;">Valor Destinado à Comissão</span>
+                            <span class="slds-col slds-size_1-of-1 slds-text-heading_small" style="font-weight: normal;">{valorDestinadoComissaoFormatado}</span>
+                        </div>
+                        <div class="slds-grid slds-wrap" style="width: 10rem;">
+                            <span class="slds-col slds-size_1-of-1 slds-text-body_small" style="font-weight: lighter;">Valor Total</span>
+                            <span class="slds-col slds-size_1-of-1 slds-text-heading_small" style="font-weight: normal;">{valorTotalFormatado}</span>
+                        </div>
+                        <div class="slds-grid slds-wrap" style="width: 10rem;">
+                            <span class="slds-col slds-size_1-of-1 slds-text-body_small" style="font-weight: lighter;">Valor Restante</span>
+                            <span class="slds-col slds-size_1-of-1 slds-text-heading_small" style="font-weight: normal;">{valorRestanteFormatado}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </lightning-card>
+</template>

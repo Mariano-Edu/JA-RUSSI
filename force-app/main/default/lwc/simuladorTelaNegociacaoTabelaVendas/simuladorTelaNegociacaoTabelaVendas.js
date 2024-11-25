@@ -1,6 +1,5 @@
 import { LightningElement, api, track } from 'lwc';
 import obterSeriesPorIdTabela from '@salesforce/apex/SimuladorTelaNegociacaoController.obterSeriesPorIdTabela';
-import calcularTotalVPL from '@salesforce/apex/CotacaoController.calcularTotalVPLTabela';
 
 import {
     formatData,
@@ -16,9 +15,8 @@ const tabelaVendasColunas = [
     { label: 'Quantidade de Parcelas', fieldName: 'QuantidadeParcelas__c', type: 'number' },
     { label: 'Valor Parcela ', fieldName: 'valorParcela', type: 'currency' },
     { label: 'Valor Total', fieldName: 'valorTotal', type: 'currency' },
-    { label: '% parcela', fieldName: 'porcentagemParcela' },
-    { label: '% total', fieldName: 'ValorTotal__c' },
-    { label: 'Após habite-se?', fieldName: 'AposHabiteSe__c', type: 'boolean' }
+    { label: '% Parcela', fieldName: 'porcentagemParcela' },
+    { label: '% Total', fieldName: 'ValorTotal__c' }
 ];
 
 export default class SimuladorTelaNegociacaoTabelaVendas extends LightningElement {
@@ -26,8 +24,10 @@ export default class SimuladorTelaNegociacaoTabelaVendas extends LightningElemen
 
     @track tabelaVendasOptions = [];
     @api tabelasVendas;
+    @api tabelaOptions;
     @api tabelaVingenteValue;
     @api ultimaTabelaSelecionada;
+    @api tabelaSelecionada;
 
     @track seriePagamentosTabelaVendas = [];
     @track tabelaVendaSelecionada;
@@ -35,13 +35,32 @@ export default class SimuladorTelaNegociacaoTabelaVendas extends LightningElemen
     @track inicioVigenciaTabela;
     @track fimVigenciaTabela;
     @track valorNominal;
-    @track valorVPL;
+    @track valorVPL = 0;
 
     @track unidadeTabelaVendasSelecionada;
     @api unidadeSelecionada;
 
-    get getTabelasVendas(){
-        return this.tabelasVendas;
+    @api tabelaVendas;
+
+    @api produtoSelecionado;
+    @api entradaPrecosMap;
+
+    get getTabelaVendas(){
+        return this.tabelaVendas;
+    }
+
+    @api tabelaMesVigencia;
+
+    get getTabelaMesVigencia(){
+        return this.tabelaMesVigencia;
+    }
+
+    get getTabelaOptions(){
+        return this.tabelaOptions;
+    }
+
+    get getTabelaVendaValue() {
+        return this.tabelaVendaValue;
     }
 
     get getTabelaVendasOptions() {
@@ -65,11 +84,17 @@ export default class SimuladorTelaNegociacaoTabelaVendas extends LightningElemen
     }
 
     get formattedValorNominal() {
-        return this.formatCurrency(this.valorNominal);
+        return this.formatCurrency(this.entradaPrecosMap.ValorVenda__c);
     }
 
-    get formattedValorVPL() {
-        return this.formatCurrency(this.valorVPL);
+    get formattedValorDescontoP() {
+        let value = 0;
+        value = this.formatPercentage(100 - this.entradaPrecosMap.ValorMinimoVenda__c * 100 / this.entradaPrecosMap.ValorVenda__c);
+        return value  ? 0 : value;
+    }
+
+    get formattedValorDescontoN() {
+        return this.formatCurrency(this.entradaPrecosMap.ValorVenda__c - this.entradaPrecosMap.ValorMinimoVenda__c);
     }
 
     formatCurrency(value) {
@@ -82,18 +107,25 @@ export default class SimuladorTelaNegociacaoTabelaVendas extends LightningElemen
         }).format(value);
     }
 
+    formatPercentage(value) {
+        if (value == null || isNaN(value)) {
+            return 0;
+        }
+        return new Intl.NumberFormat('pt-BR', { 
+            style: 'percent', 
+            minimumFractionDigits: 2, 
+            maximumFractionDigits: 2 
+        }).format(value / 100);
+    }
+
     connectedCallback() {
-        this.gerarTabelaVendasOptions();
         this.selecionarTabelaPadrao();
     }
 
     gerarTabelaVendasOptions() {
         let tabelaVendasOptions = [];
-
-        console.log(JSON.stringify(this.getTabelasVendas));
         
-
-        if (!this.getTabelasVendas) {
+        if (!this.tabelasVendas) {
             return;
         }
 
@@ -110,24 +142,16 @@ export default class SimuladorTelaNegociacaoTabelaVendas extends LightningElemen
     }
 
     selecionarTabela(idTabela) {
-        if(this.tabelasVendas.length === 0){return;}
+        if(this.tabelasVendas.length === 0) return;
 
         let tabelaSelecionadaObject = this.tabelasVendas.find(tabela => tabela.Id === idTabela);
         
         
         this.tabelaVendaSelecionada = tabelaSelecionadaObject;
-
         this.tabelaVendaValue = idTabela;
 
-        console.log(JSON.stringify('this.tabelaVendaSelecionada'));
-        console.log(JSON.stringify(this.tabelaVendaSelecionada));
-
-        console.log(JSON.stringify(this.tabelaVendaSelecionada.VigenciaInicio__c), JSON.stringify(this.tabelaVendaSelecionada.VigenciaFim__c))
-        
         this.inicioVigenciaTabela = this.tabelaVendaSelecionada.VigenciaInicio__c ? formatData(this.tabelaVendaSelecionada.VigenciaInicio__c) : null;
         this.fimVigenciaTabela = this.tabelaVendaSelecionada.VigenciaFim__c ? formatData(this.tabelaVendaSelecionada.VigenciaFim__c) : null;
-
-        // this.obterSeriesPorIdTabela();
     }
 
     setTabelaSelecionada(tabelaSelecionada, seriesPagamento, valorNominal, valorVpl) {
@@ -136,73 +160,45 @@ export default class SimuladorTelaNegociacaoTabelaVendas extends LightningElemen
         }));
     }
 
+    // renderedCallback() {
+    //     this.obterSeriesPorIdTabela();
+    // }
+
     obterSeriesPorIdTabela() {
-        obterSeriesPorIdTabela({ idTabela: this.getTabelaVendaSelecionadaId })
+
+        obterSeriesPorIdTabela({ idTabela: this.tabelaVendaSelecionada?.Id })
             .then(result => {
-                this.calcularValoresTabela(this.getTabelaVendaSelecionadaId, result);
+
+                this.calcularFinanceiroSerie(result);
             })
             .catch(error => {
                 console.log(error);
             });
-    }
-
-    selecionarTabelaVingente() {
-        if (!this.tabelaVingenteValue) {
-            return;
-        }
-
-        console.log('aqui')
-        const { idTabelaVingente, valorNominal, valorVPL } = this.tabelaVingenteValue;
-
-        this.selecionarTabela(idTabelaVingente);
-        this.valorNominal = valorNominal;
-        this.valorVPL = valorVPL;
     }
 
     selecionarTabelaPadrao() {
-        if (!this.ultimaTabelaSelecionada) {
-            this.selecionarTabelaVingente();
-            return;
-        }
-
-
-        const { tabelaVendaSelecionada, seriesTabela, valorNominal, valorVpl } = this.ultimaTabelaSelecionada;
-
-        this.selecionarTabela(tabelaVendaSelecionada.Id);
-        this.seriePagamentosTabelaVendas = seriesTabela;
-        this.valorNominal = valorNominal;
-        this.valorVPL = valorVpl;
-    }
-
-    calcularValoresTabela(idTabelaSelecionada, seriesPagamentoTabela) {
-        calcularTotalVPL({ idTabelaVendas: idTabelaSelecionada })
-            .then(result => {
-                this.valorVPL = result.valorVPL ? result.valorVPL : 0;
-                this.valorNominal = result.valorNominal ? result.valorNominal : 0;
-
-                this.calcularFinanceiroSerie(seriesPagamentoTabela);
-            })
-            .catch(error => {
-                console.log(error);
-            });
+        this.tabelaVendaValue = this.tabelaSelecionada;
+        this.tabelaVendaSelecionada = this.tabelaVendas.find(tabela => tabela.Id === this.tabelaVendaValue);
+        
+        if (this.tabelaVendaSelecionada) this.obterSeriesPorIdTabela();
     }
 
     calcularFinanceiroSerie(seriesPagamentoTabela) {
         let seriesPagamentos = [];
 
         seriesPagamentoTabela.forEach(element => {
+            
             let porcParcela = calcularPorcParcelaSeriePagamento(element.ValorTotal__c, element.QuantidadeParcelas__c);
-            let valorParcela = calcularValorParcelaSeriePagamento(porcParcela, this.valorNominal);
-            let valorTotal = calcularValorTotalSeriePagamento(element.ValorTotal__c, this.valorNominal);
+            let valorParcela = calcularValorParcelaSeriePagamento(porcParcela, this.entradaPrecosMap.ValorVenda__c);
+            let valorTotal = calcularValorTotalSeriePagamento(element.ValorTotal__c, this.entradaPrecosMap.ValorVenda__c);
 
             seriesPagamentos.push({
                 uid: this.generateUniqueId(),
                 TipoCondicao__c: element.TipoCondicao__c,
-                InicioPagamento__c: calcularInicioPagamentoSeriePagamentos(element),
+                InicioPagamento__c: element.InicioPagamento__c,
                 vencimentoParcela: null,
                 QuantidadeParcelas__c: element.QuantidadeParcelas__c,
                 ValorTotal__c: (element.ValorTotal__c).toFixed(2) + '%',
-                AposHabiteSe__c: element.AposHabiteSe__c,
                 porcentagemParcela: porcParcela.toFixed(2) + '%',
                 valorParcela: valorParcela.toFixed(2),
                 valorTotal: valorTotal
@@ -210,6 +206,10 @@ export default class SimuladorTelaNegociacaoTabelaVendas extends LightningElemen
         });
 
         this.seriePagamentosTabelaVendas = seriesPagamentos;
+
+        this.dispatchEvent(new CustomEvent('selecionarserie', {
+            detail: seriesPagamentos
+        }));
 
         this.setTabelaSelecionada(this.tabelaVendaSelecionada, this.seriePagamentosTabelaVendas, this.valorNominal, this.valorVPL);
     }

@@ -1,6 +1,5 @@
 @isTest
 public class EspelhoVendasControllerTest {
-/*
     @TestSetup
     static void makeData() {
         doCreateData();
@@ -85,9 +84,9 @@ public class EspelhoVendasControllerTest {
     @isTest
     static void testGetConfiguracaoEspelho() {
         Test.startTest();
-        List<Configura_o_de__mdt> result = EspelhoVendasController.getConfiguracaoEspelho();
+        List<ConfiguracaoSimulador__mdt> result = EspelhoVendasController.getConfiguracaoEspelho();
         Test.stopTest();
 
         System.assertNotEquals(0, result.size(), 'Deve retornar uma lista de configurações de espelho');
-    }*/
+    }
 }

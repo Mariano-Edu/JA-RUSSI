@@ -15,17 +15,6 @@ public class SeriePagamentosService {
     //criar mapa para retorno de calculo VPL e Nominal
     public static Map<String, Decimal> retornoValoresReaisVPL = new Map<String,Decimal>();
 
-    //Metodo para retornar os valores calculado da series da tabela de vendas
-    public static Map<String, Decimal> setValorRealVPLTabelaVendas(Id idTabelaVendas){
-        valorTotalPropostaValido = 0.0;
-        limparListas();
-        setarHabiteSe(idTabelaVendas);
-        Map<Id, SeriePagamentos__c> series = new Map<Id, SeriePagamentos__c> (SeriePagamentoSelector.obterSeriesPorIdTabela(idTabelaVendas));
-        inicioSerieTabelaVendas(series);
-        Map<String, Decimal> retorno = retornoValoresReaisVPL;
-        return retorno;
-    }
-
     //Metodo para retornar os valores calculado da series da proposta do cliente
     public static Map<String, Decimal> setValorRealPropostaCliente(Id idTabelaVendas, List<ObjetoSerie> seriesPropostas, Decimal valorTotalProposta){
         valorTotalPropostaValido = valorTotalProposta;
@@ -36,11 +25,26 @@ public class SeriePagamentosService {
         return retorno;
     }
 
+    public static List<SeriePagamentos__c> criarSeriePagamentos(List<SeriePagamentos__c> series) {
+        insert series;
+        return series;
+    }
+
+    public static Map<String, Decimal> setValorRealVPLTabelaVendas(Id idTabelaVendas){
+        valorTotalPropostaValido = 0.0;
+        limparListas();
+        setarHabiteSe(idTabelaVendas);
+        Map<Id, SeriePagamentos__c> series = new Map<Id, SeriePagamentos__c> (SeriePagamentoSelector.obterSeriesPorIdTabela(idTabelaVendas));
+        inicioSerieTabelaVendas(series);
+        Map<String, Decimal> retorno = retornoValoresReaisVPL;
+        return retorno;
+    }
+
     //Metodo para setar as infomorções nescessarias da tabela de vendas
     public static void setarHabiteSe (Id tabelaVenda){
-        TabelaVendas__c tabelaRelacionada = TabelaVendaSelector.obterTabelasRelacionadas(tabelaVenda);
+        TabelaVendas__c tabelaRelacionada = TabelaVendasSelector.obterTabelasRelacionadas(tabelaVenda);
 
-        taxaPos = tabelaRelacionada.AntecipacaoAposHabiteSe__c;
+        //taxaPos = tabelaRelacionada.AntecipacaoAposHabiteSe__c;
         //taxaAte = tabelaRelacionada.AntecipacaoAteHabiteSe__c;
         taxaAte = 0.0;
         idTabelaDeVendas = tabelaRelacionada.Id;
@@ -63,7 +67,6 @@ public class SeriePagamentosService {
             serieDTO.id = serie.Id;
             serieDTO.valorTotal = serie.ValorTotal__c;
             serieDTO.quantidadeParcelas = serie.QuantidadeParcelas__c.intValue();
-            serieDTO.periodicidade = serie.Periodicidade__c.intValue();
             serieDTO.inicioPagamento = serie.InicioPagamento__c.intValue();
             serieDTO.tabelaVenda = serie.TabelaVenda__c;
             serieDTO.aposHabiteSe = serie.AposHabiteSe__c;
@@ -80,6 +83,17 @@ public class SeriePagamentosService {
         }
 
         calcularSerieDePagamentos(seriesDePagamentosDTO);
+    }
+
+    public static Map<Id, UnidadeTabelaVendas__c> obterEntradaPrecoPorTabela(Id idTabela){
+        List<UnidadeTabelaVendas__c> entradas = UnidadeTabelaSelector.obterUnidadeTabelaPorId(idTabela);
+
+        Map<Id, UnidadeTabelaVendas__c> mapEntradas = new Map<Id, UnidadeTabelaVendas__c>();
+        for (UnidadeTabelaVendas__c entrada : entradas) {
+            mapEntradas.put(entrada.Unidade__c, entrada);
+        }
+
+        return mapEntradas;
     }
 
     //Metodo que inicia os calculos da series da proposta do cliente
@@ -243,7 +257,7 @@ public class SeriePagamentosService {
     //retorna os valores VPL
     public static List<ValorLinha> criarMatrizVPL (Id tabelaRelacionada, List<ValorLinha> listaMatrizGlobla) {
         System.debug('InicioCriarMatrizVPL');
-        TabelaVendas__c tabelaVendasRelacionada = TabelaVendaSelector.obterTabelasRelacionadas(tabelaRelacionada);
+        TabelaVendas__c tabelaVendasRelacionada = TabelaVendasSelector.obterTabelasRelacionadas(tabelaRelacionada);
 
         if (tabelaVendasRelacionada == null) {
             throw new IllegalArgumentException('Nenhuma tabela de vendas encontrada.');
@@ -288,7 +302,7 @@ public class SeriePagamentosService {
     }
 
     public static List<SeriePagamentos__c> seriesProposta(Id idCotacao){
-        List<TabelaVendas__c> tabelaRelacionada = TabelaVendaSelector.obterCotacaoRelacionada(idCotacao);
+        List<TabelaVendas__c> tabelaRelacionada = TabelaVendasSelector.obterCotacaoRelacionada(idCotacao);
         System.debug('Tabela relacionada a cotação: ' + tabelaRelacionada);
 
         List<SeriePagamentos__c> seriesProposta = SeriePagamentoSelector.obterSeriesPorIdTabela(tabelaRelacionada[0].Id);

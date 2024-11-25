@@ -12,6 +12,6 @@ public class SimuladorVendasController {
         
         @AuraEnabled(cacheable = true)
         public static List<TabelaVendas__c> obterTabelasPorIdEmpreendimento(Id idEmpreendimento){
-            return TabelaVendaSelector.obterTabelasPorIdEmpreendimento(idEmpreendimento);
+            return TabelaVendasSelector.obterTabelasPorIdEmpreendimento(idEmpreendimento);
         }
     }

@@ -1,4 +1,11 @@
 public without sharing class OpportunityDA {
+
+    public static List<Opportunity> getOpportunitiesById(Set<String> fields, Set<Id> setIds) {
+        return Database.query(String.format(
+            'SELECT {0} FROM Opportunity WHERE Id IN :setIds',
+            new String[]{String.join(new List<String>(fields), ',')}
+        ));
+    }
     
     public static List<Opportunity> getOpportunityByAccountProduct(Id accountId, Id productId, Id responsavelId, Id corretorId) {
         return [
@@ -16,5 +23,9 @@ public without sharing class OpportunityDA {
                 AND (ResponsavelPeloLead__c = :responsavelId
                 OR Corretor__c = :corretorId)
         ];
+    }
+
+    public static Opportunity getOpportunitiesByContractId(Id contractId){
+        return [Select Id, EmpreendimentodeInteresse__c,EmpreendimentodeInteresse__r.Name,Unidade__c,Unidade__r.Name, ContractId from Opportunity where ContractId =: contractId LIMIT 1];
     }
 }

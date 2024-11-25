@@ -4,8 +4,20 @@ import LightningModal from 'lightning/modal';
 const tipoCondicoesColunas = [
     { label: 'Tipo de condição', fieldName: 'TipoCondicao__c', sortable: true },
     { label: 'Valor Total', fieldName: 'valorTotal', type: 'currency'},
-    { label: '% Desconto aplicado', fieldName: 'porcDesconto', editable: true, cellAttributes: { alignment: 'right' }}, 
-    { label: 'Valor do desconto', fieldName: 'valorDesconto', type: 'currency'},
+    { 
+        label: 'Desconto percentual', 
+        fieldName: 'porcDesconto',  
+        type: 'number',
+        typeAttributes: {
+            minimumFractionDigits: 2, 
+            maximumFractionDigits: 2 
+        },
+        editable: true, 
+        cellAttributes: { 
+            alignment: 'right' 
+        }
+    }, 
+    { label: 'Desconto nominal', fieldName: 'nomDesconto', editable: true, cellAttributes: { alignment: 'right' }, type: 'currency'}, 
     { label: 'Valor total com desconto', fieldName: 'valorTotalComDesconto', type: 'currency'}
 ];
 
@@ -36,21 +48,36 @@ export default class SimuladorTelaNegociacaoModalDesconto extends LightningModal
     get propostasVisiveisGet() {
         return this.propostasVisiveis;
     }
+    
+    get getValoresModal() {
+        // return this.propostasVisiveis.map(proposta => ({...proposta, porcDesconto: 0.0}));
+        return this.propostasVisiveis;
+    }
 
     get getPorcentagemDesconto(){
         return this.procentagemDesconto;
     }
 
     get getValorDescontoTotal(){
-        return this.valorDescontoTotal.toFixed(2);
+        return this.formatCurrency(this.valorDescontoTotal);
     }
 
     get getValorNominal(){
-        return parseFloat(this.valorNominalProposta).toFixed(2);
+        return this.formatCurrency(this.valorNominalProposta);
     }
 
     get getValorNominalComDesconto(){
-        return parseFloat(this.valorNominalProposta - this.valorDescontoTotal).toFixed(2);
+        return this.formatCurrency(this.valorNominalProposta - this.valorDescontoTotal);
+    }
+
+    formatCurrency(value) {
+        if (!value) return 'R$ 0,00';
+        return new Intl.NumberFormat('pt-BR', {
+            style: 'currency',
+            currency: 'BRL',
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        }).format(value);
     }
 
     get isDescontoValido(){
@@ -67,10 +94,7 @@ export default class SimuladorTelaNegociacaoModalDesconto extends LightningModal
     }
 
     renderedCallback() {
-        console.log("entrou uma vez")
         if (this.propostasCliente && this.propostasVisiveis.length === 0) {
-            console.log("entrou uma segunda vez")
-            console.log("propostas cliente", JSON.stringify(this.propostasCliente))
             let propostasValidas = [];
             
             this.propostasCliente.forEach(serie=>{
@@ -78,70 +102,65 @@ export default class SimuladorTelaNegociacaoModalDesconto extends LightningModal
                 propostasValidas.push(serie);
             })
 
-            console.log("propostas validas", JSON.stringify(propostasValidas))
-
             this.propostasVisiveis = propostasValidas.length > 0 ? JSON.parse(JSON.stringify(propostasValidas)) : null;
         }
     }
     
 
-
-
     handlePorcentagemDesconto(event){
         this.procentagemDesconto = event.detail.value;
-       
     }
-
-
 
     handleChangeSerie(event){
-         this.serieSelecionadaUid = event.detail.value;
-         this.limparValoresCalculo();
+        this.serieSelecionadaUid = event.detail.value;
+        this.limparValoresCalculo();
 
-        if(this.serieSelecionadaUid === "todos"){
+        if (this.serieSelecionadaUid === "todos") {
             this.propostasVisiveis = JSON.parse(JSON.stringify(this.propostasCliente)); 
-            return;};
+            return;
+        };
         
-
-
-            this.propostasVisiveis = JSON.parse(JSON.stringify(this.propostasCliente.filter(proposta => proposta.uid === this.serieSelecionadaUid)));
+        this.propostasVisiveis = JSON.parse(JSON.stringify(this.propostasCliente.filter(proposta => proposta.uid === this.serieSelecionadaUid)));
     }
 
-        limparValoresCalculo(){
-            this.valorDesconto = 0;
-            this.procentagemDesconto = null;
-            this.valorDescontoTotal = 0;
-        }
-
-    handleFecharModal(){
-            this.close();
-        }
-
-
-    handleSave(event){
+    limparValoresCalculo() {
+        this.valorDesconto = 0;
+        this.procentagemDesconto = null;
         this.valorDescontoTotal = 0;
-        
+    }
+
+    handleFecharModal() {
+        this.close();
+    }
+
+
+    handleSave(event) {
         const records = event.detail.draftValues.slice().map((draftValue) => {
             return Object.assign({}, draftValue);
-          });
+        });
 
-          this.draftValues = [];
+        this.draftValues = [];
 
-          records.forEach(valorEditado=>{
+        records.forEach( valorEditado => {
             let serieEditada = this.propostasVisiveis.find(proposta =>(proposta.uid === valorEditado.uid));
             
-            let valorDeDesconto = (serieEditada.valorTotal * (valorEditado.porcDesconto / 100));
+            const chaves = Object.keys(valorEditado);
+            if (chaves.includes("porcDesconto") && chaves.includes("nomDesconto")) {
+                console.error('Não é possível alterar ambos de uma vez');
+                return;
+            }
+            
+            let valorEditadoPorcDesconto = (valorEditado.porcDesconto || valorEditado.nomDesconto / (serieEditada.valorTotal / 100.0));
+            let valorEditadoNomDesconto = valorEditado.nomDesconto || serieEditada.valorTotal * (valorEditado.porcDesconto / 100.0);
 
-            serieEditada.porcDesconto = valorEditado.porcDesconto ;
-            serieEditada.valorDesconto = valorDeDesconto;
-            serieEditada.valorTotalComDesconto = serieEditada.valorTotal - valorDeDesconto;
+            serieEditada.porcDesconto = Number(valorEditadoPorcDesconto).toFixed(2);
+            serieEditada.nomDesconto = valorEditadoNomDesconto;
+            serieEditada.valorTotalComDesconto = serieEditada.valorTotal - valorEditadoNomDesconto;
+        })
 
-          })
-
-        this.propostasVisiveis.forEach(serie=>{
+        this.propostasVisiveis.forEach(serie => {
             this.valorDescontoTotal += serie.valorDesconto;
         })
-          
     }
 
     sortBy(field, reverse, primer) {
@@ -161,25 +180,18 @@ export default class SimuladorTelaNegociacaoModalDesconto extends LightningModal
     }
 
     onHandleSort(event) {
-        console.log(event)
-
         const { fieldName: sortedBy, sortDirection } = event.detail;
         const cloneData = [...this.propostasVisiveis];
 
-        console.log(sortedBy, sortDirection)
-
         cloneData.sort(this.sortBy(sortedBy, sortDirection === 'asc' ? 1 : -1));
-        
-        console.log(JSON.stringify(cloneData));
 
         this.propostasVisiveis = cloneData;
         this.sortDirection = sortDirection;
         this.sortedBy = sortedBy;
     }
 
-
-
     handleSalvarPropostas(){
+        
         const descontoEvent = new CustomEvent('aplicardesconto', {
             detail: this.propostasVisiveis
         });

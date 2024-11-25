@@ -2,7 +2,12 @@ public class SimuladorTelaNegociacaoController {
    
     @AuraEnabled
     public static List<TabelaVendas__c> obterTabelasPorIdEmpreendimento(Id idEmpreendimento){
-        return TabelaVendaSelector.obterTabelasPorIdEmpreendimento(idEmpreendimento);
+        return TabelaVendasSelector.obterTabelasPorIdEmpreendimento(idEmpreendimento);
+    }
+   
+    @AuraEnabled(cacheable = true)
+    public static List<TabelaVendas__c> obterTabelasVigentesPorIdEmpreendimentoETipoVenda(Id idEmpreendimento, String tipoVenda){
+        return TabelaVendasSelector.obterTabelasVigentesPorIdEmpreendimentoETipoVenda(idEmpreendimento, tipoVenda);
     }
 
     @AuraEnabled
